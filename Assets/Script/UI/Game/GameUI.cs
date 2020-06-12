@@ -35,6 +35,10 @@ public class GameUI : UIBase
     private TextTimer textTimer;
     private bool IsTiming;
 
+    private int resetPrice = 120;
+    private int changeImagePrice = 30;
+    private int hintPrice = 60;
+
     private int _score;
 
     public static void Create()
@@ -68,6 +72,11 @@ public class GameUI : UIBase
         ViewUtils.AddButtonClick(root, "ResetBtn", OnClickReset);
         ViewUtils.AddButtonClick(root, "ImageBtn", OnClickImage);
         ViewUtils.AddButtonClick(root, "HintBtn", OnClickHint);
+
+        ViewUtils.SetText(root, "ResetBtn/Text", resetPrice.ToString());
+        ViewUtils.SetText(root, "ImageBtn/Text", changeImagePrice.ToString());
+        ViewUtils.SetText(root, "HintBtn/Text", hintPrice.ToString());
+
     }
 
     void Refresh()
@@ -77,7 +86,8 @@ public class GameUI : UIBase
 
     void InitGame() {
         ClearScore();
-        InitLevelType();
+        InitLevel();
+        RefreshGold();
         InitStartPos();
         InitTime();
 
@@ -104,7 +114,7 @@ public class GameUI : UIBase
         startY = itemContent.transform.position.y + (bgSize.y / 2) + itemSize / 2;
     }
 
-    private void InitLevelType() {
+    private void InitLevel() {
         int levelType = 1;
         itemContent = root.Find("ItemContent" + levelType).gameObject;
         for (int i = 1; i <= 4; i++)
@@ -112,6 +122,12 @@ public class GameUI : UIBase
             ViewUtils.SetActive(root, "ItemContent" + i, false);
         }
         ViewUtils.SetActive(root, "ItemContent" + levelType, true);
+
+        ViewUtils.SetText(root, "TopArea/Level/Text", SaveModel.player.level.ToString());
+    }
+
+    private void RefreshGold() {
+        ViewUtils.SetText(root, "TopArea/Gold/Text", SaveModel.player.gold.ToString());
     }
 
     private void InitTime() {
@@ -122,7 +138,7 @@ public class GameUI : UIBase
     }
 
     private void GameOver() {
-        LoseUI.Create();
+        RebornUI.Create(BackToGame);
     }
 
     private void StartTiming(bool isTiming) {
@@ -352,7 +368,7 @@ public class GameUI : UIBase
         if (canLinkList.Count == 0)
         {
             Debug.Log("需要洗牌");
-            OnClickReset();
+            ResetCard();
         }
     }
 
@@ -371,8 +387,7 @@ public class GameUI : UIBase
         PauseUI.Create(BackToGame);
     }
 
-    void OnClickReset()
-    {
+    void ResetCard() {
         typeList = new List<int>();
         for (int i = 0; i < itemList.Count; i++)
         {
@@ -402,14 +417,33 @@ public class GameUI : UIBase
         AllItemCancleClick();
         CheckHaveCanLink();
     }
+    void OnClickReset()
+    {
+        if (!SaveModel.CheckGold(resetPrice))
+        {
+            return;
+        }
+        SaveModel.UseGold(resetPrice);
+        ResetCard();
+        
+    }
 
     void OnClickImage()
     {
-
+        if (!SaveModel.CheckGold(changeImagePrice))
+        {
+            return;
+        }
+        SaveModel.UseGold(changeImagePrice);
     }
 
     void OnClickHint()
     {
+        if (!SaveModel.CheckGold(hintPrice))
+        {
+            return;
+        }
+        SaveModel.UseGold(hintPrice);
         AllItemCancleClick();
         int rand = Random.Range(0, canLinkList.Count);
         Item item1 = canLinkList[rand][0];
@@ -438,6 +472,13 @@ public class GameUI : UIBase
         else if (param == GameModel.BACK_GAME_RESTART)
         {
             RestartGame();
+        }
+        else if (param == GameModel.BACK_GAME_FAIL)
+        {
+            LoseUI.Create();
+        }else if (param == GameModel.BACK_GAME_ADDTIME)
+        {
+            textTimer.startTimingBySeconds(120);
         }
     }
 

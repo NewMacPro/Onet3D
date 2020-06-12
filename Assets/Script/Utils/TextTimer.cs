@@ -18,6 +18,8 @@ public class TextTimer: MonoBehaviour
 
     UnityAction _callback = null;
 
+    UnityAction _updataCallback = null;
+
     bool _timing = false;
 
     bool _real = false;
@@ -30,6 +32,11 @@ public class TextTimer: MonoBehaviour
 
     public void setCallback(UnityAction callback) {
         _callback = callback;
+    }
+
+    public void setUpdataCallback(UnityAction callback)
+    {
+        _updataCallback = callback;
     }
 
     public void setTimeScale(int timeScale) {
@@ -99,6 +106,10 @@ public class TextTimer: MonoBehaviour
         if (_timing && _delta > 0)
         {
             _updateLabel();
+            if (_updataCallback!= null)
+            {
+                _updataCallback();
+            }
             if (_real)
             {
                 _delta = _target - DateTime.Now.Ticks;
@@ -119,7 +130,10 @@ public class TextTimer: MonoBehaviour
     void _updateLabel()
     {
         TimeSpan ts = new TimeSpan(_delta);
-        _label.text = string.Format("{0}:{1}",ts.TotalMinutes.ToString("00"),ts.TotalSeconds.ToString("00"));
+        if (_label!=null)
+        {
+            _label.text = string.Format("{0}:{1}",ts.TotalMinutes.ToString("00"),ts.TotalSeconds.ToString("00"));            
+        }
     }
 
     void refresh() {

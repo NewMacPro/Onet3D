@@ -34,6 +34,26 @@ public class SaveModel
         ForceStorageSave();
     }
 
+    public static void UseGold(int value) 
+    {
+        SaveModel.player.gold -= value;
+        if (SaveModel.player.gold <= 0)
+        {
+            Debug.Log("金币为负数");
+            //SaveModel.player.gold = 0;
+        }
+        ForceStorageSave();
+    }
+
+    public static bool CheckGold(int value)
+    {
+        if (SaveModel.player.gold >= value)
+        {
+            return true;
+        }
+        return false;
+    }
+
     static void CheckSave() {
     }
     /// <summary>

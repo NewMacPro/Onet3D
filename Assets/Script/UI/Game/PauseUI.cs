@@ -32,6 +32,9 @@ public class PauseUI : UIBase
 
     void Attach()
     {
+        ViewUtils.SetText(root, "TitleText", "暂停");
+        ViewUtils.SetText(root, "Sound/Text", "音效");
+        ViewUtils.SetText(root, "Music/Text", "音乐");
         ViewUtils.AddButtonClick(root, "ContinueBtn", OnClickContinueBtn);
         ViewUtils.AddButtonClick(root, "HomeBtn", OnClickHomeBtn);
         ViewUtils.AddButtonClick(root, "ReStarBtn", OnClickReStartBtn);
