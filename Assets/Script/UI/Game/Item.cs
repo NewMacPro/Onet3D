@@ -7,7 +7,7 @@ public class Item : MonoBehaviour {
     private Image image;
     private Image bg;
     private Button uiBtn;
-    private Vector2 size;
+    private RectTransform rect;
 	public Point pos;
     public GameUI gameUI;
     private GameObject checkMark;
@@ -24,7 +24,7 @@ public class Item : MonoBehaviour {
         bg = transform.Find("Bg").GetComponent<Image>();
         //posTween = this.GetComponent<TweenPosition>();
         //scaTween = this.GetComponent<TweenScale>();
-        size = this.GetComponent<RectTransform>().rect.size;
+        rect = this.GetComponent<RectTransform>();
         checkMark = transform.Find("CheckMark").gameObject;
         ViewUtils.AddButtonClick(gameObject.transform, "", OnClickItem);
         //posTween.enabled = false;
@@ -42,7 +42,7 @@ public class Item : MonoBehaviour {
 	}
 
     public void SetItemSize(float s) {
-        size.Set(Mathf.FloorToInt(s), Mathf.FloorToInt(s));
+        rect.sizeDelta = new Vector2(Mathf.FloorToInt(s), Mathf.FloorToInt(s));
     }
 
 	public void OnClickItem()
