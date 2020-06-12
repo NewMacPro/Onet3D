@@ -179,7 +179,7 @@ public class GameUI : UIBase
         itemScript.SetItemType(type);
         itemScript.gameUI = this;
         itemScript.pos = new Point(i, j);
-        itemScript.hasItem = type == -1 ? 0 : 1;
+        itemScript.hasItem = type != -1;
         return itemScript;
     }
 
@@ -246,13 +246,14 @@ public class GameUI : UIBase
         CreateAllStar(pathList);
         Item item1 = clickList[0];
         Item item2 = clickList[1];
-        item1.hasItem = 0;
-        item2.hasItem = 0;
+        item1.hasItem = false;
+        item2.hasItem = false;
         AddScore(pathList.Count);
         item1.fly();
         item2.fly();
         //Destroy (item1.gameObject);
         //Destroy (item2.gameObject);
+        MmoveHor();
         clickList.Clear();
         pathList.Clear();
 
@@ -300,7 +301,7 @@ public class GameUI : UIBase
                     {
                         Item item1 = itemList[i][j];
                         Item item2 = itemList[k][l];
-                        if (item1.hasItem == 0 || item2.hasItem == 0)
+                        if (!item1.hasItem || !item2.hasItem)
                         {
                             continue;
                         }
@@ -347,7 +348,7 @@ public class GameUI : UIBase
         {
             for (int j = 0; j < itemList[i].Count; j++)
             {
-                if (itemList[i][j].hasItem == 1)
+                if (itemList[i][j].hasItem)
                 {
                     typeList.Add(itemList[i][j].itemType);
                 }
@@ -360,7 +361,7 @@ public class GameUI : UIBase
         {
             for (int j = 0; j < itemList[i].Count; j++)
             {
-                if (itemList[i][j].hasItem == 1)
+                if (itemList[i][j].hasItem)
                 {
                     itemList[i][j].SetItemType(typeList[0]);
                     typeList.RemoveAt(0);
@@ -392,5 +393,104 @@ public class GameUI : UIBase
     {
         GameModel.CheckLink(a, b , itemList);
         //TODO
+    }
+
+    public void MmoveVet(bool toMin = false)
+    {
+        List<List<Item>> listCol = new List<List<Item>>();
+        foreach (List<Item> items in itemList)
+        {
+            foreach (Item it in items)
+            {
+                List<Item> its = null;
+                if (listCol.Count > it.pos.y)
+                {
+                    its = listCol[it.pos.y];
+                }
+                else
+                {
+                    its = new List<Item>();
+                    listCol.Add(its);
+                }
+                its.Add(it);
+            }
+        }
+        for (int i = 0; i < listCol.Count; i++)
+        {
+            List<Item> items = listCol[i];
+            List<int> noneList = new List<int>();
+            for (int j = 0; j < items.Count; j++)
+            {
+                int index = toMin ? j : items.Count - j - 1;
+                Item it = items[index];
+                if (it.itemType == -1)
+                {
+                    continue;
+                }
+                if (it.hasItem)
+                {
+                    if (noneList.Count <= 0)
+                    {
+                        continue;
+                    }
+                    itemList[it.pos.x][i] = itemList[noneList[0]][i];
+                    items[it.pos.x] = itemList[noneList[0]][i];
+                    itemList[noneList[0]][i] = it;
+                    items[noneList[0]] = it;
+                    it.transform.localPosition = GetItemPos(noneList[0], i);
+                    noneList.Add(it.pos.x);
+                    //itemList[it.pos.x][i].pos.x = it.pos.x;
+                    //it.pos.x = noneList[0];
+                    noneList.RemoveAt(0);
+                    continue;
+                }
+                noneList.Add(it.pos.x);
+            }
+            items = listCol[i];
+            for (int j = 0; j < items.Count; j++)
+            {
+                items[j].pos.x = j;
+            }
+        }
+    }
+
+    public void MmoveHor(bool toMin = true)
+    {
+        for (int i = 0; i < itemList.Count; i++)
+        {
+            List<Item> items = itemList[i];
+            List<int> noneList = new List<int>();
+            for (int j = 0; j < items.Count; j++)
+            {
+                int index = toMin ? j : items.Count - j - 1;
+                Item it = items[index];
+                if (it.itemType == -1)
+                {
+                    continue;
+                }
+                if (it.hasItem)
+                {
+                    if (noneList.Count <= 0)
+                    {
+                        continue;
+                    }
+                    itemList[i][it.pos.y] = itemList[i][noneList[0]];
+                    itemList[i][noneList[0]] = it;
+                    it.transform.localPosition = GetItemPos(i, noneList[0]);
+                    noneList.Add(it.pos.y);
+                    //itemList[i][it.pos.y].pos.y = it.pos.y;
+                    //it.pos.y = noneList[0];
+                    noneList.RemoveAt(0);
+                    continue;
+                }
+                noneList.Add(it.pos.y);
+
+            }
+            items = itemList[i];
+            for (int j = 0; j < items.Count; j++)
+            {
+                items[j].pos.y = j;
+            }
+        }
     }
 }
