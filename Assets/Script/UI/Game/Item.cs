@@ -12,7 +12,7 @@ public class Item : MonoBehaviour {
     public GameUI gameUI;
     private GameObject checkMark;
 
-	public int hasItem;
+	public bool hasItem;
 
     //private TweenPosition posTween;
     //private TweenScale scaTween;

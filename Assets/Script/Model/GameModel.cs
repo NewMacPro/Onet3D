@@ -50,7 +50,7 @@ class GameModel{
         //遍历a,b之间是否通路，如果一个不是就返回false;
         for (int i = x_start + 1; i < x_end; i++)
         {
-            if (itemList[a.x][i].hasItem == 1) //是否有item
+            if (itemList[a.x][i].hasItem) //是否有item
             {
                 return false;
             }
@@ -65,7 +65,7 @@ class GameModel{
         int y_end = a.x < b.x ? b.x : a.x;
         for (int i = y_start + 1; i < y_end; i++)
         {
-            if (itemList[i][a.y].hasItem == 1)
+            if (itemList[i][a.y].hasItem)
             {
                 return false;
             }
@@ -79,7 +79,7 @@ class GameModel{
         Point c = new Point(b.x, a.y);
         Point d = new Point(a.x, b.y);
         //判断C点是否有元素                
-        if (itemList[c.x][c.y].hasItem == 0)
+        if (!itemList[c.x][c.y].hasItem)
         {
             bool path1 = CheckHorizon(b, c, itemList) && CheckVertical(a, c, itemList);
             if (path1)
@@ -93,7 +93,7 @@ class GameModel{
             return pathList;
         }
         //判断D点是否有元素
-        if (itemList[d.x][d.y].hasItem == 0)
+        if (!itemList[d.x][d.y].hasItem)
         {
             bool path2 = CheckHorizon(a, d, itemList) && CheckVertical(b, d , itemList);
             if (path2)
@@ -167,7 +167,7 @@ class GameModel{
         //检测a点,b点的左侧是否能够垂直直连
         for (int i = a.y; i >= 0; i--)
         {
-            if (itemList[a.x][i].hasItem == 0 && itemList[b.x][i].hasItem == 0 && CheckVertical(new Point(a.x, i), new Point(b.x, i) , itemList))
+            if (!itemList[a.x][i].hasItem && !itemList[b.x][i].hasItem && CheckVertical(new Point(a.x, i), new Point(b.x, i) , itemList))
             {
                 linkList.Add(new Line(new Point(a.x, i), new Point(b.x, i), 0));
             }
@@ -175,7 +175,7 @@ class GameModel{
         //检测a点,b点的右侧是否能够垂直直连
         for (int i = a.y; i < col; i++)
         {
-            if (itemList[a.x][i].hasItem == 0 && itemList[b.x][i].hasItem == 0 && CheckVertical(new Point(a.x, i), new Point(b.x, i) , itemList))
+            if (!itemList[a.x][i].hasItem && !itemList[b.x][i].hasItem && CheckVertical(new Point(a.x, i), new Point(b.x, i) , itemList))
             {
                 linkList.Add(new Line(new Point(a.x, i), new Point(b.x, i), 0));
             }
@@ -183,7 +183,7 @@ class GameModel{
         //检测a点,b点的上侧是否能够水平直连
         for (int j = a.x; j >= 0; j--)
         {
-            if (itemList[j][a.y].hasItem == 0 && itemList[j][b.y].hasItem == 0 && CheckHorizon(new Point(j, a.y), new Point(j, b.y) , itemList))
+            if (!itemList[j][a.y].hasItem && !itemList[j][b.y].hasItem && CheckHorizon(new Point(j, a.y), new Point(j, b.y) , itemList))
             {
                 linkList.Add(new Line(new Point(j, a.y), new Point(j, b.y), 1));
             }
@@ -191,7 +191,7 @@ class GameModel{
         //检测a点,b点的下侧是否能够水平直连
         for (int j = a.x; j < row; j++)
         {
-            if (itemList[j][a.y].hasItem == 0 && itemList[j][b.y].hasItem == 0 && CheckHorizon(new Point(j, a.y), new Point(j, b.y) , itemList))
+            if (!itemList[j][a.y].hasItem && !itemList[j][b.y].hasItem  && CheckHorizon(new Point(j, a.y), new Point(j, b.y) , itemList))
             {
                 linkList.Add(new Line(new Point(j, a.y), new Point(j, b.y), 1));
             }
@@ -236,7 +236,7 @@ class GameModel{
         {
             for (int j = 0; j < itemList[i].Count; j++)
             {
-                if (itemList[i][j].hasItem == 1)
+                if (itemList[i][j].hasItem)
                 {
                     return false;
                 }
