@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 class GameModel{
+    public static string BACK_GAME_CONTIUE = "contiue";
+    public static string BACK_GAME_CLOSE = "close";
+    public static string BACK_GAME_RESTART = "restart";
+    
+        
     public static List<Point> CheckLink(Point a, Point b , List<List<Item>> itemList )
     {
         List<Point> pathList = new List<Point>();

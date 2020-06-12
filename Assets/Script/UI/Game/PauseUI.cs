@@ -1,20 +1,25 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class PauseUI : UIBase
 {
-    public static void Create()
+    private UnityAction<string> callBack;
+    public static void Create(UnityAction<string> cb)
     {
         PauseUI ui = new PauseUI();
-        ui.Init();
+        ui.Init(cb);
+        
     }
 
-    void Init()
+    void Init(UnityAction<string> cb)
     {
         this.CurrentUIType.UIForms_Type = UIFormsType.PopUp;
         this.CurrentUIType.UIForms_ShowMode = UIFormsShowMode.PopUp;
+        callBack = cb;
         Redisplay();
     }
 
@@ -29,9 +34,9 @@ public class PauseUI : UIBase
     {
         ViewUtils.AddButtonClick(root, "ContinueBtn", OnClickContinueBtn);
         ViewUtils.AddButtonClick(root, "HomeBtn", OnClickHomeBtn);
-        ViewUtils.AddButtonClick(root, "ReStarBtn", OnClickReStarBtn);
-        ViewUtils.AddButtonClick(root, "ContinueBtn", Close);
-        ViewUtils.AddButtonClick(root, "ContinueBtn", Close);
+        ViewUtils.AddButtonClick(root, "ReStarBtn", OnClickReStartBtn);
+        ViewUtils.AddButtonClick(root, "Sound/SwitchBtn", OnClickSoundBtn);
+        ViewUtils.AddButtonClick(root, "Music/SwitchBtn", OnClickMusicBtn);
     }
 
     void Refresh()
@@ -42,17 +47,27 @@ public class PauseUI : UIBase
     void OnClickContinueBtn() 
     {
         Close();
+        callBack(GameModel.BACK_GAME_CONTIUE);
     }
 
     void OnClickHomeBtn()
     {
         Close();
-        UIManager.GetInstance().ShowLobbyView();
+        callBack(GameModel.BACK_GAME_CLOSE);
     }
 
-    void OnClickReStarBtn()
+    void OnClickReStartBtn()
     {
         Close();
-        GameUI.Create();
+        callBack(GameModel.BACK_GAME_RESTART);
+    }
+
+    void OnClickSoundBtn() { 
+        
+    }
+
+    void OnClickMusicBtn()
+    {
+
     }
 }

@@ -20,18 +20,12 @@ public class TextTimer: MonoBehaviour
 
     bool _timing = false;
 
-    bool _real = true;
+    bool _real = false;
 
     int _timeScale = 1;
 
     void Awake() {
         _label = transform.GetComponent<Text>();
-        setCallback(() =>
-        {
-            Debug.Log("End!");
-        });
-        setReal(false);
-        startTimingBySeconds(20);
     }
 
     public void setCallback(UnityAction callback) {
@@ -72,6 +66,13 @@ public class TextTimer: MonoBehaviour
         _timing = false;
     }
 
+    /**
+    * 停止计时
+    */
+    public void startTiming()
+    {
+        _timing = true;
+    }
     /**
      * 仅设置时间，不开始计时
      * @param {*} targetTime 目标时间戳

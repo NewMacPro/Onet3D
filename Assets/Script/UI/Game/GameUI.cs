@@ -33,6 +33,7 @@ public class GameUI : UIBase
     private Text changeImageText;
     private Text hintText;
     private TextTimer textTimer;
+    private bool IsTiming;
 
     private int _score;
 
@@ -51,7 +52,6 @@ public class GameUI : UIBase
         CreateAndAttachRoot("GameUI");
         Attach();
         Refresh();
-        InitGame();
     }
 
     void Attach() {
@@ -72,7 +72,7 @@ public class GameUI : UIBase
 
     void Refresh()
     {
-
+        InitGame();
     }
 
     void InitGame() {
@@ -84,6 +84,11 @@ public class GameUI : UIBase
         RandomType();
         CreateItems();
         CheckHaveCanLink();
+    }
+
+    void RestartGame()
+    {
+        Refresh();
     }
 
     private void ClearScore() {
@@ -110,9 +115,33 @@ public class GameUI : UIBase
     }
 
     private void InitTime() {
-        float finishTime = Time.time + 60;
-        textTimer.setTime(60);
+        int time = 2;
+        textTimer.setTimeBySeconds(time);
+        textTimer.setCallback(GameOver);
+        IsTiming = false;
     }
+
+    private void GameOver() {
+        LoseUI.Create();
+    }
+
+    private void StartTiming(bool isTiming) {
+        Debug.Log(isTiming);
+        Debug.Log(IsTiming);
+        if (isTiming == IsTiming)
+        {
+            return;
+        }
+        IsTiming = isTiming;
+        if (IsTiming)
+        {
+            textTimer.startTiming();
+        }
+        else {
+            textTimer.stopTiming();
+        }
+    }
+
 
     private void RandomType()
     {
@@ -223,6 +252,7 @@ public class GameUI : UIBase
                 if (isClear)
                 {
                     HideTwoItem(pathList);
+                    StartTiming(true);
                 }
                 else
                 {
@@ -337,7 +367,8 @@ public class GameUI : UIBase
     }
 
     void OnClickPause() {
-        PauseUI.Create();
+        StartTiming(false);
+        PauseUI.Create(BackToGame);
     }
 
     void OnClickReset()
@@ -393,4 +424,27 @@ public class GameUI : UIBase
         GameModel.CheckLink(a, b , itemList);
         //TODO
     }
+
+    void BackToGame(string param) {
+        Debug.Log(param);
+        if (param == GameModel.BACK_GAME_CLOSE)
+        {
+            BackToMainUI();
+        }
+        else if (param == GameModel.BACK_GAME_CONTIUE)
+        {
+            StartTiming(true);
+        }
+        else if (param == GameModel.BACK_GAME_RESTART)
+        {
+            RestartGame();
+        }
+    }
+
+    void BackToMainUI()
+    {
+        UIManager.GetInstance().ShowLobbyView();
+    }
+
+
 }
