@@ -153,8 +153,6 @@ public class GameUI : UIBase
     }
 
     private void StartTiming(bool isTiming) {
-        Debug.Log(isTiming);
-        Debug.Log(IsTiming);
         if (isTiming == IsTiming)
         {
             return;
@@ -392,7 +390,7 @@ public class GameUI : UIBase
 
     private void GameFinish() {
         StartTiming(false);
-        int useTime = config.GetInt("time") - (int)textTimer.getTime()*10000;
+        int useTime = config.GetInt("time") - (int)textTimer.getTime()/10000;
         WinUI.Create(_score, useTime);
         SaveModel.LevelUp();
     }

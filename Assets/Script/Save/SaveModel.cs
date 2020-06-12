@@ -18,10 +18,8 @@ public class SaveModel
         {
             return SaveModel.player;
         }
-        Save player = new Save();
-        player.name = ViewUtils.GenerateUUID();
-        SaveModel.player = player;
-        return player;
+        CreateSave();
+        return SaveModel.player;
     }
 
     public static void AddGold(int value)
@@ -60,6 +58,13 @@ public class SaveModel
     }
 
     static void CheckSave() {
+    }
+
+    public static void CreateSave()
+    {
+        Save player = new Save();
+        player.name = ViewUtils.GenerateUUID();
+        SaveModel.player = player;
     }
     /// <summary>
     /// 从本地获取存档数据

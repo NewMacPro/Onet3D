@@ -29,6 +29,7 @@ public class MainUI : UIBase
     {
         root.FindAChild<Button>("SetBtn");
         ViewUtils.AddButtonClick(root, "SetBtn", OnClickSetting);
+        ViewUtils.AddButtonClick(root, "ClearBtn", OnClickClear);
         ViewUtils.AddButtonClick(root, "PlayBtn", OnClickPlay);
         ViewUtils.AddButtonClick(root, "GalleryBtn", OnClickGallery);
         ViewUtils.AddButtonClick(root, "RateBtn", OnClickRate);
@@ -59,5 +60,9 @@ public class MainUI : UIBase
     void OnClickHelp()
     {
         IntroductionUI.Create();
+    }
+    void OnClickClear()
+    {
+        SaveModel.CreateSave();
     }
 }
