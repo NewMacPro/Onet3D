@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using LitJson;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,9 +9,9 @@ public class GameUI : UIBase
     /**背景*/
     private GameObject itemContent;
     /**行号*/
-    private int row = 8;
+    private int row;
     /**列号*/
-    private int col = 5;
+    private int col;
     /**item宽*/
     private float itemSize = 0;
     /**item起始位置x*/
@@ -38,6 +39,8 @@ public class GameUI : UIBase
     private int resetPrice = 120;
     private int changeImagePrice = 30;
     private int hintPrice = 60;
+    private int nowLevel;
+    private JsonData config;
 
     private int _score;
 
@@ -85,6 +88,7 @@ public class GameUI : UIBase
     }
 
     void InitGame() {
+        InitConfig();        
         ClearScore();
         InitLevel();
         RefreshGold();
@@ -96,6 +100,13 @@ public class GameUI : UIBase
         CheckHaveCanLink();
     }
 
+    void InitConfig(){
+        nowLevel = SaveModel.player.level;
+        config = Config.Instance.GetConfig("LevelConfig")["level"][nowLevel-1];
+        JsonData sizeConfig = Config.Instance.GetConfig("LevelConfig")["size"][config.GetString("size")];
+        row = sizeConfig.GetInt("row");
+        col = sizeConfig.GetInt("col");
+    }
     void RestartGame()
     {
         Refresh();
@@ -103,7 +114,7 @@ public class GameUI : UIBase
 
     private void ClearScore() {
         _score = 0;
-        scoreText.text = _score.ToString(); ;
+        scoreText.text = _score.ToString(); 
     }
 
     private void InitStartPos()
@@ -115,15 +126,15 @@ public class GameUI : UIBase
     }
 
     private void InitLevel() {
-        int levelType = 1;
-        itemContent = root.Find("ItemContent" + levelType).gameObject;
+        string levelSize = config.GetString("size");
+        itemContent = root.Find("ItemContent" + levelSize).gameObject;
         for (int i = 1; i <= 4; i++)
         {
             ViewUtils.SetActive(root, "ItemContent" + i, false);
         }
-        ViewUtils.SetActive(root, "ItemContent" + levelType, true);
+        ViewUtils.SetActive(root, "ItemContent" + levelSize, true);
 
-        ViewUtils.SetText(root, "TopArea/Level/Text", SaveModel.player.level.ToString());
+        ViewUtils.SetText(root, "TopArea/Level/Text", nowLevel.ToString());
     }
 
     private void RefreshGold() {
@@ -131,7 +142,7 @@ public class GameUI : UIBase
     }
 
     private void InitTime() {
-        int time =120;
+        int time = config.GetInt("time");
         textTimer.setTimeBySeconds(time);
         textTimer.setCallback(GameOver);
         IsTiming = false;
@@ -379,8 +390,11 @@ public class GameUI : UIBase
         scoreText.text = _score.ToString() ;
     }
 
-    private void GameFinish() { 
-    
+    private void GameFinish() {
+        StartTiming(false);
+        int useTime = config.GetInt("time") - (int)textTimer.getTime()*10000;
+        WinUI.Create(_score, useTime);
+        SaveModel.LevelUp();
     }
 
     void OnClickPause() {
