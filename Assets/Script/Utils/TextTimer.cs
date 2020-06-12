@@ -129,10 +129,10 @@ public class TextTimer: MonoBehaviour
 
     void _updateLabel()
     {
-        TimeSpan ts = new TimeSpan(_delta);
+        TimeSpan ts = new TimeSpan(_delta +1000);
         if (_label!=null)
         {
-            _label.text = string.Format("{0}:{1}",ts.TotalMinutes.ToString("00"),ts.TotalSeconds.ToString("00"));            
+            _label.text = string.Format("{0}:{1}",ts.Minutes.ToString("00"),ts.Seconds.ToString("00"));            
         }
     }
 

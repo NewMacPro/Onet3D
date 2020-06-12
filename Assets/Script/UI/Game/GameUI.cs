@@ -103,7 +103,7 @@ public class GameUI : UIBase
 
     private void ClearScore() {
         _score = 0;
-        scoreText.text = "得分:" + _score;
+        scoreText.text = _score.ToString(); ;
     }
 
     private void InitStartPos()
@@ -131,7 +131,7 @@ public class GameUI : UIBase
     }
 
     private void InitTime() {
-        int time = 2;
+        int time =120;
         textTimer.setTimeBySeconds(time);
         textTimer.setCallback(GameOver);
         IsTiming = false;
@@ -376,7 +376,7 @@ public class GameUI : UIBase
     public void AddScore(int score)
     {
         _score += score;
-        scoreText.text = "得分:" + _score;
+        scoreText.text = _score.ToString() ;
     }
 
     private void GameFinish() { 
@@ -461,7 +461,6 @@ public class GameUI : UIBase
     }
 
     void BackToGame(string param) {
-        Debug.Log(param);
         if (param == GameModel.BACK_GAME_CLOSE)
         {
             BackToMainUI();
