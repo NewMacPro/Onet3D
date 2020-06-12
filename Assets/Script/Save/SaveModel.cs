@@ -54,6 +54,11 @@ public class SaveModel
         return false;
     }
 
+    public static void LevelUp() {
+        SaveModel.player.level += 1;
+        ForceStorageSave();
+    }
+
     static void CheckSave() {
     }
     /// <summary>
