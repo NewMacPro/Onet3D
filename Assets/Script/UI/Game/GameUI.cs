@@ -32,6 +32,7 @@ public class GameUI : UIBase
     private Text resetText;
     private Text changeImageText;
     private Text hintText;
+    private TextTimer textTimer;
 
     private int _score;
 
@@ -61,6 +62,7 @@ public class GameUI : UIBase
         resetText = root.FindAChild<Text>("ResetBtn/Text");
         changeImageText = root.FindAChild<Text>("ImageBtn/Text");
         hintText = root.FindAChild<Text>("HintBtn/Text");
+        textTimer = timeText.AddComponent<TextTimer>();
 
         ViewUtils.AddButtonClick(root, "PauseBtn", OnClickPause);
         ViewUtils.AddButtonClick(root, "ResetBtn", OnClickReset);
@@ -77,11 +79,11 @@ public class GameUI : UIBase
         ClearScore();
         InitLevelType();
         InitStartPos();
+        InitTime();
 
         RandomType();
         CreateItems();
         CheckHaveCanLink();
-
     }
 
     private void ClearScore() {
@@ -105,6 +107,11 @@ public class GameUI : UIBase
             ViewUtils.SetActive(root, "ItemContent" + i, false);
         }
         ViewUtils.SetActive(root, "ItemContent" + levelType, true);
+    }
+
+    private void InitTime() {
+        float finishTime = Time.time + 60;
+        textTimer.setTime(60);
     }
 
     private void RandomType()

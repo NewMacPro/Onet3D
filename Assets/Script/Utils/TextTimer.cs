@@ -34,15 +34,15 @@ public class TextTimer: MonoBehaviour
         startTimingBySeconds(20);
     }
 
-    void setCallback(UnityAction callback) {
+    public void setCallback(UnityAction callback) {
         _callback = callback;
     }
 
-    void setTimeScale(int timeScale) {
+    public void setTimeScale(int timeScale) {
         _timeScale = timeScale;
     }
 
-    void setReal(bool real)
+    public void setReal(bool real)
     {
         _real = real;
     }
@@ -51,14 +51,14 @@ public class TextTimer: MonoBehaviour
      * 开始计时
      * @param {*} targetTime 目标时间戳
      */
-    void startTiming(long targetTimeTicks)
+    public void startTiming(long targetTimeTicks)
     {
         _target = (long)(targetTimeTicks * Math.Pow(10, 7));
         _timing = true;
         refresh();
     }
     
-    void startTimingBySeconds(int IntervalSeconds)
+    public void startTimingBySeconds(int IntervalSeconds)
     {
         _target = (long)(DateTime.Now.Ticks + IntervalSeconds * Math.Pow(10, 7));
         _timing = true;
@@ -68,7 +68,7 @@ public class TextTimer: MonoBehaviour
     /**
      * 停止计时
      */
-    void stopTiming() {
+    public void stopTiming() {
         _timing = false;
     }
 
@@ -76,19 +76,19 @@ public class TextTimer: MonoBehaviour
      * 仅设置时间，不开始计时
      * @param {*} targetTime 目标时间戳
      */
-    void setTime(long targetTimeTicks)
+    public void setTime(long targetTimeTicks)
     {
         _target = (long)(targetTimeTicks * Math.Pow(10, 7));
         refresh();
     }
 
-    void setTimeBySeconds(int IntervalSeconds)
+    public void setTimeBySeconds(int IntervalSeconds)
     {
         _target = (long)(DateTime.Now.Ticks + IntervalSeconds * Math.Pow(10, 7));
         refresh();
     }
 
-    float getTime() {
+    public float getTime() {
         return _delta / 1000;
     }
 
