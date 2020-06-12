@@ -1,0 +1,194 @@
+﻿/***
+*
+*    Title: "SUIFW" UI框架项目
+*           主题： UI遮罩管理器
+*    Description:
+*          功能： 负责“弹出窗体”的模态实现。
+*                （即：不允许穿透）
+*    Date: 2017
+*    Version: 0.1版本
+*    Modify Recoder:
+*
+*
+*/
+using UnityEngine;
+using UnityEngine.UI;
+using System;
+using System.Collections.Generic;
+
+public class UIMaskMgr : MonoBehaviour
+{
+    /* 字段 */
+    //本脚本私有单例实例
+    private static UIMaskMgr _Instance;
+    //UI根节点对象
+    private GameObject _GoCanvasRoot = null;
+    //UI脚本节点（加载各种管理脚本的节点）
+    private Transform _CanTransformUIScripts = null;
+    //顶层面板
+    private GameObject _GoTopPlane;
+    //提示弹窗层遮罩面板
+    private GameObject _GoPopLayerMask;
+    //中间弹窗层遮罩面板
+    private GameObject _GoFixedLayerMask;
+    //UI摄像机
+    private Camera _UICamear;
+    //原始UI摄像机的层深
+    private float _OriginalUICameraDepth;
+
+
+/// <summary>
+    /// 得到实例(单例)
+    /// </summary>
+    /// <returns></returns>
+    public static UIMaskMgr GetInstance()
+    {
+        if (_Instance == null)
+        {
+            _Instance = new GameObject("_UIMaskMgr").AddComponent<UIMaskMgr>();
+        }
+        return _Instance;
+    }
+
+    void Awake()
+    {
+        //得到UI根节点、UI脚本节点
+        _GoCanvasRoot = GameObject.FindGameObjectWithTag(SysDefine.SYS_TAG_CANVAS);
+        _CanTransformUIScripts = UnityHelper.FindTheChild(_GoCanvasRoot, SysDefine.SYS_CANVAS_UISCRIPTS_NODE_NAME);
+        //把本脚本实例，作为Canvas的子节点
+        UnityHelper.AddChildToParent(_CanTransformUIScripts, this.gameObject.transform);
+
+        //得到“顶层面板”与“遮罩面板”
+        _GoTopPlane = _GoCanvasRoot;
+        _GoPopLayerMask = UnityHelper.FindTheChild(_GoCanvasRoot.gameObject, SysDefine.SYS_CANVAS_POPLAYERMASK_NODE_NAME).gameObject;
+        _GoFixedLayerMask = UnityHelper.FindTheChild(_GoCanvasRoot.gameObject, SysDefine.SYS_CANVAS_FIXEDLAYERMASK_NODE_NAME).gameObject;
+
+        //得到UI摄像机的原始“层深”
+        _UICamear = GameObject.FindGameObjectWithTag(SysDefine.SYS_TAG_UICAMERA).GetComponent<Camera>();
+        if (_UICamear != null)
+        {
+            _OriginalUICameraDepth = _UICamear.depth;
+        }
+        else
+        {
+            Debug.LogWarning(GetType() + "/Start()/_UICamera is Null ,please Check!");
+        }
+    }
+
+    /// <summary>
+    /// 设置遮罩状态
+    /// </summary>
+    /// <param name="goDisplayPlane">需要显示的窗体</param>
+    public void SetMaskWindow(GameObject goDisplayPlane, UIFormsLucencyType UILucencyType = UIFormsLucencyType.Lucency)
+    {
+        //顶层窗体下移。
+        _GoTopPlane.transform.SetAsLastSibling();
+
+        //启用遮罩窗体与透明度5
+        switch (UILucencyType)
+        {
+            case UIFormsLucencyType.Lucency:
+                _GoPopLayerMask.SetActive(true);
+                Color newColor1 = new Color(SysDefine.SYS_UIMASK_LUCENCY_COLOR_RGB, SysDefine.SYS_UIMASK_LUCENCY_COLOR_RGB, SysDefine.SYS_UIMASK_LUCENCY_COLOR_RGB, SysDefine.SYS_UIMASK_LUCENCY_COLOR_A);
+                _GoPopLayerMask.GetComponent<Image>().color = newColor1;
+                break;
+            case UIFormsLucencyType.Translucence:
+                _GoPopLayerMask.SetActive(true);
+                Color newColor2 = new Color(SysDefine.SYS_UIMASK_TRANSLUCENCY_COLOR_RGB, SysDefine.SYS_UIMASK_TRANSLUCENCY_COLOR_RGB, SysDefine.SYS_UIMASK_TRANSLUCENCY_COLOR_RGB, SysDefine.SYS_UIMASK_TRANSLUCENCY_COLOR_A);
+                _GoPopLayerMask.GetComponent<Image>().color = newColor2;
+                break;
+            case UIFormsLucencyType.Impenetrable:
+                _GoPopLayerMask.SetActive(true);
+                Color newColor3 = new Color(SysDefine.SYS_UIMASK_IMPENETRABLE_COLOR_RGB, SysDefine.SYS_UIMASK_IMPENETRABLE_COLOR_RGB, SysDefine.SYS_UIMASK_IMPENETRABLE_COLOR_RGB, SysDefine.SYS_UIMASK_IMPENETRABLE_COLOR_A);
+                _GoPopLayerMask.GetComponent<Image>().color = newColor3;
+                break;
+            case UIFormsLucencyType.OpaqueBlack:
+                _GoPopLayerMask.SetActive(true);
+                Color newColor4 = new Color(SysDefine.SYS_UIMASK_OPAQUE_BLACK_COLOR_RGB, SysDefine.SYS_UIMASK_OPAQUE_BLACK_COLOR_RGB, SysDefine.SYS_UIMASK_OPAQUE_BLACK_COLOR_RGB, SysDefine.SYS_UIMASK_OPAQUE_BLACK_COLOR_A);
+                _GoPopLayerMask.GetComponent<Image>().color = newColor4;
+                break;
+            case UIFormsLucencyType.Penetrate:
+                _GoPopLayerMask.SetActive(false);
+            
+                break;
+            default:
+                _GoPopLayerMask.SetActive(true);   
+                break;
+        }
+        //遮罩窗体下移
+        _GoPopLayerMask.GetComponent<Canvas>().sortingOrder = goDisplayPlane.GetComponent<Canvas>().sortingOrder - 1;
+        _GoPopLayerMask.transform.localPosition = new Vector3(_GoPopLayerMask.transform.localPosition.x, _GoPopLayerMask.transform.localPosition.y, goDisplayPlane.transform.localPosition.z + 100);
+        //显示窗体下移
+        goDisplayPlane.transform.SetAsLastSibling();
+
+        //增加当前UI摄像机的“层深”
+        if (_UICamear != null)
+        {
+            _UICamear.depth = _UICamear.depth + SysDefine.SYS_UICAMERA_DEPTH_INCREMENT;
+        }
+    }
+
+    /// <summary>
+    /// 取消遮罩窗体
+    /// </summary>
+    public void CancelMaskWindow()
+    {
+        //顶层窗体上移
+        // _GoTopPlane.transform.SetAsFirstSibling();
+        //禁用遮罩窗体
+        if (_GoPopLayerMask.activeInHierarchy)
+        {
+            _GoPopLayerMask.SetActive(false);
+        }
+        //回复UI摄像机的原来的“层深”
+        _UICamear.depth = _OriginalUICameraDepth;
+    }
+
+    public void ShowFixedMask(GameObject goDisplayPlane, UIFormsLucencyType UILucencyType = UIFormsLucencyType.Impenetrable)
+    {
+        // _GoFixedLayerMask.gameObject.SetActive(true);
+
+        //启用遮罩窗体与透明度5
+        switch (UILucencyType)
+        {
+            case UIFormsLucencyType.Lucency:
+                _GoFixedLayerMask.SetActive(true);
+                Color newColor1 = new Color(SysDefine.SYS_UIMASK_LUCENCY_COLOR_RGB, SysDefine.SYS_UIMASK_LUCENCY_COLOR_RGB, SysDefine.SYS_UIMASK_LUCENCY_COLOR_RGB, SysDefine.SYS_UIMASK_LUCENCY_COLOR_A);
+                _GoFixedLayerMask.GetComponent<Image>().color = newColor1;
+                break;
+            case UIFormsLucencyType.Translucence:
+                _GoFixedLayerMask.SetActive(true);
+                Color newColor2 = new Color(SysDefine.SYS_UIMASK_TRANSLUCENCY_COLOR_RGB, SysDefine.SYS_UIMASK_TRANSLUCENCY_COLOR_RGB, SysDefine.SYS_UIMASK_TRANSLUCENCY_COLOR_RGB, SysDefine.SYS_UIMASK_TRANSLUCENCY_COLOR_A);
+                _GoFixedLayerMask.GetComponent<Image>().color = newColor2;
+                break;
+            case UIFormsLucencyType.Impenetrable:
+                _GoFixedLayerMask.SetActive(true);
+                Color newColor3 = new Color(SysDefine.SYS_UIMASK_IMPENETRABLE_COLOR_RGB, SysDefine.SYS_UIMASK_IMPENETRABLE_COLOR_RGB, SysDefine.SYS_UIMASK_IMPENETRABLE_COLOR_RGB, SysDefine.SYS_UIMASK_IMPENETRABLE_COLOR_A);
+                _GoFixedLayerMask.GetComponent<Image>().color = newColor3;
+                break;
+            case UIFormsLucencyType.OpaqueBlack:
+                _GoFixedLayerMask.SetActive(true);
+                Color newColor4 = new Color(SysDefine.SYS_UIMASK_OPAQUE_BLACK_COLOR_RGB, SysDefine.SYS_UIMASK_OPAQUE_BLACK_COLOR_RGB, SysDefine.SYS_UIMASK_OPAQUE_BLACK_COLOR_RGB, SysDefine.SYS_UIMASK_OPAQUE_BLACK_COLOR_A);
+                _GoFixedLayerMask.GetComponent<Image>().color = newColor4;
+                break;
+            case UIFormsLucencyType.Penetrate:
+                if (_GoFixedLayerMask.activeInHierarchy)
+                {
+                    _GoFixedLayerMask.SetActive(false);
+                }
+                break;
+            default:
+                break;
+        }
+
+        //遮罩窗体下移
+        _GoFixedLayerMask.transform.SetAsLastSibling();
+        //显示窗体下移
+        goDisplayPlane.transform.SetAsLastSibling();
+    }
+
+    public void HideFixedMask()
+    {
+        _GoFixedLayerMask.gameObject.SetActive(false);
+    }
+}//Class_end
