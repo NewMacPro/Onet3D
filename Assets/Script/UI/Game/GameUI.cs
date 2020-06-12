@@ -541,7 +541,12 @@ public class GameUI : UIBase
             items = listCol[i];
             for (int j = 0; j < items.Count; j++)
             {
-                items[j].pos.x = j;
+                Item it = items[j];
+                it.pos.x = j;
+                if (!it.hasItem)
+                {
+                    it.transform.localPosition = GetItemPos(it.pos.x,it.pos.y);
+                }
             }
         }
     }
@@ -581,7 +586,12 @@ public class GameUI : UIBase
             items = itemList[i];
             for (int j = 0; j < items.Count; j++)
             {
-                items[j].pos.y = j;
+                Item it = items[j];
+                it.pos.y = j;
+                if (!it.hasItem)
+                {
+                    it.transform.localPosition = GetItemPos(it.pos.x, it.pos.y);
+                }
             }
         }
     }
