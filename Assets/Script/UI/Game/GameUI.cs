@@ -36,6 +36,7 @@ public class GameUI : UIBase
     private Text changeImageText;
     private Text hintText;
     private TextTimer textTimer;
+    private bool haveBomb;
     private bool IsTiming;
 
     private int resetPrice = 120;
@@ -68,6 +69,7 @@ public class GameUI : UIBase
 
     void Attach()
     {
+        MessageCenter.AddMsgListener(MyMessageType.GAME_UI , OnMessage);
         scoreText = root.FindAChild<Text>("TopArea/Star/Text");
         levelText = root.FindAChild<Text>("TopArea/Level/Text");
         goldText = root.FindAChild<Text>("TopArea/Gold/Text");
@@ -86,6 +88,14 @@ public class GameUI : UIBase
         ViewUtils.SetText(root, "ImageBtn/Text", changeImagePrice.ToString());
         ViewUtils.SetText(root, "HintBtn/Text", hintPrice.ToString());
 
+    }
+
+    void OnMessage(KeyValuesUpdate kv)
+    {
+        if (kv.Key == MyMessage.TIME_OUT)
+        {
+            GameOver();
+        }
     }
 
     void Refresh()
@@ -113,6 +123,7 @@ public class GameUI : UIBase
         LevelSize sizeConfig = Config.Instance.GetLevelSizeConfigById(config.size);
         row = sizeConfig.row;
         col = sizeConfig.col;
+        haveBomb = config.haveBomb;
         moveType = config.moveType == 5 ? 0 : config.moveType;
     }
     void RestartGame()
@@ -162,6 +173,7 @@ public class GameUI : UIBase
 
     private void GameOver()
     {
+        StartTiming(false);
         RebornUI.Create(BackToGame);
     }
 
@@ -219,11 +231,15 @@ public class GameUI : UIBase
         bool newGame = false;
         int totalRow = row + 2;
         int totalCol = col + 2;
-        //Debug.Log(SaveModel.player.itemList.Count);
         if (SaveModel.player.itemTypeList == null || SaveModel.player.itemTypeList.Count != totalRow * totalCol)
         {
             newGame = true;
             RandomType();
+        }
+        Vector2 bombPos = new Vector2(-1 , -1);
+        if (haveBomb)
+        {
+            bombPos = new Vector2(Random.Range(1, col), Random.Range(1, row));
         }
         int index = 0;
         itemList = new List<List<Item>>();
@@ -244,8 +260,8 @@ public class GameUI : UIBase
                     type = (int)typeList[index];
                     index++;
                 }
-                
-                itemScript = CreateItem(i, j, type);
+                bool isBomb = j == bombPos.x && i == bombPos.y;
+                itemScript = CreateItem(i, j, type, isBomb);
                 tmp.Add(itemScript);
             }
             itemList.Add(tmp);
@@ -253,11 +269,12 @@ public class GameUI : UIBase
         SaveModel.ResetItemList(itemList);
     }
 
-    private Item CreateItem(int i, int j, int type)
+    private Item CreateItem(int i, int j, int type, bool isBomb)
     {
         GameObject item = ViewUtils.CreatePrefabAndSetParent(itemContent.transform, "GameItem");
         item.transform.localPosition = GetItemPos(i, j);
         Item itemScript = item.AddComponent<Item>();
+        itemScript.IsBomb(isBomb);
         itemScript.SetItemSize(itemSize);
         itemScript.SetItemType(type);
         itemScript.gameUI = this;
@@ -272,20 +289,20 @@ public class GameUI : UIBase
         float yPos = startY - i * itemSize;
         if (i == 0)
         {
-            yPos = yPos - itemSize / 2;
+            yPos = yPos - itemSize / 4;
         }
         if (i == row + 1)
         {
-            yPos = yPos + itemSize / 2;
+            yPos = yPos + itemSize / 4;
         }
 
         if (j == 0)
         {
-            xPos = xPos + itemSize / 2;
+            xPos = xPos + itemSize / 4;
         }
         if (j == col + 1)
         {
-            xPos = xPos - itemSize / 2;
+            xPos = xPos - itemSize / 4;
         }
 
         return new Vector3(xPos, yPos, 0);
@@ -710,5 +727,9 @@ public class GameUI : UIBase
         {
             MoveHor(false);
         }
+    }
+
+    void OnDestroyRoot(){
+        MessageCenter.RemoveMsgListener(MyMessageType.GAME_UI , OnMessage);
     }
 }
