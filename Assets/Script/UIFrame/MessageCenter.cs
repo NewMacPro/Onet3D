@@ -47,7 +47,6 @@ public class MessageCenter
     /// <param name="handler">消息委托</param>
     public static void RemoveMsgListener(int messageType, DelMessageDelivery handler)
     {
-
         if (dicMessages.ContainsKey(messageType))
         {
             dicMessages[messageType] -= handler;

@@ -729,7 +729,8 @@ public class GameUI : UIBase
         }
     }
 
-    void OnDestroyRoot(){
+    public override void OnDestroyRoot()
+    {
         MessageCenter.RemoveMsgListener(MyMessageType.GAME_UI , OnMessage);
     }
 }
