@@ -1,4 +1,5 @@
-﻿using LitJson;
+﻿using DG.Tweening;
+using LitJson;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,7 @@ using UnityEngine.UI;
 
 public class GameUI : UIBase
 {
+    const float ITEM_MOVE_TIME = 0.2f;
     /**背景*/
     private GameObject itemContent;
     /**行号*/
@@ -308,7 +310,7 @@ public class GameUI : UIBase
         item2.fly();
         //Destroy (item1.gameObject);
         //Destroy (item2.gameObject);
-        MmoveHor();
+        MoveVet(item1.pos, item2.pos);
         clickList.Clear();
         pathList.Clear();
 
@@ -499,7 +501,7 @@ public class GameUI : UIBase
         UIManager.GetInstance().ShowLobbyView();
     }
 
-    public void MmoveVet(bool toMin = false)
+    public void MoveVet(Point point1, Point point2, bool toMin = false)
     {
         List<List<Item>> listCol = new List<List<Item>>();
         foreach (List<Item> items in itemList)
@@ -521,6 +523,10 @@ public class GameUI : UIBase
         }
         for (int i = 0; i < listCol.Count; i++)
         {
+            if (i != point1.y && i!=point2.y)
+            {
+                continue;
+            }
             List<Item> items = listCol[i];
             List<int> noneList = new List<int>();
             for (int j = 0; j < items.Count; j++)
@@ -541,7 +547,8 @@ public class GameUI : UIBase
                     items[it.pos.x] = itemList[noneList[0]][i];
                     itemList[noneList[0]][i] = it;
                     items[noneList[0]] = it;
-                    it.transform.localPosition = GetItemPos(noneList[0], i);
+                    it.transform.DOLocalMove(GetItemPos(noneList[0], i), ITEM_MOVE_TIME).SetDelay(Const.STAR_STAY_TIME);
+                    //it.transform.localPosition = GetItemPos(noneList[0], i);
                     noneList.Add(it.pos.x);
                     //itemList[it.pos.x][i].pos.x = it.pos.x;
                     //it.pos.x = noneList[0];
@@ -563,10 +570,14 @@ public class GameUI : UIBase
         }
     }
 
-    public void MmoveHor(bool toMin = true)
+    public void MoveHor(Point point1, Point point2, bool toMin = true)
     {
         for (int i = 0; i < itemList.Count; i++)
         {
+            if (i != point1.x && i != point2.x)
+            {
+                continue;
+            }
             List<Item> items = itemList[i];
             List<int> noneList = new List<int>();
             for (int j = 0; j < items.Count; j++)
@@ -585,7 +596,8 @@ public class GameUI : UIBase
                     }
                     itemList[i][it.pos.y] = itemList[i][noneList[0]];
                     itemList[i][noneList[0]] = it;
-                    it.transform.localPosition = GetItemPos(i, noneList[0]);
+                    it.transform.DOLocalMove(GetItemPos(i, noneList[0]), ITEM_MOVE_TIME).SetDelay(Const.STAR_STAY_TIME);
+                    //it.transform.localPosition = GetItemPos(i, noneList[0]);
                     noneList.Add(it.pos.y);
                     //itemList[i][it.pos.y].pos.y = it.pos.y;
                     //it.pos.y = noneList[0];

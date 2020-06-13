@@ -9,7 +9,6 @@ public class Star : MonoBehaviour {
     private GameObject lineR;
     private Vector3 flyPos = Vector3.zero;
     private bool flyFlag = false;
-    private float time = 0.5f;
     private float timer = 0;
 
     void Awake()
@@ -74,7 +73,7 @@ public class Star : MonoBehaviour {
         if (flyFlag)
         {
             timer += Time.deltaTime;
-            if (timer >= time)
+            if (timer >= Const.STAR_STAY_TIME)
             {
                 flyFlag = false;
                 fly();
