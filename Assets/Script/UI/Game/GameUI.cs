@@ -714,4 +714,8 @@ public class GameUI : UIBase
             MoveHor(false);
         }
     }
+
+    void OnDestroyRoot(){
+        MessageCenter.RemoveMsgListener(MyMessageType.GAME_UI , OnMessage);
+    }
 }

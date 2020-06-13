@@ -25,12 +25,12 @@ public class Item : MonoBehaviour {
 	void Awake()
 	{
         uiBtn = this.GetComponent<Button>();
-        image = transform.Find("Image").GetComponent<Image>();
+        image = transform.Find("Bg/Image").GetComponent<Image>();
         bg = transform.Find("Bg").GetComponent<Image>();
         //posTween = this.GetComponent<TweenPosition>();
         //scaTween = this.GetComponent<TweenScale>();
         rect = this.GetComponent<RectTransform>();
-        checkMark = transform.Find("CheckMark").gameObject;
+        checkMark = transform.Find("Bg/CheckMark").gameObject;
         ViewUtils.AddButtonClick(gameObject.transform, "", OnClickItem);
         //posTween.enabled = false;
         //scaTween.enabled = false;
@@ -84,7 +84,7 @@ public class Item : MonoBehaviour {
 
     public void IsBomb(bool isBomb) 
     {
-        ViewUtils.SetActive(gameObject.transform, "Bomb", isBomb);
+        ViewUtils.SetActive(gameObject.transform, "Bg/Bomb", isBomb);
         if (isBomb)
         {
             Text text = gameObject.transform.FindAChild<Text>("BombText");
@@ -120,6 +120,7 @@ public class Item : MonoBehaviour {
     }
 
     public void SendGameOverMessage() {
+        ViewUtils.SetActive(gameObject.transform, "Bg/Bomb", false);
         MessageCenter.SendMessage(MyMessageType.GAME_UI, MyMessage.TIME_OUT, null);
         textTimer.stopTiming();
     }
