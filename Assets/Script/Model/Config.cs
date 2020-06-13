@@ -59,4 +59,40 @@ public class Config: Singleton<Config>
         Debug.LogWarning("can not find config:" + configName);
         return new JsonData();
     }
+
+    public LevelConfig[] GetLevelConfig()
+    {
+        JsonData data = GetConfig("LevelConfig")["level"];
+        return JsonMapper.ToObject<LevelConfig[]>(data.ToJson());
+    }
+
+    public LevelConfig GetLevelConfigByLevel(int level)
+    {
+        LevelConfig[] config = GetLevelConfig();
+        if (config.Length == 0)
+        {
+            Debug.LogWarning("can not find level config");
+            return new LevelConfig();
+        }
+        int index = level - 1;
+        index = index % config.Length;
+        return config[index];
+    }
+
+    public Dictionary<string, LevelSize> GetLevelSizeConfig()
+    {
+        JsonData data = GetConfig("LevelConfig")["size"];
+        return JsonMapper.ToObject<Dictionary<string, LevelSize>>(data.ToJson());
+    }
+
+    public LevelSize GetLevelSizeConfigById(string sizeId)
+    {
+        Dictionary<string, LevelSize> dic = GetLevelSizeConfig();
+        if (dic.ContainsKey(sizeId))
+        {
+            return dic[sizeId];
+        }
+        Debug.LogWarning("can not find current size:" + sizeId);
+        return new LevelSize();
+    }
 }

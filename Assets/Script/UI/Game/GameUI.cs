@@ -42,7 +42,7 @@ public class GameUI : UIBase
     private int changeImagePrice = 30;
     private int hintPrice = 60;
     private int nowLevel;
-    private JsonData config;
+    private LevelConfig config;
 
     private int _score;
 
@@ -52,7 +52,8 @@ public class GameUI : UIBase
         ui.Init();
     }
 
-    void Init() {
+    void Init()
+    {
         Redisplay();
     }
 
@@ -63,7 +64,8 @@ public class GameUI : UIBase
         Refresh();
     }
 
-    void Attach() {
+    void Attach()
+    {
         scoreText = root.FindAChild<Text>("TopArea/Star/Text");
         levelText = root.FindAChild<Text>("TopArea/Level/Text");
         goldText = root.FindAChild<Text>("TopArea/Gold/Text");
@@ -89,8 +91,9 @@ public class GameUI : UIBase
         InitGame();
     }
 
-    void InitGame() {
-        InitConfig();        
+    void InitGame()
+    {
+        InitConfig();
         ClearScore();
         InitLevel();
         RefreshGold();
@@ -102,21 +105,23 @@ public class GameUI : UIBase
         CheckHaveCanLink();
     }
 
-    void InitConfig(){
+    void InitConfig()
+    {
         nowLevel = SaveModel.player.level;
-        config = Config.Instance.GetConfig("LevelConfig")["level"][nowLevel-1];
-        JsonData sizeConfig = Config.Instance.GetConfig("LevelConfig")["size"][config.GetString("size")];
-        row = sizeConfig.GetInt("row");
-        col = sizeConfig.GetInt("col");
+        config = Config.Instance.GetLevelConfigByLevel(nowLevel);
+        LevelSize sizeConfig = Config.Instance.GetLevelSizeConfigById(config.size);
+        row = sizeConfig.row;
+        col = sizeConfig.col;
     }
     void RestartGame()
     {
         Refresh();
     }
 
-    private void ClearScore() {
+    private void ClearScore()
+    {
         _score = 0;
-        scoreText.text = _score.ToString(); 
+        scoreText.text = _score.ToString();
     }
 
     private void InitStartPos()
@@ -127,8 +132,9 @@ public class GameUI : UIBase
         startY = itemContent.transform.position.y + (bgSize.y / 2) + itemSize / 2;
     }
 
-    private void InitLevel() {
-        string levelSize = config.GetString("size");
+    private void InitLevel()
+    {
+        string levelSize = config.size;
         itemContent = root.Find("ItemContent" + levelSize).gameObject;
         for (int i = 1; i <= 4; i++)
         {
@@ -139,22 +145,26 @@ public class GameUI : UIBase
         ViewUtils.SetText(root, "TopArea/Level/Text", nowLevel.ToString());
     }
 
-    private void RefreshGold() {
+    private void RefreshGold()
+    {
         ViewUtils.SetText(root, "TopArea/Gold/Text", SaveModel.player.gold.ToString());
     }
 
-    private void InitTime() {
-        int time = config.GetInt("time");
+    private void InitTime()
+    {
+        int time = config.time;
         textTimer.setTimeBySeconds(time);
         textTimer.setCallback(GameOver);
         IsTiming = false;
     }
 
-    private void GameOver() {
+    private void GameOver()
+    {
         RebornUI.Create(BackToGame);
     }
 
-    private void StartTiming(bool isTiming) {
+    private void StartTiming(bool isTiming)
+    {
         if (isTiming == IsTiming)
         {
             return;
@@ -164,7 +174,8 @@ public class GameUI : UIBase
         {
             textTimer.startTiming();
         }
-        else {
+        else
+        {
             textTimer.stopTiming();
         }
     }
@@ -274,7 +285,7 @@ public class GameUI : UIBase
             AllItemCancleClick();
             if (item1.itemType == item2.itemType)
             {
-                List<Point> pathList = GameModel.CheckLink(item1.pos, item2.pos , itemList);
+                List<Point> pathList = GameModel.CheckLink(item1.pos, item2.pos, itemList);
                 bool isClear = pathList.Count != 0;
                 if (isClear)
                 {
@@ -366,7 +377,7 @@ public class GameUI : UIBase
                         {
                             continue;
                         }
-                        if (GameModel.CheckLink(itemList[i][j].pos, itemList[k][l].pos , itemList).Count != 0)
+                        if (GameModel.CheckLink(itemList[i][j].pos, itemList[k][l].pos, itemList).Count != 0)
                         {
                             List<Item> tempList = new List<Item>();
                             tempList.Add(item1);
@@ -387,22 +398,25 @@ public class GameUI : UIBase
     public void AddScore(int score)
     {
         _score += score;
-        scoreText.text = _score.ToString() ;
+        scoreText.text = _score.ToString();
     }
 
-    private void GameFinish() {
+    private void GameFinish()
+    {
         StartTiming(false);
-        int useTime = config.GetInt("time") - (int)textTimer.getTime()/10000;
+        int useTime = config.time - (int)textTimer.getTime() / 10000;
         WinUI.Create(_score, useTime);
         SaveModel.LevelUp();
     }
 
-    void OnClickPause() {
+    void OnClickPause()
+    {
         StartTiming(false);
         PauseUI.Create(BackToGame);
     }
 
-    void ResetCard() {
+    void ResetCard()
+    {
         typeList = new List<int>();
         for (int i = 0; i < itemList.Count; i++)
         {
@@ -440,7 +454,7 @@ public class GameUI : UIBase
         }
         SaveModel.UseGold(resetPrice);
         ResetCard();
-        
+
     }
 
     void OnClickImage()
@@ -470,11 +484,12 @@ public class GameUI : UIBase
 
     public void CreatLine(Point a, Point b)
     {
-        GameModel.CheckLink(a, b , itemList);
+        GameModel.CheckLink(a, b, itemList);
         //TODO
     }
 
-    void BackToGame(string param) {
+    void BackToGame(string param)
+    {
         if (param == GameModel.BACK_GAME_CLOSE)
         {
             BackToMainUI();
@@ -490,7 +505,8 @@ public class GameUI : UIBase
         else if (param == GameModel.BACK_GAME_FAIL)
         {
             LoseUI.Create();
-        }else if (param == GameModel.BACK_GAME_ADDTIME)
+        }
+        else if (param == GameModel.BACK_GAME_ADDTIME)
         {
             textTimer.startTimingBySeconds(120);
         }
@@ -523,7 +539,7 @@ public class GameUI : UIBase
         }
         for (int i = 0; i < listCol.Count; i++)
         {
-            if (i != point1.y && i!=point2.y)
+            if (i != point1.y && i != point2.y)
             {
                 continue;
             }
@@ -564,7 +580,7 @@ public class GameUI : UIBase
                 it.pos.x = j;
                 if (!it.hasItem)
                 {
-                    it.transform.localPosition = GetItemPos(it.pos.x,it.pos.y);
+                    it.transform.localPosition = GetItemPos(it.pos.x, it.pos.y);
                 }
             }
         }
