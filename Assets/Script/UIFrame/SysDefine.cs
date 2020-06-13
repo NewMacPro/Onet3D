@@ -86,7 +86,7 @@ public static class SysDefine
     public const float SYS_UIMASK_LUCENCY_COLOR_A = 0F / 255F;
     //半透明度
     public const float SYS_UIMASK_TRANSLUCENCY_COLOR_RGB = 0F / 255F;
-    public const float SYS_UIMASK_TRANSLUCENCY_COLOR_A = 190F / 255F;
+    public const float SYS_UIMASK_TRANSLUCENCY_COLOR_A = 180F / 255F;
     //低透明度
     public const float SYS_UIMASK_IMPENETRABLE_COLOR_RGB = 0F;
     public const float SYS_UIMASK_IMPENETRABLE_COLOR_A = 200F / 255F;
@@ -205,7 +205,7 @@ public class UIType
     //UI窗体显示类型
     public UIFormsShowMode UIForms_ShowMode = UIFormsShowMode.Normal;
     //UI窗体透明度类型
-    public UIFormsLucencyType UIForms_LucencyType = UIFormsLucencyType.Lucency;
+    public UIFormsLucencyType UIForms_LucencyType = UIFormsLucencyType.Translucence;
     //是否隐藏普通界面
     public bool IsHideNormalView = false;
 
