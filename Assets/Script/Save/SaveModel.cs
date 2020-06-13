@@ -52,6 +52,28 @@ public class SaveModel
         return false;
     }
 
+    public static bool SoundSwith
+    {
+        get { return SaveModel.player.soundSwitch;}
+
+        set { SaveModel.player.soundSwitch = value; }
+    }
+
+    public static bool MusicSwith
+    {
+         get { return SaveModel.player.musicSwitch;}
+
+        set { SaveModel.player.musicSwitch = value; }
+    }
+
+    public static bool NotifySwitch
+    {
+         get { return SaveModel.player.notifySwitch;}
+
+        set { SaveModel.player.notifySwitch = value; }
+    }
+    
+
     public static void LevelUp() {
         SaveModel.player.level += 1;
         ForceStorageSave();
