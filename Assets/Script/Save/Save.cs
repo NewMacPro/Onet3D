@@ -13,5 +13,6 @@ public class Save
     public bool soundSwitch = true;
     public bool musicSwitch = true;
     public bool notifySwitch = true;
+    public List<int> itemTypeList = new List<int>();
 
 }

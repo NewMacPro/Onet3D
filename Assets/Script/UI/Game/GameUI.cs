@@ -102,7 +102,6 @@ public class GameUI : UIBase
         InitStartPos();
         InitTime();
 
-        RandomType();
         CreateItems();
         CheckHaveCanLink();
     }
@@ -217,27 +216,41 @@ public class GameUI : UIBase
     /**创建item*/
     private void CreateItems()
     {
+        bool newGame = false;
+        int totalRow = row + 2;
+        int totalCol = col + 2;
+        //Debug.Log(SaveModel.player.itemList.Count);
+        if (SaveModel.player.itemTypeList == null || SaveModel.player.itemTypeList.Count != totalRow * totalCol)
+        {
+            newGame = true;
+            RandomType();
+        }
         int index = 0;
         itemList = new List<List<Item>>();
-        for (int i = 0; i <= row + 1; i++)
+        for (int i = 0; i < totalRow; i++)
         {
             List<Item> tmp = new List<Item>();
 
-            for (int j = 0; j < col + 2; j++)
+            for (int j = 0; j < totalCol; j++)
             {
                 Item itemScript;
                 int type = -1;
-                //第一行和最后一行
-                if (i != 0 && i != row + 1 && j != 0 && j != col + 1)
+                if (!newGame)
+                {
+                    type = SaveModel.player.itemTypeList[i * totalCol + j];
+                }
+                else if (i != 0 && i != row + 1 && j != 0 && j != col + 1)//第一行和最后一行
                 {
                     type = (int)typeList[index];
                     index++;
                 }
+                
                 itemScript = CreateItem(i, j, type);
                 tmp.Add(itemScript);
             }
             itemList.Add(tmp);
         }
+        SaveModel.ResetItemList(itemList);
     }
 
     private Item CreateItem(int i, int j, int type)
@@ -342,11 +355,14 @@ public class GameUI : UIBase
         clickList.Clear();
         pathList.Clear();
 
+
         if (GameModel.IsFinish(itemList))
         {
+            SaveModel.ResetItemList(null);
             GameFinish();
             return;
         }
+        SaveModel.ResetItemList(itemList);
         CheckHaveCanLink();
     }
 

@@ -94,6 +94,7 @@ public class SaveModel
     public static void DeSerialize() {
         string user = LocalSave.LoadUser();
         //user = "";
+        Debug.Log(user);
         if (string.IsNullOrEmpty(user)) {
             SaveModel.player = GetPlayer();
             ForceStorageSave();
@@ -117,5 +118,24 @@ public class SaveModel
         //sw.Write(saveJsonStr);
         //sw.Close();
         LocalSave.SaveUser(JsonMapper.ToJson(SaveModel.player));
+    }
+
+    public static void ResetItemList(List<List<Item>> itemList)
+    {
+        player.itemTypeList.Clear();
+        if (itemList != null)
+        {
+            for (int i = 0; i < itemList.Count; i++)
+            {
+                List<Item> items = itemList[i];
+                for (int j = 0; j < items.Count; j++)
+                {
+                    Item item = items[j];
+                    player.itemTypeList.Add(item.hasItem?item.itemType:-1);
+                }
+            }
+        }
+        
+        ForceStorageSave();
     }
 }
