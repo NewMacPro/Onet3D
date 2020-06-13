@@ -77,6 +77,7 @@ public static class SysDefine
     public const string SYS_CANVAS_FRONT_NODE_NAME = "Front";
     public const string SYS_CANVAS_MIDDLE_NODE_NAME = "Middle";
     public const string SYS_CANVAS_NOVICE_NODE_NAME = "Novice";
+    public const string SYS_CANVAS_BLOCK_NODE_NAME = "BlockInput";
     public const string SYS_CANVAS_UISCRIPTS_NODE_NAME = "_UIScripts";
     public const string SYS_CANVAS_POPLAYERMASK_NODE_NAME = "PopLayerMask";
     public const string SYS_CANVAS_FIXEDLAYERMASK_NODE_NAME = "FixedLayerMask";

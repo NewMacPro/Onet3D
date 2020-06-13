@@ -49,6 +49,8 @@ public class UIManager : MonoBehaviour
     private Transform _CanTransformNovice = null;
     //数据等待中节点
     private Transform _CanTransformWaiting = null;
+    //吃事件节点
+    private Transform _CanTransformBlock = null;
 
 
     public Transform fadeOutBlackImage;
@@ -80,6 +82,7 @@ public class UIManager : MonoBehaviour
 
     //界面间z轴距离
     public float viewZGap = -200;
+    private int blockCount = 0;
     /// <summary>
     /// 得到本类实例
     /// </summary>
@@ -109,11 +112,13 @@ public class UIManager : MonoBehaviour
         _CanTransformFront = UnityHelper.FindTheChild(_CanvasTransform.gameObject, SysDefine.SYS_CANVAS_FRONT_NODE_NAME);
         _CanTransformMiddle = UnityHelper.FindTheChild(_CanvasTransform.gameObject, SysDefine.SYS_CANVAS_MIDDLE_NODE_NAME);
         _CanTransformNovice = UnityHelper.FindTheChild(_CanvasTransform.gameObject, SysDefine.SYS_CANVAS_NOVICE_NODE_NAME);
+        _CanTransformBlock = UnityHelper.FindTheChild(_CanvasTransform.gameObject, SysDefine.SYS_CANVAS_BLOCK_NODE_NAME);
         // _Bg = UnityHelper.FindTheChild(_CanvasTransform.gameObject, "UIBgEffect");
         //初始化“UI窗体预设”路径数据
         InitUIFormsPathsData();
         SetBaseNodeOrderDic();
         InitWaitingPanel();
+        SetBlockActive();
     }
 
     void InitWaitingPanel() {
@@ -1153,6 +1158,23 @@ public class UIManager : MonoBehaviour
     {
         if (hallBg != null)
             hallBg.SetActive(value);
+    }
+
+    public void ShowBlock()
+    {
+        blockCount++;
+        SetBlockActive();
+    }
+
+    public void HideBlock()
+    {
+        blockCount--;
+        SetBlockActive();
+    }
+
+    public void SetBlockActive()
+    {
+        _CanTransformBlock.gameObject.SetActive(blockCount > 0);
     }
 
     public void Destroy()
