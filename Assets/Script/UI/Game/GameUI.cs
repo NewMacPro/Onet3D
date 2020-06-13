@@ -44,6 +44,8 @@ public class GameUI : UIBase
     private int hintPrice = 60;
     private int nowLevel;
     private LevelConfig config;
+    private int moveType = 0;
+    private List<LineItem> tipItemList = new List<LineItem>();
 
     private int _score;
 
@@ -123,6 +125,7 @@ public class GameUI : UIBase
         row = sizeConfig.row;
         col = sizeConfig.col;
         haveBomb = config.haveBomb;
+        moveType = config.moveType == 5 ? 0 : config.moveType;
     }
     void RestartGame()
     {
@@ -296,10 +299,22 @@ public class GameUI : UIBase
 
     public void ClickItem(Item item)
     {
+        if (tipItemList.Count > 0)
+        {
+            foreach (LineItem li in tipItemList)
+            {
+                li.DestroyThis();
+            }
+            tipItemList.Clear();
+        }
         if (clickList.Count == 1)
         {
-            clickList.Add(item);
             Item item1 = clickList[0];
+            if (item1 == item)
+            {
+                return;
+            }
+            clickList.Add(item);
             Item item2 = clickList[1];
             AllItemCancleClick();
             if (item1.itemType == item2.itemType)
@@ -308,17 +323,19 @@ public class GameUI : UIBase
                 bool isClear = pathList.Count != 0;
                 if (isClear)
                 {
-                    HideTwoItem(pathList);
                     StartTiming(true);
+                    HideTwoItem(pathList);
                 }
                 else
                 {
                     clickList.Clear();
+                    item.OnClickItem();
                 }
             }
             else
             {
                 clickList.Clear();
+                item.OnClickItem();
             }
         }
         else
@@ -340,7 +357,7 @@ public class GameUI : UIBase
         item2.fly();
         //Destroy (item1.gameObject);
         //Destroy (item2.gameObject);
-        MoveVet(item1.pos, item2.pos);
+        DoMoveAni();
         clickList.Clear();
         pathList.Clear();
 
@@ -361,6 +378,20 @@ public class GameUI : UIBase
             starItem.transform.localPosition = item.transform.localPosition;
             Star star = starItem.AddComponent<Star>();
             star.initLine(i, pathList, Mathf.CeilToInt(itemSize + 1), scoreText.transform.position);
+        }
+    }
+
+    private void CreateTipLine(List<Point> pathList)
+    {
+        tipItemList.Clear();
+        for (int i = 0; i < pathList.Count; i++)
+        {
+            Item item = itemList[pathList[i].x][pathList[i].y];
+            GameObject tipItem = ViewUtils.CreatePrefabAndSetParent(itemContent.transform, "TipItem");
+            tipItem.transform.localPosition = item.transform.localPosition;
+            LineItem line = tipItem.AddComponent<LineItem>();
+            line.initLine(i, pathList, Mathf.CeilToInt(itemSize + 1));
+            tipItemList.Add(line);
         }
     }
 
@@ -503,8 +534,9 @@ public class GameUI : UIBase
 
     public void CreatLine(Point a, Point b)
     {
-        GameModel.CheckLink(a, b, itemList);
+        List<Point> pathList = GameModel.CheckLink(a, b, itemList);
         //TODO
+        CreateTipLine(pathList);
     }
 
     void BackToGame(string param)
@@ -536,7 +568,7 @@ public class GameUI : UIBase
         UIManager.GetInstance().ShowLobbyView();
     }
 
-    public void MoveVet(Point point1, Point point2, bool toMin = false)
+    public void MoveVet(bool toMin = false)
     {
         List<List<Item>> listCol = new List<List<Item>>();
         foreach (List<Item> items in itemList)
@@ -558,10 +590,10 @@ public class GameUI : UIBase
         }
         for (int i = 0; i < listCol.Count; i++)
         {
-            if (i != point1.y && i != point2.y)
-            {
-                continue;
-            }
+            //if (i != point1.y && i != point2.y)
+            //{
+            //    continue;
+            //}
             List<Item> items = listCol[i];
             List<int> noneList = new List<int>();
             for (int j = 0; j < items.Count; j++)
@@ -605,14 +637,14 @@ public class GameUI : UIBase
         }
     }
 
-    public void MoveHor(Point point1, Point point2, bool toMin = true)
+    public void MoveHor(bool toMin = true)
     {
         for (int i = 0; i < itemList.Count; i++)
         {
-            if (i != point1.x && i != point2.x)
-            {
-                continue;
-            }
+            //if (i != point1.x && i != point2.x)
+            //{
+            //    continue;
+            //}
             List<Item> items = itemList[i];
             List<int> noneList = new List<int>();
             for (int j = 0; j < items.Count; j++)
@@ -652,6 +684,34 @@ public class GameUI : UIBase
                     it.transform.localPosition = GetItemPos(it.pos.x, it.pos.y);
                 }
             }
+        }
+    }
+
+    public void DoMoveAni()
+    {
+        if (config.moveType == 0)
+        {
+            return;
+        }
+        if (config.moveType == 5)
+        {
+            moveType = moveType % 4 + 1;
+        }
+        if (moveType == 1)
+        {
+            MoveVet();
+        }
+        if (moveType == 2)
+        {
+            MoveHor();
+        }
+        if (moveType == 3)
+        {
+            MoveVet(true);
+        }
+        if (moveType == 4)
+        {
+            MoveHor(false);
         }
     }
 }

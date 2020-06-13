@@ -12,21 +12,21 @@
       "size": "2", 
       "time": 120,
 	  "haveBomb" : false,
-	  "moveType" : 0
+	  "moveType" : 1
     }, 
     {
       "level": 3, 
       "size": "3", 
       "time": 120,
 	  "haveBomb" : false,
-	  "moveType" : 0
+	  "moveType" : 2
     }, 
     {
       "level": 4, 
       "size": "4", 
       "time": 120,
 	  "haveBomb" : false,
-	  "moveType" : 0
+	  "moveType" : 5
     }
   ],
  "size":{
