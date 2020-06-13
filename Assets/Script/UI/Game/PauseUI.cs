@@ -44,7 +44,8 @@ public class PauseUI : UIBase
 
     void Refresh()
     {
-
+        RefreshMusicSwitch();
+        RefreshSoundSwitch();
     }
 
     void OnClickContinueBtn() 
@@ -65,12 +66,25 @@ public class PauseUI : UIBase
         callBack(GameModel.BACK_GAME_RESTART);
     }
 
-    void OnClickSoundBtn() { 
-        
+    void OnClickSoundBtn()
+    {
+        SaveModel.SoundSwith = !SaveModel.SoundSwith;
+        RefreshSoundSwitch();
     }
-
     void OnClickMusicBtn()
     {
+        SaveModel.MusicSwith = !SaveModel.MusicSwith;
+        RefreshMusicSwitch();
+    }
 
+    void RefreshMusicSwitch()
+    {
+        ViewUtils.SetActive(root, "Music/SwitchBtn/OnImage", SaveModel.MusicSwith);
+        ViewUtils.SetActive(root, "Music/SwitchBtn/OffImage", !SaveModel.MusicSwith);
+    }
+    void RefreshSoundSwitch()
+    {
+        ViewUtils.SetActive(root, "Sound/SwitchBtn/OnImage", SaveModel.SoundSwith);
+        ViewUtils.SetActive(root, "Sound/SwitchBtn/OffImage", !SaveModel.SoundSwith);
     }
 }
