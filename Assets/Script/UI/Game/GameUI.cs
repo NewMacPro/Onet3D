@@ -43,6 +43,7 @@ public class GameUI : UIBase
     private int hintPrice = 60;
     private int nowLevel;
     private LevelConfig config;
+    private int moveType = 0;
 
     private int _score;
 
@@ -112,6 +113,7 @@ public class GameUI : UIBase
         LevelSize sizeConfig = Config.Instance.GetLevelSizeConfigById(config.size);
         row = sizeConfig.row;
         col = sizeConfig.col;
+        moveType = config.moveType == 5 ? 0 : config.moveType;
     }
     void RestartGame()
     {
@@ -289,8 +291,8 @@ public class GameUI : UIBase
                 bool isClear = pathList.Count != 0;
                 if (isClear)
                 {
-                    HideTwoItem(pathList);
                     StartTiming(true);
+                    HideTwoItem(pathList);
                 }
                 else
                 {
@@ -321,7 +323,7 @@ public class GameUI : UIBase
         item2.fly();
         //Destroy (item1.gameObject);
         //Destroy (item2.gameObject);
-        MoveVet(item1.pos, item2.pos);
+        DoMoveAni();
         clickList.Clear();
         pathList.Clear();
 
@@ -517,7 +519,7 @@ public class GameUI : UIBase
         UIManager.GetInstance().ShowLobbyView();
     }
 
-    public void MoveVet(Point point1, Point point2, bool toMin = false)
+    public void MoveVet(bool toMin = false)
     {
         List<List<Item>> listCol = new List<List<Item>>();
         foreach (List<Item> items in itemList)
@@ -539,10 +541,10 @@ public class GameUI : UIBase
         }
         for (int i = 0; i < listCol.Count; i++)
         {
-            if (i != point1.y && i != point2.y)
-            {
-                continue;
-            }
+            //if (i != point1.y && i != point2.y)
+            //{
+            //    continue;
+            //}
             List<Item> items = listCol[i];
             List<int> noneList = new List<int>();
             for (int j = 0; j < items.Count; j++)
@@ -586,14 +588,14 @@ public class GameUI : UIBase
         }
     }
 
-    public void MoveHor(Point point1, Point point2, bool toMin = true)
+    public void MoveHor(bool toMin = true)
     {
         for (int i = 0; i < itemList.Count; i++)
         {
-            if (i != point1.x && i != point2.x)
-            {
-                continue;
-            }
+            //if (i != point1.x && i != point2.x)
+            //{
+            //    continue;
+            //}
             List<Item> items = itemList[i];
             List<int> noneList = new List<int>();
             for (int j = 0; j < items.Count; j++)
@@ -633,6 +635,34 @@ public class GameUI : UIBase
                     it.transform.localPosition = GetItemPos(it.pos.x, it.pos.y);
                 }
             }
+        }
+    }
+
+    public void DoMoveAni()
+    {
+        if (config.moveType == 0)
+        {
+            return;
+        }
+        if (config.moveType == 5)
+        {
+            moveType = moveType % 4 + 1;
+        }
+        if (moveType == 1)
+        {
+            MoveVet();
+        }
+        if (moveType == 2)
+        {
+            MoveHor();
+        }
+        if (moveType == 3)
+        {
+            MoveVet(true);
+        }
+        if (moveType == 4)
+        {
+            MoveHor(false);
         }
     }
 }
