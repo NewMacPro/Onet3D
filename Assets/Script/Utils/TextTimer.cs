@@ -26,6 +26,10 @@ public class TextTimer: MonoBehaviour
 
     int _timeScale = 1;
 
+    bool showText = true;
+
+    string format = "{0}:{1}";
+
     void Awake() {
         _label = transform.GetComponent<Text>();
     }
@@ -100,6 +104,13 @@ public class TextTimer: MonoBehaviour
         return _delta / 1000;
     }
 
+    public void setTextShow(bool isShow) {
+        showText = isShow;
+    }
+
+    public void setFormat(string myFormat) {
+        format = myFormat;
+    }
     void Update() {
         int dt = (int)(Time.deltaTime * Math.Pow(10,7));
         dt *= _timeScale;
@@ -130,9 +141,15 @@ public class TextTimer: MonoBehaviour
     void _updateLabel()
     {
         TimeSpan ts = new TimeSpan(_delta +1000);
-        if (_label!=null)
+        if (_label != null)
         {
-            _label.text = string.Format("{0}:{1}",ts.Minutes.ToString("00"),ts.Seconds.ToString("00"));            
+            if (showText)
+            {
+                _label.text = string.Format(format,ts.Minutes.ToString("00"),ts.Seconds.ToString("00"));
+            }
+            else {
+                _label.text = "";
+            }
         }
     }
 
