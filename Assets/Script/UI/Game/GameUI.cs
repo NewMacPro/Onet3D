@@ -44,6 +44,7 @@ public class GameUI : UIBase
     private int nowLevel;
     private LevelConfig config;
     private int moveType = 0;
+    private List<LineItem> tipItemList = new List<LineItem>();
 
     private int _score;
 
@@ -279,10 +280,22 @@ public class GameUI : UIBase
 
     public void ClickItem(Item item)
     {
+        if (tipItemList.Count > 0)
+        {
+            foreach (LineItem li in tipItemList)
+            {
+                li.DestroyThis();
+            }
+            tipItemList.Clear();
+        }
         if (clickList.Count == 1)
         {
-            clickList.Add(item);
             Item item1 = clickList[0];
+            if (item1 == item)
+            {
+                return;
+            }
+            clickList.Add(item);
             Item item2 = clickList[1];
             AllItemCancleClick();
             if (item1.itemType == item2.itemType)
@@ -297,11 +310,13 @@ public class GameUI : UIBase
                 else
                 {
                     clickList.Clear();
+                    item.OnClickItem();
                 }
             }
             else
             {
                 clickList.Clear();
+                item.OnClickItem();
             }
         }
         else
@@ -344,6 +359,20 @@ public class GameUI : UIBase
             starItem.transform.localPosition = item.transform.localPosition;
             Star star = starItem.AddComponent<Star>();
             star.initLine(i, pathList, Mathf.CeilToInt(itemSize + 1), scoreText.transform.position);
+        }
+    }
+
+    private void CreateTipLine(List<Point> pathList)
+    {
+        tipItemList.Clear();
+        for (int i = 0; i < pathList.Count; i++)
+        {
+            Item item = itemList[pathList[i].x][pathList[i].y];
+            GameObject tipItem = ViewUtils.CreatePrefabAndSetParent(itemContent.transform, "TipItem");
+            tipItem.transform.localPosition = item.transform.localPosition;
+            LineItem line = tipItem.AddComponent<LineItem>();
+            line.initLine(i, pathList, Mathf.CeilToInt(itemSize + 1));
+            tipItemList.Add(line);
         }
     }
 
@@ -486,8 +515,9 @@ public class GameUI : UIBase
 
     public void CreatLine(Point a, Point b)
     {
-        GameModel.CheckLink(a, b, itemList);
+        List<Point> pathList = GameModel.CheckLink(a, b, itemList);
         //TODO
+        CreateTipLine(pathList);
     }
 
     void BackToGame(string param)
