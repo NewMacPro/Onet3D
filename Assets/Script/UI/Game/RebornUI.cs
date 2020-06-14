@@ -34,10 +34,10 @@ public class RebornUI : UIBase
 
     void Attach()
     {
-        ViewUtils.SetText(root, "TitleText", "复活");
-        ViewUtils.SetText(root, "HintText", "时间到了！");
-        ViewUtils.SetText(root, "CloseBtn/Text", "不了，谢谢！");
-        ViewUtils.SetText(root, "AdRebornBtn/Text", "免费复活");
+        ViewUtils.SetText(root, "TitleText", "RESURRECTION");
+        ViewUtils.SetText(root, "HintText", "Time is up!");
+        ViewUtils.SetText(root, "CloseBtn/Text", "No thank you");
+        ViewUtils.SetText(root, "AdRebornBtn/Text", "Free");
         ViewUtils.AddButtonClick(root, "AdRebornBtn", OnClickAdBtn);
         ViewUtils.AddButtonClick(root, "CloseBtn", OnClickCloseBtn);
         heart = root.FindAChild<Image>("Heart/Image");
