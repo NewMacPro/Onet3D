@@ -13,7 +13,7 @@ public class Item : MonoBehaviour {
     public GameUI gameUI;
     private GameObject checkMark;
     private TextTimer textTimer;
-    private int totalSce = 12;//40
+    private int totalSce = 40;
     private int showSce = 10;
     private Image progress;
 
@@ -37,13 +37,14 @@ public class Item : MonoBehaviour {
 	}
 
 	/**设置item类型*/
-	public void SetItemType(int type)
+	public void SetItemType(int typeIndex , int type)
 	{
 		itemType = type;
+        string name = GalleryModel.galleryImageName[typeIndex];
         if (itemType == -1) {
             gameObject.SetActive(false);
         }
-        image.sprite = iResourceManager.LoadSprite("img_jiaju_00" + type);
+        image.sprite = iResourceManager.LoadSprite("img_" + name +"_" + type);
 	}
 
     public void SetImageBg(int bgIndex) {

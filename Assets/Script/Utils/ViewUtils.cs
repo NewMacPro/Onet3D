@@ -490,7 +490,7 @@ public class ViewUtils
     }
 
     public static void SetActive(Transform parent, string path, bool isActive) {
-        parent.Find(path).gameObject.SetActive(isActive);
+        parent.FindAChild(path).gameObject.SetActive(isActive);
     }
 
     public static void CreateAndSetRedSpot(Transform parent)
@@ -905,7 +905,7 @@ public class ViewUtils
         return uuid;
     }
 
-    public static void AddButtonClick(Transform parent, string path, UnityAction action)
+    public static void AddButtonClick(Transform parent, string path, UnityAction action )
     {
         Button com = parent.FindAChild<Button>(path);
         if (com != null && com.onClick != null)
