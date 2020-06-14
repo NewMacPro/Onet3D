@@ -13,6 +13,14 @@ public class Save
     public bool soundSwitch = true;
     public bool musicSwitch = true;
     public bool notifySwitch = true;
-    public List<int> itemTypeList = new List<int>();
+    public CurrentLevel currentLevel = new CurrentLevel();
+}
 
+public class CurrentLevel
+{
+    public int level = 0;
+    public List<int> itemTypeList = new List<int>();
+    public int bobmPos = -1;
+    public int bobmTime = 0;
+    public int star = 0;
 }

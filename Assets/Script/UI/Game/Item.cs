@@ -16,8 +16,11 @@ public class Item : MonoBehaviour {
     private int totalSce = 40;
     private int showSce = 10;
     private Image progress;
+    public float nowSec = 0;
+    public float lastSec = 0;
 
-	public bool hasItem;
+    public bool hasItem;
+    public bool isBomb;
 
     //private TweenPosition posTween;
     //private TweenScale scaTween;
@@ -87,19 +90,23 @@ public class Item : MonoBehaviour {
 		Destroy (this.gameObject);
 	}
 
-    public void IsBomb(bool isBomb) 
+    public void IsBomb(bool isBomb, int bombTime = 12) 
     {
         ViewUtils.SetActive(gameObject.transform, "Bg/Bomb", isBomb);
+        this.isBomb = isBomb;
         if (isBomb)
         {
+            nowSec = bombTime > 0 ? bombTime : 12;
+            lastSec = nowSec;
             Text text = gameObject.transform.FindAChild<Text>("BombText");
             textTimer = text.AddComponent<TextTimer>();
             textTimer.setTextShow(false);
             textTimer.setFormat("{1}");
-            textTimer.startTimingBySeconds(totalSce);
+            textTimer.startTimingBySeconds(Mathf.RoundToInt(nowSec));
             textTimer.setUpdataCallback(BombCallback);
             textTimer.setCallback(SendGameOverMessage);
             progress = gameObject.transform.FindAChild<Image>("Progress");
+            Debug.Log(bombTime);
         }
     }
 
@@ -115,8 +122,13 @@ public class Item : MonoBehaviour {
         if (textTimer == null) {
             return;
         }
-
-        float nowSec = textTimer.getTime() / 10000;
+        nowSec = textTimer.getTime() / 10000;
+        if (Mathf.Abs(lastSec - nowSec)>1)
+        {
+            lastSec = nowSec;
+            SaveModel.player.currentLevel.bobmTime = Mathf.FloorToInt(nowSec);
+            SaveModel.ForceStorageSave();
+        }
         progress.fillAmount = nowSec / totalSce;
         if (nowSec < showSce)
         {
