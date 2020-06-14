@@ -47,6 +47,7 @@ public class GameUI : UIBase
     private int moveType = 0;
     private List<LineItem> tipItemList = new List<LineItem>();
     private int bgIndex = 1;
+    private int typeIndex = 1;
     private CurrentLevel currentLevel;
 
     private int _score;
@@ -67,7 +68,7 @@ public class GameUI : UIBase
     {
         CreateAndAttachRoot("GameUI");
         Attach();
-        Refresh();
+        InitGame();
     }
 
     void Attach()
@@ -121,7 +122,6 @@ public class GameUI : UIBase
     {
         InitGame();
     }
-
     void InitGame()
     {
         InitScore();
@@ -156,7 +156,7 @@ public class GameUI : UIBase
     }
     void RestartGame()
     {
-        Refresh();
+        GameUI.Create();
     }
 
     private void ClearScore()
@@ -245,9 +245,11 @@ public class GameUI : UIBase
     private void RandomType()
     {
         typeList = new List<int>();
+        typeIndex = GalleryModel.GetRandomGallery();
         for (int i = 0; i < row * col * 0.5; i++)
         {
-            int type = Random.Range(1, 6);
+            int maxCount = GalleryModel.galleryTypeCount[typeIndex];
+            int type = Random.Range(1, maxCount + 1);
             typeList.Add(type);
             typeList.Add(type);
         }
@@ -325,7 +327,7 @@ public class GameUI : UIBase
         Item itemScript = item.AddComponent<Item>();
         itemScript.IsBomb(isBomb, currentLevel.bobmTime);
         itemScript.SetItemSize(itemSize);
-        itemScript.SetItemType(type);
+        itemScript.SetItemType(typeIndex ,type);
         itemScript.gameUI = this;
         itemScript.pos = new Point(i, j);
         itemScript.hasItem = type != -1;
@@ -554,7 +556,7 @@ public class GameUI : UIBase
             {
                 if (itemList[i][j].hasItem)
                 {
-                    itemList[i][j].SetItemType(typeList[0]);
+                    itemList[i][j].SetItemType(typeIndex ,typeList[0]);
                     typeList.RemoveAt(0);
                 }
             }
@@ -582,6 +584,19 @@ public class GameUI : UIBase
             return;
         }
         SaveModel.UseGold(changeImagePrice);
+        int nowType = typeIndex;
+        while (nowType == typeIndex)
+        {
+            typeIndex = GalleryModel.GetRandomGallery();
+        }
+        for (int i = 0; i < itemList.Count; i++)
+        {
+            for (int j = 0; j < itemList[i].Count; j++)
+            {
+                itemList[i][j].SetItemType(typeIndex, typeList[0]);
+                typeList.RemoveAt(0);
+            }
+        }
     }
 
     void OnClickHint()
@@ -800,7 +815,7 @@ public class GameUI : UIBase
 
     private void OnClickLevelDebug() {
         SaveModel.LevelUp();
-        Refresh();
+        GameUI.Create();
     }
 #endif
 }
