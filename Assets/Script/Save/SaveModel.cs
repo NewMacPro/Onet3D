@@ -122,7 +122,7 @@ public class SaveModel
 
     public static void ResetItemList(List<List<Item>> itemList)
     {
-        player.itemTypeList.Clear();
+        player.currentLevel.itemTypeList.Clear();
         if (itemList != null)
         {
             for (int i = 0; i < itemList.Count; i++)
@@ -131,11 +131,23 @@ public class SaveModel
                 for (int j = 0; j < items.Count; j++)
                 {
                     Item item = items[j];
-                    player.itemTypeList.Add(item.hasItem?item.itemType:-1);
+                    player.currentLevel.itemTypeList.Add(item.hasItem ? item.itemType : -1);
+                    if (item.isBomb)
+                    {
+                        player.currentLevel.bobmPos = player.currentLevel.itemTypeList.Count - 1;
+                        Debug.Log(player.currentLevel.bobmPos);
+                        player.currentLevel.bobmTime = Mathf.FloorToInt(item.nowSec);
+                    }
                 }
             }
         }
-        
+
+        ForceStorageSave();
+    }
+    public static void ClearCurrentLevel()
+    {
+        player.currentLevel = new CurrentLevel();
+
         ForceStorageSave();
     }
 }

@@ -47,6 +47,7 @@ public class GameUI : UIBase
     private int moveType = 0;
     private List<LineItem> tipItemList = new List<LineItem>();
     private int bgIndex = 1;
+    private CurrentLevel currentLevel;
 
     private int _score;
 
@@ -58,6 +59,7 @@ public class GameUI : UIBase
 
     void Init()
     {
+        initCurrentLevel();
         Redisplay();
     }
 
@@ -90,7 +92,6 @@ public class GameUI : UIBase
         ViewUtils.SetText(root, "ResetBtn/Text", resetPrice.ToString());
         ViewUtils.SetText(root, "ImageBtn/Text", changeImagePrice.ToString());
         ViewUtils.SetText(root, "HintBtn/Text", hintPrice.ToString());
-
     }
 
     void OnMessage(KeyValuesUpdate kv)
@@ -101,6 +102,21 @@ public class GameUI : UIBase
         }
     }
 
+    void initCurrentLevel()
+    {
+        currentLevel = SaveModel.player.currentLevel;
+
+        Debug.Log(currentLevel.level);
+        if (currentLevel.level != SaveModel.player.level)
+        {
+            currentLevel = new CurrentLevel();
+            SaveModel.player.currentLevel = currentLevel;
+            currentLevel.level = SaveModel.player.level;
+            Debug.Log(currentLevel.level);
+            Debug.Log(SaveModel.player.currentLevel.level);
+        }
+    }
+
     void Refresh()
     {
         InitGame();
@@ -108,8 +124,8 @@ public class GameUI : UIBase
 
     void InitGame()
     {
+        InitScore();
         InitConfig();
-        ClearScore();
         InitLevel();
         RefreshGold();
         InitStartPos();
@@ -117,6 +133,15 @@ public class GameUI : UIBase
 
         CreateItems();
         CheckHaveCanLink();
+    }
+
+    void InitScore()
+    {
+        ClearScore();
+        if (currentLevel.level == SaveModel.player.level)
+        {
+            AddScore(currentLevel.star);
+        }
     }
 
     void InitConfig()
@@ -137,7 +162,9 @@ public class GameUI : UIBase
     private void ClearScore()
     {
         _score = 0;
+        currentLevel.star = _score;
         scoreText.text = _score.ToString();
+        SaveModel.ForceStorageSave();
     }
 
     private void InitStartPos()
@@ -178,6 +205,7 @@ public class GameUI : UIBase
 
     private void GameOver()
     {
+        SaveModel.ClearCurrentLevel();
         StartTiming(false);
         RebornUI.Create(BackToGame);
     }
@@ -236,7 +264,7 @@ public class GameUI : UIBase
         bool newGame = false;
         int totalRow = row + 2;
         int totalCol = col + 2;
-        if (SaveModel.player.itemTypeList == null || SaveModel.player.itemTypeList.Count != totalRow * totalCol)
+        if (currentLevel.itemTypeList.Count != totalRow * totalCol)
         {
             newGame = true;
             RandomType();
@@ -244,7 +272,9 @@ public class GameUI : UIBase
         Vector2 bombPos = new Vector2(-1 , -1);
         if (haveBomb)
         {
-            bombPos = new Vector2(Random.Range(1, col), Random.Range(1, row));
+            bombPos = newGame ? 
+                new Vector2(Random.Range(1, col), Random.Range(1, row)) :
+                new Vector2(currentLevel.bobmPos % totalCol, Mathf.Floor(currentLevel.bobmPos / totalCol));
         }
         int index = 0;
         itemList = new List<List<Item>>();
@@ -258,7 +288,7 @@ public class GameUI : UIBase
                 int type = -1;
                 if (!newGame)
                 {
-                    type = SaveModel.player.itemTypeList[i * totalCol + j];
+                    type = currentLevel.itemTypeList[i * totalCol + j];
                 }
                 else if (i != 0 && i != row + 1 && j != 0 && j != col + 1)//第一行和最后一行
                 {
@@ -279,7 +309,7 @@ public class GameUI : UIBase
         GameObject item = ViewUtils.CreatePrefabAndSetParent(itemContent.transform, "GameItem");
         item.transform.localPosition = GetItemPos(i, j);
         Item itemScript = item.AddComponent<Item>();
-        itemScript.IsBomb(isBomb);
+        itemScript.IsBomb(isBomb, currentLevel.bobmTime);
         itemScript.SetItemSize(itemSize);
         itemScript.SetItemType(type);
         itemScript.gameUI = this;
@@ -468,11 +498,14 @@ public class GameUI : UIBase
     public void AddScore(int score)
     {
         _score += score;
+        currentLevel.star = _score;
         scoreText.text = _score.ToString();
+        SaveModel.ForceStorageSave();
     }
 
     private void GameFinish()
     {
+        SaveModel.ClearCurrentLevel();
         StartTiming(false);
         int useTime = config.time - (int)textTimer.getTime() / 10000;
         WinUI.Create(_score, useTime);
@@ -524,6 +557,7 @@ public class GameUI : UIBase
         }
         SaveModel.UseGold(resetPrice);
         ResetCard();
+        SaveModel.ResetItemList(itemList);
 
     }
 
