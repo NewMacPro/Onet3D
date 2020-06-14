@@ -198,8 +198,22 @@ public class GameUI : UIBase
     private void InitTime()
     {
         int time = config.time;
+        if (currentLevel.level == SaveModel.player.level
+            && currentLevel.levelRemainTime > 0)
+        {
+            time = currentLevel.levelRemainTime;
+        }
         textTimer.setTimeBySeconds(time);
         textTimer.setCallback(GameOver);
+        textTimer.setUpdataCallback(() =>
+        {
+            int t = Mathf.FloorToInt(textTimer.getTime() / 10000);
+            if (Mathf.Abs(t - currentLevel.levelRemainTime)>1)
+	        {
+                currentLevel.levelRemainTime = t;
+                SaveModel.ForceStorageSave();
+	        };
+        });
         IsTiming = false;
     }
 
@@ -614,6 +628,11 @@ public class GameUI : UIBase
         else if (param == GameModel.BACK_GAME_ADDTIME)
         {
             textTimer.startTimingBySeconds(120);
+            currentLevel = SaveModel.player.currentLevel;
+            currentLevel.levelRemainTime = Mathf.FloorToInt(textTimer.getTime() / 10000);
+            currentLevel.level = SaveModel.player.level;
+            currentLevel.star = _score;
+            SaveModel.ResetItemList(itemList);
         }
     }
 

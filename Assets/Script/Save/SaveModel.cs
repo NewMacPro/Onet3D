@@ -135,7 +135,6 @@ public class SaveModel
                     if (item.isBomb)
                     {
                         player.currentLevel.bobmPos = player.currentLevel.itemTypeList.Count - 1;
-                        Debug.Log(player.currentLevel.bobmPos);
                         player.currentLevel.bobmTime = Mathf.FloorToInt(item.nowSec);
                     }
                 }

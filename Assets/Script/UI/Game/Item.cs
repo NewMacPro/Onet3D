@@ -136,6 +136,7 @@ public class Item : MonoBehaviour {
     }
 
     public void SendGameOverMessage() {
+        isBomb = false;
         ViewUtils.SetActive(gameObject.transform, "Bg/Bomb", false);
         MessageCenter.SendMessage(MyMessageType.GAME_UI, MyMessage.TIME_OUT, null);
         textTimer.stopTiming();
