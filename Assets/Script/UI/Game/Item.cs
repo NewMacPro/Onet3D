@@ -46,6 +46,10 @@ public class Item : MonoBehaviour {
         image.sprite = iResourceManager.LoadSprite("img_jiaju_00" + type);
 	}
 
+    public void SetImageBg(int bgIndex) {
+        ViewUtils.SetImage(gameObject.transform, "Bg", "ItemBg" + bgIndex);
+    }
+
     public void SetItemSize(float s) {
         rect.sizeDelta = new Vector2(Mathf.FloorToInt(s), Mathf.FloorToInt(s));
     }

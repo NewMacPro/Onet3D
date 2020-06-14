@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9d5c8f8bd520f594798f51881517604a
+guid: ae89c1c247a28f644bf9ace96bff5e11
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -46,7 +46,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteBorder: {x: 24, y: 38, z: 24, w: 38}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -96,7 +96,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: MainUI
+  spritePackingTag: GalleryUI
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
   userData: 

@@ -32,6 +32,7 @@ using UnityEngine.UI;
      void Attach()
      {
          ViewUtils.AddButtonClick(root, "CloseBtn", Close);
+         ViewUtils.SetText(root, "HintText", "Unlock more pictures");
          goldText = root.FindAChild<Text>("Gold/Text");
          InitItems();
      }

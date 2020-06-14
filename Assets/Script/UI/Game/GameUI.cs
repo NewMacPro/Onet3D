@@ -46,6 +46,7 @@ public class GameUI : UIBase
     private LevelConfig config;
     private int moveType = 0;
     private List<LineItem> tipItemList = new List<LineItem>();
+    private int bgIndex = 1;
 
     private int _score;
 
@@ -83,6 +84,8 @@ public class GameUI : UIBase
         ViewUtils.AddButtonClick(root, "ResetBtn", OnClickReset);
         ViewUtils.AddButtonClick(root, "ImageBtn", OnClickImage);
         ViewUtils.AddButtonClick(root, "HintBtn", OnClickHint);
+        ViewUtils.AddButtonClick(root, "Gold", OnClickGoldDebug);
+        ViewUtils.AddButtonClick(root, "Level", OnClickLevelDebug);
 
         ViewUtils.SetText(root, "ResetBtn/Text", resetPrice.ToString());
         ViewUtils.SetText(root, "ImageBtn/Text", changeImagePrice.ToString());
@@ -156,6 +159,8 @@ public class GameUI : UIBase
         ViewUtils.SetActive(root, "ItemContent" + levelSize, true);
 
         ViewUtils.SetText(root, "TopArea/Level/Text", nowLevel.ToString());
+        bgIndex = Random.Range(1, 4);
+        ViewUtils.SetImage(root, "Bg", "img_bg_00" + bgIndex);
     }
 
     private void RefreshGold()
@@ -280,6 +285,7 @@ public class GameUI : UIBase
         itemScript.gameUI = this;
         itemScript.pos = new Point(i, j);
         itemScript.hasItem = type != -1;
+        itemScript.SetImageBg(bgIndex);
         return itemScript;
     }
 
@@ -733,4 +739,15 @@ public class GameUI : UIBase
     {
         MessageCenter.RemoveMsgListener(MyMessageType.GAME_UI , OnMessage);
     }
+#if UNITY_EDITOR
+    private void OnClickGoldDebug() {
+        SaveModel.AddGold(10000);
+        RefreshGold();
+    }
+
+    private void OnClickLevelDebug() {
+        SaveModel.LevelUp();
+        Refresh();
+    }
+#endif
 }
