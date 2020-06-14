@@ -3,7 +3,10 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEditor;
 
-public class Item : MonoBehaviour {
+public class Item : MonoBehaviour
+{
+    const int TOTAL_TIME = 40;
+    const int TIP_TIME = 10;
 	public int itemType;
     private Image image;
     private Image bg;
@@ -13,8 +16,7 @@ public class Item : MonoBehaviour {
     public GameUI gameUI;
     private GameObject checkMark;
     private TextTimer textTimer;
-    private int totalSce = 40;
-    private int showSce = 10;
+    private int totalSce = TOTAL_TIME;
     private Image progress;
     public float nowSec = 0;
     public float lastSec = 0;
@@ -90,13 +92,13 @@ public class Item : MonoBehaviour {
 		Destroy (this.gameObject);
 	}
 
-    public void IsBomb(bool isBomb, int bombTime = 12) 
+    public void IsBomb(bool isBomb, int bombTime = TOTAL_TIME) 
     {
         ViewUtils.SetActive(gameObject.transform, "Bg/Bomb", isBomb);
         this.isBomb = isBomb;
         if (isBomb)
         {
-            nowSec = bombTime > 0 ? bombTime : 12;
+            nowSec = bombTime > 0 ? bombTime : TOTAL_TIME;
             lastSec = nowSec;
             Text text = gameObject.transform.FindAChild<Text>("BombText");
             textTimer = text.AddComponent<TextTimer>();
@@ -130,7 +132,7 @@ public class Item : MonoBehaviour {
             SaveModel.ForceStorageSave();
         }
         progress.fillAmount = nowSec / totalSce;
-        if (nowSec < showSce)
+        if (nowSec < TIP_TIME)
         {
             textTimer.setTextShow(true);
         }
