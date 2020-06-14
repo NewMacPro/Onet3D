@@ -47,7 +47,7 @@ public class GameUI : UIBase
     private int moveType = 0;
     private List<LineItem> tipItemList = new List<LineItem>();
     private int bgIndex = 1;
-    private int typeIndex = 1;
+    private int galleryType = 1; //图集种类
     private CurrentLevel currentLevel;
 
     private int _score;
@@ -106,8 +106,6 @@ public class GameUI : UIBase
     void initCurrentLevel()
     {
         currentLevel = SaveModel.player.currentLevel;
-
-        Debug.Log(currentLevel.level);
         if (currentLevel.level != SaveModel.player.level)
         {
             currentLevel = new CurrentLevel();
@@ -231,10 +229,10 @@ public class GameUI : UIBase
     private void RandomType()
     {
         typeList = new List<int>();
-        typeIndex = GalleryModel.GetRandomGallery();
+        galleryType = GalleryModel.GetRandomGallery();
         for (int i = 0; i < row * col * 0.5; i++)
         {
-            int maxCount = GalleryModel.galleryTypeCount[typeIndex];
+            int maxCount = GalleryModel.galleryTypeCount[galleryType];
             int type = Random.Range(1, maxCount + 1);
             typeList.Add(type);
             typeList.Add(type);
@@ -313,7 +311,7 @@ public class GameUI : UIBase
         Item itemScript = item.AddComponent<Item>();
         itemScript.IsBomb(isBomb, currentLevel.bobmTime);
         itemScript.SetItemSize(itemSize);
-        itemScript.SetItemType(typeIndex ,type);
+        itemScript.SetItemType(galleryType ,type);
         itemScript.gameUI = this;
         itemScript.pos = new Point(i, j);
         itemScript.hasItem = type != -1;
@@ -542,7 +540,7 @@ public class GameUI : UIBase
             {
                 if (itemList[i][j].hasItem)
                 {
-                    itemList[i][j].SetItemType(typeIndex ,typeList[0]);
+                    itemList[i][j].SetItemType(galleryType ,typeList[0]);
                     typeList.RemoveAt(0);
                 }
             }
@@ -570,17 +568,18 @@ public class GameUI : UIBase
             return;
         }
         SaveModel.UseGold(changeImagePrice);
-        int nowType = typeIndex;
-        while (nowType == typeIndex)
+        
+        int nowType = galleryType;
+        while (nowType == galleryType)
         {
-            typeIndex = GalleryModel.GetRandomGallery();
+            galleryType = GalleryModel.GetRandomGallery();
         }
         for (int i = 0; i < itemList.Count; i++)
         {
             for (int j = 0; j < itemList[i].Count; j++)
             {
-                itemList[i][j].SetItemType(typeIndex, typeList[0]);
-                typeList.RemoveAt(0);
+                //TODO 已经随机完要换的图集种类,这里面要写怎么把原来的index换成现在的index 
+                //问题 ： 原来图集有80张图，某张图的index=80，但是现在的图集只有20张图，怎么转换
             }
         }
     }
@@ -604,7 +603,6 @@ public class GameUI : UIBase
     public void CreatLine(Point a, Point b)
     {
         List<Point> pathList = GameModel.CheckLink(a, b, itemList);
-        //TODO
         CreateTipLine(pathList);
     }
 

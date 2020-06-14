@@ -38,7 +38,7 @@ class GalleryModel
     //随机已有图集
     public static int GetRandomGallery() { 
         // TODO
-        return Random.Range(0 , galleryName.Length);
+        return Random.Range(0 , galleryName.Length-1);
     }
 }
     

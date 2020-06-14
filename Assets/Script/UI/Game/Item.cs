@@ -47,6 +47,7 @@ public class Item : MonoBehaviour {
         if (itemType == -1) {
             gameObject.SetActive(false);
         }
+        Debug.Log("img_" + name + "_" + type);
         image.sprite = iResourceManager.LoadSprite("img_" + name +"_" + type);
 	}
 

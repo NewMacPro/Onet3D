@@ -31,10 +31,12 @@ public class LoseUI : UIBase
         ViewUtils.AddButtonClick(root, "ReStartBtn", OnClickReStartBtn);
         ViewUtils.AddButtonClick(root, "AdBtn", OnClickAdBtn);
 
+        
         ViewUtils.SetText(root, "AdBtn/Text", addGoldValue.ToString());
-        ViewUtils.SetText(root, "TitleText", "你输了！");
-        ViewUtils.SetText(root, "CheckPointText", "关卡" + SaveModel.player.level);
-        ViewUtils.SetText(root, "TimeOutText", "时间到了！");
+        ViewUtils.SetText(root, "ReStartBtn/Text", "RESTART");
+        ViewUtils.SetText(root, "TitleText", "YOU LOSE!");
+        ViewUtils.SetText(root, "CheckPointText", "level" + SaveModel.player.level);
+        ViewUtils.SetText(root, "TimeOutText", "Time is up!");
     }
 
     void Refresh()
