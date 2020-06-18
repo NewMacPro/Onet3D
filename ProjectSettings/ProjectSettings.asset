@@ -625,7 +625,8 @@ PlayerSettings:
     daydream:
       daydreamIconForeground: {fileID: 0}
       daydreamIconBackground: {fileID: 0}
-  cloudServicesEnabled: {}
+  cloudServicesEnabled:
+    UNet: 1
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -638,10 +639,10 @@ PlayerSettings:
     m_VersionCode: 1
     m_VersionName: 
   apiCompatibilityLevel: 6
-  cloudProjectId: b17e5986-f034-4fca-b1a1-8b62d4972a44
+  cloudProjectId: 582da406-4eb3-4698-b957-32b1eaad3f7e
   framebufferDepthMemorylessMode: 0
-  projectName: Project
-  organizationId: yysun
+  projectName: Onet3D
+  organizationId: narcissu
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
