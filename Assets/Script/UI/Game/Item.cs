@@ -2,9 +2,12 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEditor;
+using DG.Tweening;
 
 public class Item : MonoBehaviour
 {
+    const float SCALE_SMALL = 0.8f;
+    const float SCALE_BIG = 1f;
     const int TOTAL_TIME = 40;
     const int TIP_TIME = 10;
 	public int itemType;
@@ -30,16 +33,16 @@ public class Item : MonoBehaviour
 	void Awake()
 	{
         uiBtn = this.GetComponent<Button>();
-        image = transform.Find("Bg/Image").GetComponent<Image>();
-        bg = transform.Find("Bg").GetComponent<Image>();
+        image = transform.FindAChild<Image>("Image");
+        bg = transform.FindAChild<Image>("Bg");
         //posTween = this.GetComponent<TweenPosition>();
         //scaTween = this.GetComponent<TweenScale>();
         rect = this.GetComponent<RectTransform>();
-        checkMark = transform.Find("Bg/CheckMark").gameObject;
+        checkMark = transform.FindAChild("CheckMark").gameObject;
         ViewUtils.AddButtonClick(gameObject.transform, "", OnClickItem);
         //posTween.enabled = false;
         //scaTween.enabled = false;
-	}
+    }
 
 	/**设置item类型*/
 	public void SetItemType(int typeIndex , int type)
@@ -144,5 +147,15 @@ public class Item : MonoBehaviour
         ViewUtils.SetActive(gameObject.transform, "Bg/Bomb", false);
         MessageCenter.SendMessage(MyMessageType.GAME_UI, MyMessage.TIME_OUT, null);
         textTimer.stopTiming();
+    }
+
+    void OnMouseDown()
+    {
+        transform.DOScale(SCALE_SMALL, 0.1f);
+    }
+
+    void OnMouseUp()
+    {
+        transform.DOScale(SCALE_BIG, 0.1f);
     }
 }
