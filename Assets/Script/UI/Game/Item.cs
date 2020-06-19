@@ -3,8 +3,10 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEditor;
 using DG.Tweening;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
-public class Item : MonoBehaviour
+public class Item : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     const float SCALE_SMALL = 0.8f;
     const float SCALE_BIG = 1f;
@@ -40,12 +42,18 @@ public class Item : MonoBehaviour
         rect = this.GetComponent<RectTransform>();
         checkMark = transform.FindAChild("CheckMark").gameObject;
         ViewUtils.AddButtonClick(gameObject.transform, "", OnClickItem);
+
         //posTween.enabled = false;
         //scaTween.enabled = false;
     }
 
-	/**设置item类型*/
-	public void SetItemType(int typeIndex , int type)
+    public void MyClick(BaseEventData data)
+    {
+        Debug.Log("点击");
+    }
+
+    /**设置item类型*/
+    public void SetItemType(int typeIndex , int type)
 	{
 		itemType = type;
         string name = GalleryModel.galleryImageName[typeIndex];
@@ -149,12 +157,11 @@ public class Item : MonoBehaviour
         textTimer.stopTiming();
     }
 
-    void OnMouseDown()
+    public void OnPointerDown(PointerEventData eventData)
     {
         transform.DOScale(SCALE_SMALL, 0.1f);
     }
-
-    void OnMouseUp()
+    public void OnPointerUp(PointerEventData eventData)
     {
         transform.DOScale(SCALE_BIG, 0.1f);
     }
