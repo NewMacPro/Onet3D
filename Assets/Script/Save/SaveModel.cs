@@ -80,6 +80,10 @@ public class SaveModel
     }
 
     static void CheckSave() {
+        if (SaveModel.player.galleryIds.Count == 0)
+        {
+            SaveModel.player.galleryIds.Add(1);
+        }
     }
 
     public static void CreateSave()
@@ -140,7 +144,6 @@ public class SaveModel
                 }
             }
         }
-
         ForceStorageSave();
     }
     public static void ClearCurrentLevel()
@@ -148,5 +151,12 @@ public class SaveModel
         player.currentLevel = new CurrentLevel();
 
         ForceStorageSave();
+    }
+    public static bool IsGalleryUnlock(int galleryId)
+    {
+        int index = player.galleryIds.FindIndex((int id)=>{
+            return id == galleryId;
+        });
+        return index >= 0;
     }
 }

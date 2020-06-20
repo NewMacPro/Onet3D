@@ -100,4 +100,21 @@ public class Config: Singleton<Config>
         JsonData data = GetConfig("Gallery")["gallery"];
         return JsonMapper.ToObject<GalleryData[]>(data.ToJson());
     }
+    public List<GalleryData> GetAlreadyGalleryData()
+    {
+        GalleryData[] datas = GetGalleryData();
+        List<GalleryData> list = new List<GalleryData>();
+        foreach (GalleryData data in datas)
+	    {
+            int index = SaveModel.player.galleryIds.FindIndex((int id) =>
+            {
+                return id == data.id;
+            });
+            if (index >= 0)
+            {
+                list.Add(data);
+            }
+	    }
+        return list;
+    }
 }

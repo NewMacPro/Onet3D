@@ -36,50 +36,56 @@ using UnityEngine.UI;
          goldText = root.FindAChild<Text>("Gold/Text");
          InitItems();
      }
-
+     
      void InitItems(){
          Transform content = root.FindAChild("Content");
          for (int i = 0; i < GalleryModel.galleryData.Length; i++)
          {
              GalleryData gd = GalleryModel.galleryData[i];
-             string imageName = gd.imgName;
-             string name = gd.name;
              GameObject item = ViewUtils.CreatePrefabAndSetParent(content, "GalleryItem");
-
-             ViewUtils.SetText(item.transform, "Title", name);
-             for (int j = 1; j <= 5; j++)
-             {
-                 ViewUtils.SetImage(item.transform, "ItemGroup/Item" + j + "/Bg/Image", "img_" + imageName + "_" + j);
-                 Debug.Log("img_" + imageName + "_" + j);
-             }
-
-             ViewUtils.SetActive(item.transform, "ButtonGroup/UnlockBtn", GalleryModel.HaveThisGallery(name));
-             ViewUtils.SetActive(item.transform, "ButtonGroup/AdBtn", !GalleryModel.HaveThisGallery(name) && i == 4);
-             ViewUtils.SetActive(item.transform, "ButtonGroup/PayBtn", !GalleryModel.HaveThisGallery(name) && i != 4);
-             ViewUtils.SetText(item.transform, "PayBtn/Text", gd.gold.ToString());
-             if (!GalleryModel.HaveThisGallery(name) && i != 4)
-             {
-                 if (SaveModel.player.gold < gd.gold)
-                 {
-                     item.transform.FindAChild<Image>("PayBtn/Text").color = Color.red;
-                 }
-                 else
-                 {
-                     item.transform.FindAChild<Image>("PayBtn/Text").color = Color.white;
-                 }
-             }
-             
-
-             ViewUtils.AddButtonClick(item.transform, "AdBtn", delegate ()
-             {
-                OnClickAdBtn(i);
-             } );
-             ViewUtils.AddButtonClick(item.transform, "PayBtn", delegate()
-             {
-                 OnClickPay(i);
-             });
-             
+             InitSingleItem(item.transform, gd);
          }
+     }
+
+     void InitSingleItem(Transform item, GalleryData gd)
+     {
+        string imageName = gd.imgName;
+        string name = gd.name;
+
+        ViewUtils.SetText(item.transform, "Title", name);
+        for (int j = 1; j <= 5; j++)
+        {
+            ViewUtils.SetImage(item.transform, "ItemGroup/Item" + j + "/Bg/Image", "img_" + imageName + "_" + j);
+            Debug.Log("img_" + imageName + "_" + j);
+        }
+
+        bool payUnlock = gd.unlockType == Const.UNLOCK_TYPE_PAY;
+        ViewUtils.SetActive(item.transform, "ButtonGroup/UnlockBtn", GalleryModel.HaveThisGallery(gd.id));
+        ViewUtils.SetActive(item.transform, "ButtonGroup/AdBtn", !GalleryModel.HaveThisGallery(gd.id) && !payUnlock);
+        ViewUtils.SetActive(item.transform, "ButtonGroup/PayBtn", !GalleryModel.HaveThisGallery(gd.id) && payUnlock);
+        ViewUtils.SetText(item.transform, "PayBtn/Value", gd.gold.ToString());
+        if (!GalleryModel.HaveThisGallery(gd.id) && payUnlock)
+        {
+            if (SaveModel.player.gold < gd.gold)
+            {
+                item.transform.FindAChild<Text>("PayBtn/Value").color = Color.red;
+            }
+            else
+            {
+                item.transform.FindAChild<Text>("PayBtn/Value").color = Color.white;
+            }
+        }
+             
+
+        ViewUtils.AddButtonClick(item.transform, "AdBtn", delegate ()
+        {
+            OnClickAdBtn(item, gd);
+        } );
+        ViewUtils.AddButtonClick(item.transform, "PayBtn", delegate()
+        {
+            OnClickPay(item, gd);
+        });
+             
      }
      
      void Refresh()
@@ -87,20 +93,21 @@ using UnityEngine.UI;
          goldText.text = SaveModel.player.gold.ToString();
      }
 
-     void OnClickAdBtn(int index)
+     void OnClickAdBtn(Transform item, GalleryData gd)
      {
-         GalleryModel.UnlockGallery(GalleryModel.galleryData[index].name);
+         GalleryModel.UnlockGallery(gd.id);
+         InitSingleItem(item, gd);
      }
 
-     void OnClickPay(int index)
+     void OnClickPay(Transform item, GalleryData gd)
      {
-         GalleryData gd = GalleryModel.galleryData[index];
          if (!SaveModel.CheckGold(gd.gold))
          {
              return;
          }
          SaveModel.UseGold(gd.gold);
-         GalleryModel.UnlockGallery(gd.name);
+         GalleryModel.UnlockGallery(gd.id);
+         InitSingleItem(item, gd);
      }
 }
 

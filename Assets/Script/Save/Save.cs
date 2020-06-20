@@ -14,6 +14,7 @@ public class Save
     public bool musicSwitch = true;
     public bool notifySwitch = true;
     public CurrentLevel currentLevel = new CurrentLevel();
+    public List<int> galleryIds = new List<int>();
 }
 
 public class CurrentLevel
@@ -24,5 +25,5 @@ public class CurrentLevel
     public int bobmTime = 0;
     public int star = 0;
     public int levelRemainTime = -1;
-    public int galleryType = -1;
+    public int galleryId = -1;
 }
