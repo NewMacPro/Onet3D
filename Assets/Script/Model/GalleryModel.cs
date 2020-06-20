@@ -5,13 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
+public class GalleryData
+{
+    public string imgName = "";
+    public string name = "";
+    public int gold = 0;
+    public int typeCount = 0;
+}
 
 class GalleryModel
 {
-    public static string[] galleryImageName = new string[] { "yi" , "che" , "mao" , "cai" };
-    public static string[] galleryName = new string[] { "Sofa illustrated book", "Car", "Birthday hat", "Vegetables" };
-    public static int[] galleryGold = new int[] { 0, 0, 0, 0 };
-    public static int[] galleryTypeCount = new int[] { 24, 16, 25, 20 };
+    public static GalleryData[] galleryData = Config.Instance.GetGalleryData();
 
     //是否有这个图集
     public static bool HaveThisGallery(string name) {
@@ -38,7 +42,21 @@ class GalleryModel
     //随机已有图集
     public static int GetRandomGallery() { 
         // TODO
-        return Random.Range(0 , galleryName.Length-1);
+        return Random.Range(0, galleryData.Length - 1);
+    }
+    public static string GetImgByType(int typeIndex, int type, out int itemType)
+    {
+        typeIndex = typeIndex % GalleryModel.galleryData.Length;
+        GalleryData gd = GalleryModel.galleryData[typeIndex];
+        string name = gd.imgName;
+        itemType = type;
+        if (type == -1)
+        {
+            return "";
+        }
+        type = type % gd.typeCount + 1;
+        itemType = type;
+        return "img_" + name + "_" + type;
     }
 }
     

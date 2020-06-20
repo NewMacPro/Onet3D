@@ -39,10 +39,11 @@ using UnityEngine.UI;
 
      void InitItems(){
          Transform content = root.FindAChild("Content");
-         for (int i = 0; i < GalleryModel.galleryImageName.Length; i++)
+         for (int i = 0; i < GalleryModel.galleryData.Length; i++)
          {
-             string imageName = GalleryModel.galleryImageName[i];
-             string name = GalleryModel.galleryName[i];
+             GalleryData gd = GalleryModel.galleryData[i];
+             string imageName = gd.imgName;
+             string name = gd.name;
              GameObject item = ViewUtils.CreatePrefabAndSetParent(content, "GalleryItem");
 
              ViewUtils.SetText(item.transform, "Title", name);
@@ -55,10 +56,10 @@ using UnityEngine.UI;
              ViewUtils.SetActive(item.transform, "ButtonGroup/UnlockBtn", GalleryModel.HaveThisGallery(name));
              ViewUtils.SetActive(item.transform, "ButtonGroup/AdBtn", !GalleryModel.HaveThisGallery(name) && i == 4);
              ViewUtils.SetActive(item.transform, "ButtonGroup/PayBtn", !GalleryModel.HaveThisGallery(name) && i != 4);
-             ViewUtils.SetText(item.transform, "PayBtn/Text", GalleryModel.galleryGold[i].ToString());
+             ViewUtils.SetText(item.transform, "PayBtn/Text", gd.gold.ToString());
              if (!GalleryModel.HaveThisGallery(name) && i != 4)
              {
-                 if (SaveModel.player.gold < GalleryModel.galleryGold[i])
+                 if (SaveModel.player.gold < gd.gold)
                  {
                      item.transform.FindAChild<Image>("PayBtn/Text").color = Color.red;
                  }
@@ -88,17 +89,18 @@ using UnityEngine.UI;
 
      void OnClickAdBtn(int index)
      {
-         GalleryModel.UnlockGallery(GalleryModel.galleryName[index]);
+         GalleryModel.UnlockGallery(GalleryModel.galleryData[index].name);
      }
 
      void OnClickPay(int index)
      {
-         if (!SaveModel.CheckGold(GalleryModel.galleryGold[index]))
+         GalleryData gd = GalleryModel.galleryData[index];
+         if (!SaveModel.CheckGold(gd.gold))
          {
              return;
          }
-         SaveModel.UseGold(GalleryModel.galleryGold[index]);
-         GalleryModel.UnlockGallery(GalleryModel.galleryName[index]);
+         SaveModel.UseGold(gd.gold);
+         GalleryModel.UnlockGallery(gd.name);
      }
 }
 

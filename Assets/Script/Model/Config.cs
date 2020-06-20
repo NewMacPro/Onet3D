@@ -95,4 +95,9 @@ public class Config: Singleton<Config>
         Debug.LogWarning("can not find current size:" + sizeId);
         return new LevelSize();
     }
+    public GalleryData[] GetGalleryData()
+    {
+        JsonData data = GetConfig("Gallery")["gallery"];
+        return JsonMapper.ToObject<GalleryData[]>(data.ToJson());
+    }
 }

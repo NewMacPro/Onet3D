@@ -1,0 +1,28 @@
+{
+"gallery": [
+    {
+      "imgName": "yi", 
+      "name": "Sofa illustrated book", 
+      "gold": 0,
+	  "typeCount" : 24
+    }, 
+    {
+      "imgName": "che", 
+      "name": "Car", 
+      "gold": 0,
+	  "typeCount" : 16
+    }, 
+    {
+      "imgName": "mao", 
+      "name": "Birthday hat", 
+      "gold": 0,
+	  "typeCount" : 25
+    }, 
+    {
+      "imgName": "cai", 
+      "name": "Vegetables", 
+      "gold": 0,
+	  "typeCount" : 20
+    }
+  ]
+}

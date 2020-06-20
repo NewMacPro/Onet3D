@@ -24,4 +24,5 @@ public class CurrentLevel
     public int bobmTime = 0;
     public int star = 0;
     public int levelRemainTime = -1;
+    public int galleryType = -1;
 }

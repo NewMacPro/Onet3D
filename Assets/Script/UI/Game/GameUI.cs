@@ -111,8 +111,6 @@ public class GameUI : UIBase
             currentLevel = new CurrentLevel();
             SaveModel.player.currentLevel = currentLevel;
             currentLevel.level = SaveModel.player.level;
-            Debug.Log(currentLevel.level);
-            Debug.Log(SaveModel.player.currentLevel.level);
         }
     }
 
@@ -160,9 +158,7 @@ public class GameUI : UIBase
     private void ClearScore()
     {
         _score = 0;
-        currentLevel.star = _score;
         scoreText.text = _score.ToString();
-        SaveModel.ForceStorageSave();
     }
 
     private void InitStartPos()
@@ -243,10 +239,10 @@ public class GameUI : UIBase
     private void RandomType()
     {
         typeList = new List<int>();
-        galleryType = GalleryModel.GetRandomGallery();
+        galleryType = currentLevel.galleryType == -1 ? GalleryModel.GetRandomGallery() : currentLevel.galleryType;
         for (int i = 0; i < row * col * 0.5; i++)
         {
-            int maxCount = GalleryModel.galleryTypeCount[galleryType];
+            int maxCount = GalleryModel.galleryData[galleryType].typeCount;
             int type = Random.Range(1, maxCount + 1);
             typeList.Add(type);
             typeList.Add(type);
@@ -513,7 +509,7 @@ public class GameUI : UIBase
     {
         _score += score;
         currentLevel.star = _score;
-        scoreText.text = _score.ToString();
+        scoreText.text = _score.ToString();;
         SaveModel.ForceStorageSave();
     }
 
