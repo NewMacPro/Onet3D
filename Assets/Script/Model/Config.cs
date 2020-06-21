@@ -6,7 +6,7 @@ using System.IO;
 
 public class Config: Singleton<Config>
 {
-    private const String CONST_CONFIG_NODE_COMMON = "common";
+    private const String CONST_CONFIG_NODE_COMMON = "Common";
 
     public JsonData data = new JsonData();
     private JsonData textData;
@@ -49,7 +49,6 @@ public class Config: Singleton<Config>
     {
         get { return data != null ? data[CONST_CONFIG_NODE_COMMON] : null; }
     }
-
     public JsonData GetConfig(string configName)
     {
         if (data.ContainsKey(configName))
@@ -100,13 +99,14 @@ public class Config: Singleton<Config>
         JsonData data = GetConfig("Gallery")["gallery"];
         return JsonMapper.ToObject<GalleryData[]>(data.ToJson());
     }
-    public List<GalleryData> GetAlreadyGalleryData()
+
+    public List<GalleryData> GetGalleryDataByIds(List<int> ids)
     {
         GalleryData[] datas = GetGalleryData();
         List<GalleryData> list = new List<GalleryData>();
         foreach (GalleryData data in datas)
 	    {
-            int index = SaveModel.player.galleryIds.FindIndex((int id) =>
+            int index = ids.FindIndex((int id) =>
             {
                 return id == data.id;
             });

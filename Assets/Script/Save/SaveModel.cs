@@ -79,11 +79,25 @@ public class SaveModel
         ForceStorageSave();
     }
 
-    static void CheckSave() {
-        if (SaveModel.player.galleryIds.Count == 0)
+    static void CheckSave()
+    {
+        int[] defaultGallery = JsonMapper.ToObject<int[]>(Config.Instance.commonNode.GetNode("defaultGallery").ToJson());
+        int minGalleryCount = Config.Instance.commonNode.GetInt("minGalleryCount");
+        foreach (int id in defaultGallery)
         {
-            SaveModel.player.galleryIds.Add(1);
+            if (SaveModel.player.galleryIds.IndexOf(id) < 0)
+            {
+                SaveModel.player.galleryIds.Add(id);
+            }
+            if (SaveModel.player.currentGalleryIds.Count < minGalleryCount && SaveModel.player.currentGalleryIds.IndexOf(id) < 0)
+            {
+                Debug.Log(id);
+                SaveModel.player.currentGalleryIds.Add(id);
+            }
         }
+        GalleryModel.alreadyGalleryData = Config.Instance.GetGalleryDataByIds(SaveModel.player.galleryIds);
+        GalleryModel.currentGalleryData = Config.Instance.GetGalleryDataByIds(SaveModel.player.currentGalleryIds);
+        ForceStorageSave();
     }
 
     public static void CreateSave()
@@ -91,6 +105,7 @@ public class SaveModel
         Save player = new Save();
         player.name = ViewUtils.GenerateUUID();
         SaveModel.player = player;
+        CheckSave();
     }
     /// <summary>
     /// 从本地获取存档数据
