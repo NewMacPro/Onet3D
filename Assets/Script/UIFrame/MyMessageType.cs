@@ -12,5 +12,6 @@ class MyMessageType
 class MyMessage
 {
     public const int TIME_OUT = 10001;
+    public const int REFRESH_RES = 10002;
 }
 

@@ -101,6 +101,10 @@ public class GameUI : UIBase
         {
             GameOver();
         }
+        if (kv.Key == MyMessage.REFRESH_RES)
+        {
+            RefreshGold();
+        }
     }
 
     void initCurrentLevel()
@@ -479,8 +483,12 @@ public class GameUI : UIBase
             {
                 for (int k = i; k < itemList.Count; k++)
                 {
-                    for (int l = j; l < itemList[k].Count; l++)
+                    for (int l = 0; l < itemList[k].Count; l++)
                     {
+                        if (k == i && l <= j)
+                        {
+                            continue;
+                        }
                         Item item1 = itemList[i][j];
                         Item item2 = itemList[k][l];
                         if (!item1.hasItem || !item2.hasItem)
@@ -491,7 +499,7 @@ public class GameUI : UIBase
                         {
                             continue;
                         }
-                        if (GameModel.CheckLink(itemList[i][j].pos, itemList[k][l].pos, itemList).Count != 0)
+                        if (GameModel.CheckLink(item1.pos, item2.pos, itemList).Count != 0)
                         {
                             List<Item> tempList = new List<Item>();
                             tempList.Add(item1);
@@ -522,6 +530,7 @@ public class GameUI : UIBase
         SaveModel.ClearCurrentLevel();
         StartTiming(false);
         int useTime = config.time - (int)textTimer.getTime() / 10000;
+        GameManager.Instance.gameNum++;
         WinUI.Create(_score, useTime);
         SaveModel.LevelUp();
     }

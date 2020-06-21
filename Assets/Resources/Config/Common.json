@@ -1,4 +1,21 @@
 {
 	"defaultGallery" : [1,2,3],
-	"minGalleryCount" : 3
+	"minGalleryCount" : 3,
+	"luckyRewardsGameNum": 3,
+	"rewardsProbability" : 
+	[
+	 {
+		"gold": 30,
+		"ssurp
+		": 80
+	 },
+	 {
+		"gold": 60,
+		"probability": 50
+	 },
+	 {
+		"gold": 120,
+		"probability": 20
+	 }
+	]
 }

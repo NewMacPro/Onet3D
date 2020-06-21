@@ -21,11 +21,6 @@ public class WinUI : UIBase
         this.CurrentUIType.UIForms_ShowMode = UIFormsShowMode.PopUp;
         starValue = star;
         timeValue = time;
-        Redisplay();
-    }
-
-    public override void Redisplay()
-    {
         CreateAndAttachRoot("WinUI");
         Attach();
         Refresh();
@@ -61,6 +56,7 @@ public class WinUI : UIBase
         param["lefttime"] = timeValue.ToString();
         param["getcoins"] = "" + starAddGoldValue + timeAddGoldValue;
 
+        ShowLuckyRewards();
         FBstatistics.LogEvent("gamelevel", param);
         
     }
@@ -90,5 +86,15 @@ public class WinUI : UIBase
 
     void OnClickShareBtn() { 
     
+    }
+
+    void ShowLuckyRewards()
+    {
+        int luckyRewardsGameNum = Config.Instance.commonNode.GetInt("luckyRewardsGameNum");
+        if (GameManager.Instance.gameNum >= luckyRewardsGameNum)
+        {
+            GameManager.Instance.gameNum = 0;
+            SurpriseRewardUI.Create();
+        }
     }
 }
