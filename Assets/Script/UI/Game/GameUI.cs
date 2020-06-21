@@ -216,6 +216,7 @@ public class GameUI : UIBase
         SaveModel.ClearCurrentLevel();
         StartTiming(false);
         RebornUI.Create(BackToGame);
+
     }
 
     private void StartTiming(bool isTiming)

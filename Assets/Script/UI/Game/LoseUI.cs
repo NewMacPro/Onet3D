@@ -37,6 +37,15 @@ public class LoseUI : UIBase
         ViewUtils.SetText(root, "TitleText", "YOU LOSE!");
         ViewUtils.SetText(root, "CheckPointText", "level" + SaveModel.player.level);
         ViewUtils.SetText(root, "TimeOutText", "Time is up!");
+
+        Dictionary<string,object> param = new Dictionary<string,object>();
+        param["name"] = "level" + SaveModel.player.level;
+        param["ispassed"] = "false";
+        param["getstars"] = "";
+        param["lefttime"] = "";
+        param["getcoins"] = "";
+
+        FBstatistics.LogEvent("gamelevel", param);
     }
 
     void Refresh()

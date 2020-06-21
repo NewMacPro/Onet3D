@@ -53,12 +53,16 @@ public class MainUI : UIBase
     {
         GalleryUI.Create();
     }
+    void OnClickNoAd() {
+        FBstatistics.LogEvent("clickremovead");        
+    }
     void OnClickRate()
     {
-
+        FBstatistics.LogEvent("clickrate");
     }
     void OnClickHelp()
     {
+        FBstatistics.LogEvent("clickhelp");
         IntroductionUI.Create();
     }
     void OnClickClear()
