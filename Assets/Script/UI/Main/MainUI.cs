@@ -32,7 +32,7 @@ public class MainUI : UIBase
         ViewUtils.AddButtonClick(root, "ClearBtn", OnClickClear);
         ViewUtils.AddButtonClick(root, "PlayBtn", OnClickPlay);
         ViewUtils.AddButtonClick(root, "GalleryBtn", OnClickGallery);
-        ViewUtils.AddButtonClick(root, "RateBtn", OnClickRate);
+        ViewUtils.AddButtonClick(root, "NoadBtn", OnClickNoAdBtn);
         ViewUtils.AddButtonClick(root, "HelpBtn", OnClickHelp);
         goldText = root.FindAChild<Text>("Gold/Text");
     }
@@ -53,12 +53,9 @@ public class MainUI : UIBase
     {
         GalleryUI.Create();
     }
-    void OnClickNoAd() {
-        FBstatistics.LogEvent("clickremovead");        
-    }
-    void OnClickRate()
+    void OnClickNoAdBtn()
     {
-        FBstatistics.LogEvent("clickrate");
+        FBstatistics.LogEvent("clickremovead");
     }
     void OnClickHelp()
     {

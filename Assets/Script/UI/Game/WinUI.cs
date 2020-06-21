@@ -84,8 +84,8 @@ public class WinUI : UIBase
     
     }
 
-    void OnClickNoAdBtn() { 
-    
+    void OnClickNoAdBtn() {
+        FBstatistics.LogEvent("clickremovead");
     }
 
     void OnClickShareBtn() { 
