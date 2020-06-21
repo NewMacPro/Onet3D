@@ -539,6 +539,7 @@ public class GameUI : UIBase
     {
         StartTiming(false);
         PauseUI.Create(BackToGame);
+        FBstatistics.LogEvent("game tentative");
     }
 
     void ResetCard()
@@ -574,6 +575,10 @@ public class GameUI : UIBase
     }
     void OnClickReset()
     {
+        Dictionary<string,object> param = new Dictionary<string,object>();
+        param["name"] = "Refresh";
+        FBstatistics.LogEvent("Click the tool button", param);
+
         if (!SaveModel.CheckGold(resetPrice))
         {
             return;
@@ -586,6 +591,10 @@ public class GameUI : UIBase
 
     void OnClickImage()
     {
+        Dictionary<string, object> param = new Dictionary<string, object>();
+        param["name"] = "Change picture";
+        FBstatistics.LogEvent("Click the tool button", param);
+
         if (GalleryModel.alreadyGalleryData.Count < 2)
         {
             return;
@@ -618,6 +627,10 @@ public class GameUI : UIBase
 
     void OnClickHint()
     {
+        Dictionary<string, object> param = new Dictionary<string, object>();
+        param["name"] = "prompt";
+        FBstatistics.LogEvent("Click the tool button", param);
+
         if (!SaveModel.CheckGold(hintPrice))
         {
             return;

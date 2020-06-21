@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-class FBstatistics : Singleton<FBstatistics>
+class FBstatistics : UnitySingleton<FBstatistics>
 {
-    void Start()
+    public void Init()
     {
         if (FB.IsInitialized)
         {
