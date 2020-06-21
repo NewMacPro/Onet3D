@@ -9,6 +9,10 @@
     <package>com.facebook.android:facebook-gamingservices:[7.0.1, 8)</package>
     <package>com.facebook.android:facebook-login:[7.0.1, 8)</package>
     <package>com.facebook.android:facebook-share:[7.0.1, 8)</package>
+    <package>com.google.android.gms:play-services-ads:19.1.0</package>
+    <package>com.google.android.gms:play-services-ads-identifier:17.0.0</package>
+    <package>com.ironsource.adapters:admobadapter:4.3.10</package>
+    <package>com.ironsource.sdk:mediationsdk:6.17.0</package>
     <package>com.parse.bolts:bolts-android:1.4.0</package>
   </packages>
   <files />

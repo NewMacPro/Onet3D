@@ -1031,7 +1031,7 @@ GameObject:
   - component: {fileID: 2509454625772174962}
   - component: {fileID: 7522536202544788283}
   m_Layer: 5
-  m_Name: RateBtn
+  m_Name: NoadBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1084,7 +1084,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 90181be0e47f47a409e08157824ac860, type: 3}
+  m_Sprite: {fileID: 21300000, guid: abf5a35e33b0ef4428dacdf194554bae, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
