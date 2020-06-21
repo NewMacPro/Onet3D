@@ -53,6 +53,15 @@ public class WinUI : UIBase
         ViewUtils.SetText(root, "TimeBg/GoldValue", "+" + timeAddGoldValue);
         ViewUtils.SetText(root, "AdBtn/Text", "" + starAddGoldValue + timeAddGoldValue);
         ViewUtils.SetText(root, "ReStartBtn/Text", "CONTINUE");
+
+        Dictionary<string, object> param = new Dictionary<string, object>();
+        param["name"] = "level" + SaveModel.player.level;
+        param["ispassed"] = "true";
+        param["getstars"] = starValue.ToString();
+        param["lefttime"] = timeValue.ToString();
+        param["getcoins"] = "" + starAddGoldValue + timeAddGoldValue;
+
+        FBstatistics.LogEvent("gamelevel", param);
         
     }
 

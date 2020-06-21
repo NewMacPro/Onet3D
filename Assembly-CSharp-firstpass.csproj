@@ -66,6 +66,7 @@
      <Compile Include="Assets\Plugins\UnityPurchasing\script\IAPListener.cs" />
      <Compile Include="Assets\Plugins\UnityPurchasing\script\PurchasingCheck.cs" />
      <None Include="Assets\Plugins\UnityPurchasing\script\link.xml" />
+     <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>E:/MyProgram/Onet3D/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
@@ -296,6 +297,18 @@
  </Reference>
  <Reference Include="UnityEngine.XRModule">
  <HintPath>E:/Unity2019.3.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
+ </Reference>
+ <Reference Include="Facebook.Unity">
+ <HintPath>E:/MyProgram/Onet3D/Assets/FacebookSDK/Plugins/Facebook.Unity.dll</HintPath>
+ </Reference>
+ <Reference Include="Facebook.Unity.Gameroom">
+ <HintPath>E:/MyProgram/Onet3D/Assets/FacebookSDK/Plugins/Gameroom/Facebook.Unity.Gameroom.dll</HintPath>
+ </Reference>
+ <Reference Include="FacebookNamedPipeClient">
+ <HintPath>E:/MyProgram/Onet3D/Assets/FacebookSDK/Plugins/Gameroom/FacebookNamedPipeClient.dll</HintPath>
+ </Reference>
+ <Reference Include="Facebook.Unity.Settings">
+ <HintPath>E:/MyProgram/Onet3D/Assets/FacebookSDK/Plugins/Settings/Facebook.Unity.Settings.dll</HintPath>
  </Reference>
  <Reference Include="LitJson">
  <HintPath>E:/MyProgram/Onet3D/Assets/Plugins/LitJson.dll</HintPath>

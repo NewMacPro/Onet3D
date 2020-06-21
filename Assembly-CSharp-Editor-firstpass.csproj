@@ -327,6 +327,33 @@
  <Reference Include="UnityEditor.Android.Extensions">
  <HintPath>E:/Unity2019.3.11f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll</HintPath>
  </Reference>
+ <Reference Include="Facebook.Unity">
+ <HintPath>E:/MyProgram/Onet3D/Assets/FacebookSDK/Plugins/Facebook.Unity.dll</HintPath>
+ </Reference>
+ <Reference Include="Facebook.Unity.Editor">
+ <HintPath>E:/MyProgram/Onet3D/Assets/FacebookSDK/Plugins/Editor/Facebook.Unity.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Facebook.Unity.Gameroom">
+ <HintPath>E:/MyProgram/Onet3D/Assets/FacebookSDK/Plugins/Gameroom/Facebook.Unity.Gameroom.dll</HintPath>
+ </Reference>
+ <Reference Include="FacebookNamedPipeClient">
+ <HintPath>E:/MyProgram/Onet3D/Assets/FacebookSDK/Plugins/Gameroom/FacebookNamedPipeClient.dll</HintPath>
+ </Reference>
+ <Reference Include="Facebook.Unity.Settings">
+ <HintPath>E:/MyProgram/Onet3D/Assets/FacebookSDK/Plugins/Settings/Facebook.Unity.Settings.dll</HintPath>
+ </Reference>
+ <Reference Include="Google.IOSResolver_v1.2.135.0">
+ <HintPath>E:/MyProgram/Onet3D/Assets/PlayServicesResolver/Editor/Google.IOSResolver_v1.2.135.0.dll</HintPath>
+ </Reference>
+ <Reference Include="Google.JarResolver_v1.2.135.0">
+ <HintPath>E:/MyProgram/Onet3D/Assets/PlayServicesResolver/Editor/Google.JarResolver_v1.2.135.0.dll</HintPath>
+ </Reference>
+ <Reference Include="Google.VersionHandler">
+ <HintPath>E:/MyProgram/Onet3D/Assets/PlayServicesResolver/Editor/Google.VersionHandler.dll</HintPath>
+ </Reference>
+ <Reference Include="Google.VersionHandlerImpl_v1.2.135.0">
+ <HintPath>E:/MyProgram/Onet3D/Assets/PlayServicesResolver/Editor/Google.VersionHandlerImpl_v1.2.135.0.dll</HintPath>
+ </Reference>
  <Reference Include="LitJson">
  <HintPath>E:/MyProgram/Onet3D/Assets/Plugins/LitJson.dll</HintPath>
  </Reference>
