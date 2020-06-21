@@ -56,10 +56,10 @@ using UnityEngine.UI;
         for (int j = 1; j <= 5; j++)
         {
             ViewUtils.SetImage(item.transform, "ItemGroup/Item" + j + "/Bg/Image", "img_" + imageName + "_" + j);
-            Debug.Log("img_" + imageName + "_" + j);
         }
 
         bool payUnlock = gd.unlockType == Const.UNLOCK_TYPE_PAY;
+        ViewUtils.SetActive(item.transform, "Choose", GalleryModel.GalleryUsed(gd.id));
         ViewUtils.SetActive(item.transform, "ButtonGroup/UnlockBtn", GalleryModel.HaveThisGallery(gd.id));
         ViewUtils.SetActive(item.transform, "ButtonGroup/AdBtn", !GalleryModel.HaveThisGallery(gd.id) && !payUnlock);
         ViewUtils.SetActive(item.transform, "ButtonGroup/PayBtn", !GalleryModel.HaveThisGallery(gd.id) && payUnlock);
@@ -80,10 +80,14 @@ using UnityEngine.UI;
         ViewUtils.AddButtonClick(item.transform, "AdBtn", delegate ()
         {
             OnClickAdBtn(item, gd);
-        } );
+        });
         ViewUtils.AddButtonClick(item.transform, "PayBtn", delegate()
         {
             OnClickPay(item, gd);
+        });
+        ViewUtils.AddButtonClick(item.transform, "", delegate()
+        {
+            OnClickItem(item, gd);
         });
              
      }
@@ -91,6 +95,20 @@ using UnityEngine.UI;
      void Refresh()
      {
          goldText.text = SaveModel.player.gold.ToString();
+     }
+
+     void OnClickItem(Transform item, GalleryData gd)
+     {
+         Debug.Log(GalleryModel.GalleryUsed(gd.id));
+         if (GalleryModel.GalleryUsed(gd.id))
+         {
+             GalleryModel.UnloadGallery(gd.id);
+         }
+         else
+         {
+             GalleryModel.UseGallery(gd.id);
+         }
+         InitSingleItem(item, gd);
      }
 
      void OnClickAdBtn(Transform item, GalleryData gd)

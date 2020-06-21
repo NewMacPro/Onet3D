@@ -15,6 +15,7 @@ public class Save
     public bool notifySwitch = true;
     public CurrentLevel currentLevel = new CurrentLevel();
     public List<int> galleryIds = new List<int>();
+    public List<int> currentGalleryIds = new List<int>();
 }
 
 public class CurrentLevel
