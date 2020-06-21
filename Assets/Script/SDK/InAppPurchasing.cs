@@ -3,13 +3,16 @@ using UnityEngine.Purchasing;
 using LitJson;
 using System;
 
-public class InAppPurchasing : Singleton<InAppPurchasing>, IStoreListener
+public class InAppPurchasing : UnitySingleton<InAppPurchasing>, IStoreListener
 {
     //IAP组件相关的对象，m_Controller里存储着商品信息
     private static IStoreController m_Controller;//存储商品信息
     private static IAppleExtensions m_AppleExtensions;
     private static IExtensionProvider m_Extensions;
 
+    //需要配置
+    private string[] idArr = new string[] { };
+    //需要配置
 
     private static bool PurchaseAvailable = true;//IAP可用状态
     private static bool InternetAvailable;//是否初始化成功
@@ -17,7 +20,7 @@ public class InAppPurchasing : Singleton<InAppPurchasing>, IStoreListener
     public Action OnPayFailedAction;
 
     public static InAppPurchasing instance;
-    public void Init(string[] idArr)
+    public void Init()
     {
         //如果没有连击网络，关闭IAP功能
         if (Application.internetReachability == NetworkReachability.NotReachable)
@@ -30,12 +33,12 @@ public class InAppPurchasing : Singleton<InAppPurchasing>, IStoreListener
             //如果没有初始化成功
             if (InternetAvailable == false)
             {
-                InitUnityPurchase(idArr);//初始化
+                InitUnityPurchase();//初始化
             }
         }
     }
 
-    public void InitUnityPurchase(string[] idArr)//初始化方法
+    public void InitUnityPurchase()//初始化方法
     {
         var module = StandardPurchasingModule.Instance();//标准采购模块
         var builder = ConfigurationBuilder.Instance(module);//配置模式

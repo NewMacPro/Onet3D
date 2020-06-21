@@ -66,16 +66,31 @@ public class SettingUI : UIBase
     }
     void OnClickSoundBtn()
     {
+        Dictionary<string, object> param = new Dictionary<string, object>();
+        param["name"] = "sound";
+        param["Whether to open"] = SaveModel.SoundSwith?"off" : "On";
+        FBstatistics.LogEvent("Click switch", param);
+
         SaveModel.SoundSwith = !SaveModel.SoundSwith;
         RefreshSoundSwitch();
     }
     void OnClickMusicBtn()
     {
+        Dictionary<string, object> param = new Dictionary<string, object>();
+        param["name"] = "music";
+        param["Whether to open"] = SaveModel.MusicSwith ? "off" : "On";
+        FBstatistics.LogEvent("Click switch", param);
+
         SaveModel.MusicSwith = !SaveModel.MusicSwith;
         RefreshMusicSwitch();
     }
     void OnClickNotifyBtn()
     {
+        Dictionary<string, object> param = new Dictionary<string, object>();
+        param["name"] = "notifs";
+        param["Whether to open"] = SaveModel.NotifySwitch ? "off" : "On";
+        FBstatistics.LogEvent("Click switch", param);
+
         SaveModel.NotifySwitch = !SaveModel.NotifySwitch;
         RefreshNotifySwitch();
     }

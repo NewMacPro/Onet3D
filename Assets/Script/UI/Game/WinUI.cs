@@ -9,6 +9,7 @@ public class WinUI : UIBase
     private int timeValue;
     private int starAddGoldValue = 0;
     private int timeAddGoldValue = 0;
+    private float timer = 0;
     public static void Create(int star , int time)
     {
         WinUI ui = new WinUI();
@@ -21,6 +22,7 @@ public class WinUI : UIBase
         this.CurrentUIType.UIForms_ShowMode = UIFormsShowMode.PopUp;
         starValue = star;
         timeValue = time;
+        timer = 0;
         Redisplay();
     }
 
@@ -54,6 +56,7 @@ public class WinUI : UIBase
         ViewUtils.SetText(root, "AdBtn/Text", "" + starAddGoldValue + timeAddGoldValue);
         ViewUtils.SetText(root, "ReStartBtn/Text", "CONTINUE");
 
+        //统计
         Dictionary<string, object> param = new Dictionary<string, object>();
         param["name"] = "level" + SaveModel.player.level;
         param["ispassed"] = "true";
@@ -65,6 +68,10 @@ public class WinUI : UIBase
         
     }
 
+    void OnUpdate() {
+        timer += Time.deltaTime;
+    }
+
     void Refresh()
     {
 
@@ -73,11 +80,21 @@ public class WinUI : UIBase
     void OnClickReStartBtn() {
         Close();
         GameUI.Create();
+
+        //Dictionary<string, object> param = new Dictionary<string, object>();
+        //param["action"] = "close";
+        //param["time"] = "" +(int)timer;
+        FBstatistics.LogEvent("Click to replay");
     }
 
     void OnClickAdBtn() {
         SaveModel.AddGold(starAddGoldValue + timeAddGoldValue);
         ViewUtils.SetActive(root, "AdBtn", false);
+
+        //Dictionary<string, object> param = new Dictionary<string, object>();
+        //param["action"] = "show";
+        //param["time"] = "" + (int)timer;
+        FBstatistics.LogEvent("Watch the video");
     }
 
     void OnClickEvaluateBtn() { 
