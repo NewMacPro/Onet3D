@@ -21,7 +21,7 @@ public class GameUI : UIBase
     /**item起始位置y*/
     private float startY = 0;
     /**item类型列表*/
-    private List<int> typeList;
+    private List<int> typeList = new List<int>();
     /**item列表*/
     private List<List<Item>> itemList;
     /**可连接的列表*/
@@ -47,7 +47,7 @@ public class GameUI : UIBase
     private int moveType = 0;
     private List<LineItem> tipItemList = new List<LineItem>();
     private int bgIndex = 1;
-    private int galleryType = 1; //图集种类
+    private int galleryId = 0; //图集种类
     private CurrentLevel currentLevel;
 
     private int _score;
@@ -111,8 +111,6 @@ public class GameUI : UIBase
             currentLevel = new CurrentLevel();
             SaveModel.player.currentLevel = currentLevel;
             currentLevel.level = SaveModel.player.level;
-            Debug.Log(currentLevel.level);
-            Debug.Log(SaveModel.player.currentLevel.level);
         }
     }
 
@@ -160,9 +158,7 @@ public class GameUI : UIBase
     private void ClearScore()
     {
         _score = 0;
-        currentLevel.star = _score;
         scoreText.text = _score.ToString();
-        SaveModel.ForceStorageSave();
     }
 
     private void InitStartPos()
@@ -243,11 +239,9 @@ public class GameUI : UIBase
 
     private void RandomType()
     {
-        typeList = new List<int>();
-        galleryType = GalleryModel.GetRandomGallery();
         for (int i = 0; i < row * col * 0.5; i++)
         {
-            int maxCount = GalleryModel.galleryTypeCount[galleryType];
+            int maxCount = GalleryModel.GetGalleryById(galleryId).typeCount;
             int type = Random.Range(1, maxCount + 1);
             typeList.Add(type);
             typeList.Add(type);
@@ -279,6 +273,11 @@ public class GameUI : UIBase
         bool newGame = false;
         int totalRow = row + 2;
         int totalCol = col + 2;
+        if (!SaveModel.IsGalleryUnlock(currentLevel.galleryId))
+        {
+            currentLevel.galleryId = -1;
+        }
+        galleryId = currentLevel.galleryId == -1 ? GalleryModel.GetRandomGallery() : currentLevel.galleryId;
         if (currentLevel.itemTypeList.Count != totalRow * totalCol)
         {
             newGame = true;
@@ -326,7 +325,7 @@ public class GameUI : UIBase
         Item itemScript = item.AddComponent<Item>();
         itemScript.IsBomb(isBomb, currentLevel.bobmTime);
         itemScript.SetItemSize(itemSize);
-        itemScript.SetItemType(galleryType ,type);
+        itemScript.SetItemType(galleryId, type);
         itemScript.gameUI = this;
         itemScript.pos = new Point(i, j);
         itemScript.hasItem = type != -1;
@@ -514,7 +513,7 @@ public class GameUI : UIBase
     {
         _score += score;
         currentLevel.star = _score;
-        scoreText.text = _score.ToString();
+        scoreText.text = _score.ToString();;
         SaveModel.ForceStorageSave();
     }
 
@@ -535,7 +534,7 @@ public class GameUI : UIBase
 
     void ResetCard()
     {
-        typeList = new List<int>();
+        typeList.Clear();
         for (int i = 0; i < itemList.Count; i++)
         {
             for (int j = 0; j < itemList[i].Count; j++)
@@ -555,7 +554,7 @@ public class GameUI : UIBase
             {
                 if (itemList[i][j].hasItem)
                 {
-                    itemList[i][j].SetItemType(galleryType ,typeList[0]);
+                    itemList[i][j].SetItemType(galleryId, typeList[0]);
                     typeList.RemoveAt(0);
                 }
             }
@@ -578,25 +577,34 @@ public class GameUI : UIBase
 
     void OnClickImage()
     {
+        if (GalleryModel.alreadyGalleryData.Count < 2)
+        {
+            return;
+        }
         if (!SaveModel.CheckGold(changeImagePrice))
         {
             return;
         }
         SaveModel.UseGold(changeImagePrice);
-        
-        int nowType = galleryType;
-        while (nowType == galleryType)
+        RefreshGold();
+        int nowType = galleryId;
+        int whileCount = 0;
+        int whileMaxCount = 1000 ;
+        while (nowType == galleryId && whileCount < whileMaxCount)
         {
-            galleryType = GalleryModel.GetRandomGallery();
+            whileCount++;
+            galleryId = GalleryModel.GetRandomGallery();
         }
         for (int i = 0; i < itemList.Count; i++)
         {
             for (int j = 0; j < itemList[i].Count; j++)
             {
-                //TODO 已经随机完要换的图集种类,这里面要写怎么把原来的index换成现在的index 
-                //问题 ： 原来图集有80张图，某张图的index=80，但是现在的图集只有20张图，怎么转换
+                Item item = itemList[i][j];
+                item.ChangeGallery(galleryId, item.itemType);
             }
         }
+        currentLevel.galleryId = galleryId;
+        SaveModel.ResetItemList(itemList);
     }
 
     void OnClickHint()
@@ -806,15 +814,19 @@ public class GameUI : UIBase
     {
         MessageCenter.RemoveMsgListener(MyMessageType.GAME_UI , OnMessage);
     }
+    private void OnClickGoldDebug()
+    {
 #if UNITY_EDITOR
-    private void OnClickGoldDebug() {
         SaveModel.AddGold(10000);
         RefreshGold();
+#endif
     }
 
-    private void OnClickLevelDebug() {
+    private void OnClickLevelDebug()
+    {
+#if UNITY_EDITOR
         SaveModel.LevelUp();
         GameUI.Create();
-    }
 #endif
+    }
 }

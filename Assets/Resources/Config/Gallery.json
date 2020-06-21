@@ -1,0 +1,35 @@
+{
+"gallery": [
+    {
+	  "id": 1,
+      "imgName": "yi", 
+      "name": "Sofa illustrated book", 
+      "gold": 0,
+	  "typeCount" : 24
+    }, 
+    {
+	  "id": 2,
+      "imgName": "che", 
+      "name": "Car", 
+      "gold": 0,
+	  "typeCount" : 16,
+	  "unlockType": "pay"
+    }, 
+    {
+	  "id": 3,
+      "imgName": "mao", 
+      "name": "Birthday hat", 
+      "gold": 0,
+	  "typeCount" : 25,
+	  "unlockType": "pay"
+    }, 
+    {
+	  "id": 4,
+      "imgName": "cai", 
+      "name": "Vegetables", 
+      "gold": 0,
+	  "typeCount" : 20,
+	  "unlockType": "ad"
+    }
+  ]
+}

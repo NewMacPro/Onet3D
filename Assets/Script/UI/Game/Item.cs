@@ -55,14 +55,28 @@ public class Item : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     /**设置item类型*/
     public void SetItemType(int typeIndex , int type)
 	{
-		itemType = type;
-        string name = GalleryModel.galleryImageName[typeIndex];
-        if (itemType == -1) {
+        image.name = GalleryModel.GetImgByType(typeIndex, type, out itemType);
+        if (itemType == -1)
+        {
             gameObject.SetActive(false);
+            return;
         }
-        Debug.Log("img_" + name + "_" + type);
-        image.sprite = iResourceManager.LoadSprite("img_" + name +"_" + type);
+        image.sprite = iResourceManager.LoadSprite(image.name);
 	}
+
+    public void ChangeGallery(int galleryId, int type)
+    {
+        CanvasGroup cg = GetComponent<CanvasGroup>();
+        if (cg == null)
+        {
+            cg = gameObject.AddComponent<CanvasGroup>();
+        }
+        cg.DOKill();
+        cg.alpha = 0;
+        SetItemType(galleryId, type);
+        float random = Random.Range(0.5f,1.2f);
+        cg.DOFade(1, random);
+    }
 
     public void SetImageBg(int bgIndex) {
         ViewUtils.SetImage(gameObject.transform, "Bg", "ItemBg" + bgIndex);

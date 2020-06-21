@@ -5,28 +5,40 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
+public class GalleryData
+{
+    public int id = -1;
+    public string imgName = "";
+    public string name = "";
+    public string unlockType = "";
+    public int gold = 0;
+    public int typeCount = 0;
+}
 
 class GalleryModel
 {
-    public static string[] galleryImageName = new string[] { "yi" , "che" , "mao" , "cai" };
-    public static string[] galleryName = new string[] { "Sofa illustrated book", "Car", "Birthday hat", "Vegetables" };
-    public static int[] galleryGold = new int[] { 0, 0, 0, 0 };
-    public static int[] galleryTypeCount = new int[] { 24, 16, 25, 20 };
+    public static GalleryData[] galleryData = Config.Instance.GetGalleryData();
+    public static List<GalleryData> alreadyGalleryData = Config.Instance.GetAlreadyGalleryData();
 
     //是否有这个图集
-    public static bool HaveThisGallery(string name) {
-        return true;
+    public static bool HaveThisGallery(int id) {
+        return alreadyGalleryData.Find((GalleryData gData) =>
+        {
+            return gData.id == id;
+        }) != null;
     }
 
     //是否使用这个图集
-    public static bool GalleryUsed(string name) {
+    public static bool GalleryUsed(int id) {
         return true;
     }
 
     //解锁这个图集
-    public static void UnlockGallery(string name)
-    { 
-    
+    public static void UnlockGallery(int id)
+    {
+        SaveModel.player.galleryIds.Add(id);
+        SaveModel.ForceStorageSave();
+        GalleryModel.alreadyGalleryData = Config.Instance.GetAlreadyGalleryData();
     }
 
     //使用图集
@@ -37,8 +49,34 @@ class GalleryModel
 
     //随机已有图集
     public static int GetRandomGallery() { 
-        // TODO
-        return Random.Range(0 , galleryName.Length-1);
+        int index = Random.Range(0, alreadyGalleryData.Count);
+        return alreadyGalleryData[index].id;
+    }
+
+    public static string GetImgByType(int galleryId, int type, out int itemType)
+    {
+        GalleryData gd = GalleryModel.GetGalleryById(galleryId);
+        string name = gd.imgName;
+        itemType = type;
+        if (type == -1)
+        {
+            return "";
+        }
+        type = (type - 1) % gd.typeCount + 1;
+        itemType = type;
+        return "img_" + name + "_" + type;
+    }
+
+    public static GalleryData GetGalleryById(int id)
+    {
+        foreach (GalleryData item in galleryData)
+        {
+            if (item.id == id)
+            {
+                return item;
+            }
+        }
+        return null;
     }
 }
     
