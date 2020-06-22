@@ -52,7 +52,7 @@ public class MainUI : UIBase
     void OnClickGallery()
     {
         GalleryUI.Create();
-        FBstatistics.LogEvent("Click to change picture");
+        FBstatistics.LogEvent("clickchange");
         
     }
     void OnClickNoAdBtn()
