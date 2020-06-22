@@ -43,11 +43,15 @@ public class SaveModel
         ForceStorageSave();
     }
 
-    public static bool CheckGold(int value)
+    public static bool CheckGold(int value, bool needTip = true)
     {
         if (SaveModel.player.gold >= value)
         {
             return true;
+        }
+        if (needTip)
+        {
+            GoldNotEnoughUI.Create();
         }
         return false;
     }

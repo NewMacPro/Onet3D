@@ -93,9 +93,9 @@ public class GameUI : UIBase
         ViewUtils.SetText(root, "ResetBtn/Text", resetPrice.ToString());
         ViewUtils.SetText(root, "ImageBtn/Text", changeImagePrice.ToString());
         ViewUtils.SetText(root, "HintBtn/Text", hintPrice.ToString());
-        ViewUtils.SetTextColor(root, "ResetBtn/Text",  SaveModel.CheckGold(resetPrice) ? Color.white : Color.red);
-        ViewUtils.SetTextColor(root, "ImageBtn/Text", SaveModel.CheckGold(changeImagePrice) ? Color.white : Color.red);
-        ViewUtils.SetTextColor(root, "HintBtn/Text", SaveModel.CheckGold(hintPrice) ? Color.white : Color.red);
+        ViewUtils.SetTextColor(root, "ResetBtn/Text",  SaveModel.CheckGold(resetPrice, false) ? Color.white : Color.red);
+        ViewUtils.SetTextColor(root, "ImageBtn/Text", SaveModel.CheckGold(changeImagePrice, false) ? Color.white : Color.red);
+        ViewUtils.SetTextColor(root, "HintBtn/Text", SaveModel.CheckGold(hintPrice, false) ? Color.white : Color.red);
     }
 
     void OnMessage(KeyValuesUpdate kv)
@@ -194,9 +194,9 @@ public class GameUI : UIBase
     private void RefreshGold()
     {
         ViewUtils.SetText(root, "TopArea/Gold/Text", SaveModel.player.gold.ToString());
-        ViewUtils.SetTextColor(root, "ResetBtn/Text", SaveModel.CheckGold(resetPrice) ? Color.white : Color.red);
-        ViewUtils.SetTextColor(root, "ImageBtn/Text", SaveModel.CheckGold(changeImagePrice) ? Color.white : Color.red);
-        ViewUtils.SetTextColor(root, "HintBtn/Text", SaveModel.CheckGold(hintPrice) ? Color.white : Color.red);
+        ViewUtils.SetTextColor(root, "ResetBtn/Text", SaveModel.CheckGold(resetPrice, false) ? Color.white : Color.red);
+        ViewUtils.SetTextColor(root, "ImageBtn/Text", SaveModel.CheckGold(changeImagePrice, false) ? Color.white : Color.red);
+        ViewUtils.SetTextColor(root, "HintBtn/Text", SaveModel.CheckGold(hintPrice, false) ? Color.white : Color.red);
     }
 
     private void InitTime()

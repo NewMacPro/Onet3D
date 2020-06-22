@@ -2,6 +2,7 @@
 	"defaultGallery" : [1,2,3],
 	"minGalleryCount" : 3,
 	"luckyRewardsGameNum": 3,
+	"adGold": 120,
 	"rewardsProbability" : 
 	[
 	 {

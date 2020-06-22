@@ -4,4 +4,3 @@ SDK
    支付（测试）
 
 评分弹窗在玩完第4关弹出
-金币不足弹窗（GoldNotEnoughUI）
