@@ -43,11 +43,15 @@ public class SaveModel
         ForceStorageSave();
     }
 
-    public static bool CheckGold(int value)
+    public static bool CheckGold(int value, bool needTip = true)
     {
         if (SaveModel.player.gold >= value)
         {
             return true;
+        }
+        if (needTip)
+        {
+            GoldNotEnoughUI.Create();
         }
         return false;
     }
@@ -91,7 +95,6 @@ public class SaveModel
             }
             if (SaveModel.player.currentGalleryIds.Count < minGalleryCount && SaveModel.player.currentGalleryIds.IndexOf(id) < 0)
             {
-                Debug.Log(id);
                 SaveModel.player.currentGalleryIds.Add(id);
             }
         }
