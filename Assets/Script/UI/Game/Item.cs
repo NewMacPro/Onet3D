@@ -134,7 +134,6 @@ public class Item : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             textTimer.setUpdataCallback(BombCallback);
             textTimer.setCallback(SendGameOverMessage);
             progress = gameObject.transform.FindAChild<Image>("Progress");
-            Debug.Log(bombTime);
         }
     }
 

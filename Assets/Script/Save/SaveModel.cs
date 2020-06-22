@@ -91,7 +91,6 @@ public class SaveModel
             }
             if (SaveModel.player.currentGalleryIds.Count < minGalleryCount && SaveModel.player.currentGalleryIds.IndexOf(id) < 0)
             {
-                Debug.Log(id);
                 SaveModel.player.currentGalleryIds.Add(id);
             }
         }

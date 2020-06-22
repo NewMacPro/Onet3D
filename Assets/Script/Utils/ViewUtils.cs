@@ -933,11 +933,21 @@ public class ViewUtils
         }
     }
 
-    public static void SetText(Transform parent, string path, string text) {
+    public static void SetText(Transform parent, string path, string text)
+    {
         Text com = parent.FindAChild<Text>(path);
         if (com != null)
         {
             com.text = text;
+        }
+    }
+
+    public static void SetTextColor(Transform parent, string path, Color color)
+    {
+        Text com = parent.FindAChild<Text>(path);
+        if (com != null)
+        {
+            com.color = color;
         }
     }
 
