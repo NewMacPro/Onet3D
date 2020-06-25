@@ -1,19 +1,7 @@
 <dependencies>
   <packages>
-    <package>com.android.support:appcompat-v7:25.3.1</package>
-    <package>com.android.support:cardview-v7:25.3.1</package>
-    <package>com.android.support:customtabs:25.3.1</package>
-    <package>com.android.support:support-v4:25.3.1</package>
-    <package>com.facebook.android:facebook-applinks:[7.0.1, 8)</package>
-    <package>com.facebook.android:facebook-core:[7.0.1, 8)</package>
-    <package>com.facebook.android:facebook-gamingservices:[7.0.1, 8)</package>
-    <package>com.facebook.android:facebook-login:[7.0.1, 8)</package>
-    <package>com.facebook.android:facebook-share:[7.0.1, 8)</package>
-    <package>com.google.android.gms:play-services-ads:19.1.0</package>
     <package>com.google.android.gms:play-services-ads-identifier:17.0.0</package>
-    <package>com.ironsource.adapters:admobadapter:4.3.10</package>
     <package>com.ironsource.sdk:mediationsdk:6.17.0</package>
-    <package>com.parse.bolts:bolts-android:1.4.0</package>
   </packages>
   <files />
   <settings>
@@ -23,6 +11,7 @@
     <setting name="gradleBuildEnabled" value="True" />
     <setting name="gradleTemplateEnabled" value="False" />
     <setting name="installAndroidPackages" value="True" />
+    <setting name="localMavenRepoDir" value="Assets/GeneratedLocalRepo" />
     <setting name="packageDir" value="Assets/Plugins/Android" />
     <setting name="patchAndroidManifest" value="True" />
     <setting name="patchMainTemplateGradle" value="True" />

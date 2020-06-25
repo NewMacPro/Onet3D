@@ -21,8 +21,8 @@ public class GameManager : UnitySingleton<GameManager>
         Config.Instance.Init();
         SaveModel.DeSerialize();
         UIManager.GetInstance().ShowLobbyView();
-        FBstatistics.Instance.Init();
+        //FBstatistics.Instance.Init();
         InAppPurchasing.Instance.Init();
-        //IronsoucrManager.Instance.Init();
+        IronsoucrManager.Instance.Init();
     }
 }
