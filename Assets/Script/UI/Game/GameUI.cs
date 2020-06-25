@@ -107,6 +107,7 @@ public class GameUI : UIBase
         if (kv.Key == MyMessage.REFRESH_RES)
         {
             RefreshGold();
+            AddScore(1);
         }
     }
 
@@ -143,7 +144,7 @@ public class GameUI : UIBase
         ClearScore();
         if (currentLevel.level == SaveModel.player.level)
         {
-            AddScore(currentLevel.star);
+            AddScore(currentLevel.star, false);
         }
     }
 
@@ -423,7 +424,6 @@ public class GameUI : UIBase
         Item item2 = clickList[1];
         item1.hasItem = false;
         item2.hasItem = false;
-        AddScore(pathList.Count);
         item1.fly();
         item2.fly();
         //Destroy (item1.gameObject);
@@ -431,6 +431,7 @@ public class GameUI : UIBase
         DoMoveAni();
         clickList.Clear();
         pathList.Clear();
+        AddScore(pathList.Count);
 
 
         if (GameModel.IsFinish(itemList))
@@ -445,13 +446,14 @@ public class GameUI : UIBase
 
     private void CreateAllStar(List<Point> pathList)
     {
+        Transform node = this.root.FindAChild("StarNode");
         for (int i = 0; i < pathList.Count; i++)
         {
             Item item = itemList[pathList[i].x][pathList[i].y];
             GameObject starItem = ViewUtils.CreatePrefabAndSetParent(itemContent.transform, "StarItem");
             starItem.transform.localPosition = item.transform.localPosition;
             Star star = starItem.AddComponent<Star>();
-            star.initLine(i, pathList, Mathf.CeilToInt(itemSize + 1), scoreText.transform.position);
+            star.initLine(i, pathList, Mathf.CeilToInt(itemSize + 1), node.position, item);
         }
     }
 
@@ -464,7 +466,7 @@ public class GameUI : UIBase
             GameObject tipItem = ViewUtils.CreatePrefabAndSetParent(itemContent.transform, "TipItem");
             tipItem.transform.localPosition = item.transform.localPosition;
             LineItem line = tipItem.AddComponent<LineItem>();
-            line.initLine(i, pathList, Mathf.CeilToInt(itemSize + 1));
+            line.initLine(i, pathList, Mathf.CeilToInt(itemSize + 1), item);
             tipItemList.Add(line);
         }
     }
@@ -523,7 +525,7 @@ public class GameUI : UIBase
         }
     }
 
-    public void AddScore(int score)
+    public void AddScore(int score, bool showAni = true)
     {
         _score += score;
         currentLevel.star = _score;
