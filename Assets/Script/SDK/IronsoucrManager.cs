@@ -138,7 +138,6 @@ public class IronsoucrManager : UnitySingleton<IronsoucrManager>
 	void InterstitialAdReadyEvent()
 	{
 		Debug.Log("unity-script: I got InterstitialAdReadyEvent");
-		ShowText.GetComponent<UnityEngine.UI.Text>().color = UnityEngine.Color.blue;
 	}
 
 	void InterstitialAdLoadFailedEvent(IronSourceError error)
@@ -149,13 +148,11 @@ public class IronsoucrManager : UnitySingleton<IronsoucrManager>
 	void InterstitialAdShowSucceededEvent()
 	{
 		Debug.Log("unity-script: I got InterstitialAdShowSucceededEvent");
-		ShowText.GetComponent<UnityEngine.UI.Text>().color = UnityEngine.Color.red;
 	}
 
 	void InterstitialAdShowFailedEvent(IronSourceError error)
 	{
 		Debug.Log("unity-script: I got InterstitialAdShowFailedEvent, code :  " + error.getCode() + ", description : " + error.getDescription());
-		ShowText.GetComponent<UnityEngine.UI.Text>().color = UnityEngine.Color.red;
 	}
 
 	void InterstitialAdClickedEvent()
