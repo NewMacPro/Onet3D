@@ -49,6 +49,7 @@ public class GameUI : UIBase
     private int bgIndex = 1;
     private int galleryId = 0; //图集种类
     private CurrentLevel currentLevel;
+    private Image viewMask;
 
     private int _score;
 
@@ -81,6 +82,7 @@ public class GameUI : UIBase
         resetText = root.FindAChild<Text>("ResetBtn/Text");
         changeImageText = root.FindAChild<Text>("ImageBtn/Text");
         hintText = root.FindAChild<Text>("HintBtn/Text");
+        viewMask = root.FindAChild<Image>("ViewMask");
         textTimer = timeText.AddComponent<TextTimer>();
 
         ViewUtils.AddButtonClick(root, "PauseBtn", OnClickPause);
@@ -624,16 +626,28 @@ public class GameUI : UIBase
             whileCount++;
             galleryId = GalleryModel.GetRandomGallery();
         }
+        currentLevel.galleryId = galleryId;
+        SaveModel.ResetItemList(itemList);
+        viewMask.color = Color.white;
         for (int i = 0; i < itemList.Count; i++)
         {
             for (int j = 0; j < itemList[i].Count; j++)
             {
                 Item item = itemList[i][j];
-                item.ChangeGallery(galleryId, item.itemType);
+                item.SetAlpha(0);
             }
         }
-        currentLevel.galleryId = galleryId;
-        SaveModel.ResetItemList(itemList);
+        viewMask.DOFade(0, 0.5f).OnComplete(() =>
+        {
+            for (int i = 0; i < itemList.Count; i++)
+            {
+                for (int j = 0; j < itemList[i].Count; j++)
+                {
+                    Item item = itemList[i][j];
+                    item.ChangeGallery(galleryId, item.itemType);
+                }
+            }
+        });
     }
 
     void OnClickHint()

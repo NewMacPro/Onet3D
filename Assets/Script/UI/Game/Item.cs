@@ -73,9 +73,20 @@ public class Item : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         }
         cg.DOKill();
         cg.alpha = 0;
+        SetAlpha(0);
         SetItemType(galleryId, type);
-        float random = Random.Range(0.5f,1.2f);
-        cg.DOFade(1, random);
+        float random = Random.Range(0f, 0.5f);
+        cg.DOFade(1, 0.2f).SetDelay(random);
+    }
+
+    public void SetAlpha(float alpha)
+    {
+        CanvasGroup cg = GetComponent<CanvasGroup>();
+        if (cg == null)
+        {
+            cg = gameObject.AddComponent<CanvasGroup>();
+        }
+        cg.alpha = 0;
     }
 
     public void SetImageBg(int bgIndex) {
