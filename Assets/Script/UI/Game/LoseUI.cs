@@ -57,11 +57,13 @@ public class LoseUI : UIBase
     {
         Close();
         GameUI.Create();
+        FBstatistics.LogEvent("clickreplay");
     }
 
     void OnClickAdBtn() 
     {
         SaveModel.AddGold(addGoldValue);
         ViewUtils.SetActive(root, "AdBtn", false);
+        FBstatistics.LogEvent("watchad");
     }
 }

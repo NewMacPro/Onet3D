@@ -93,6 +93,9 @@ public class GameUI : UIBase
         ViewUtils.SetText(root, "ResetBtn/Text", resetPrice.ToString());
         ViewUtils.SetText(root, "ImageBtn/Text", changeImagePrice.ToString());
         ViewUtils.SetText(root, "HintBtn/Text", hintPrice.ToString());
+        ViewUtils.SetTextColor(root, "ResetBtn/Text",  SaveModel.CheckGold(resetPrice, false) ? Color.white : Color.red);
+        ViewUtils.SetTextColor(root, "ImageBtn/Text", SaveModel.CheckGold(changeImagePrice, false) ? Color.white : Color.red);
+        ViewUtils.SetTextColor(root, "HintBtn/Text", SaveModel.CheckGold(hintPrice, false) ? Color.white : Color.red);
     }
 
     void OnMessage(KeyValuesUpdate kv)
@@ -100,6 +103,10 @@ public class GameUI : UIBase
         if (kv.Key == MyMessage.TIME_OUT)
         {
             GameOver();
+        }
+        if (kv.Key == MyMessage.REFRESH_RES)
+        {
+            RefreshGold();
         }
     }
 
@@ -187,6 +194,9 @@ public class GameUI : UIBase
     private void RefreshGold()
     {
         ViewUtils.SetText(root, "TopArea/Gold/Text", SaveModel.player.gold.ToString());
+        ViewUtils.SetTextColor(root, "ResetBtn/Text", SaveModel.CheckGold(resetPrice, false) ? Color.white : Color.red);
+        ViewUtils.SetTextColor(root, "ImageBtn/Text", SaveModel.CheckGold(changeImagePrice, false) ? Color.white : Color.red);
+        ViewUtils.SetTextColor(root, "HintBtn/Text", SaveModel.CheckGold(hintPrice, false) ? Color.white : Color.red);
     }
 
     private void InitTime()
@@ -479,8 +489,12 @@ public class GameUI : UIBase
             {
                 for (int k = i; k < itemList.Count; k++)
                 {
-                    for (int l = j; l < itemList[k].Count; l++)
+                    for (int l = 0; l < itemList[k].Count; l++)
                     {
+                        if (k == i && l <= j)
+                        {
+                            continue;
+                        }
                         Item item1 = itemList[i][j];
                         Item item2 = itemList[k][l];
                         if (!item1.hasItem || !item2.hasItem)
@@ -491,7 +505,7 @@ public class GameUI : UIBase
                         {
                             continue;
                         }
-                        if (GameModel.CheckLink(itemList[i][j].pos, itemList[k][l].pos, itemList).Count != 0)
+                        if (GameModel.CheckLink(item1.pos, item2.pos, itemList).Count != 0)
                         {
                             List<Item> tempList = new List<Item>();
                             tempList.Add(item1);
@@ -522,6 +536,7 @@ public class GameUI : UIBase
         SaveModel.ClearCurrentLevel();
         StartTiming(false);
         int useTime = config.time - (int)textTimer.getTime() / 10000;
+        GameManager.Instance.gameNum++;
         WinUI.Create(_score, useTime);
         SaveModel.LevelUp();
     }
@@ -530,7 +545,7 @@ public class GameUI : UIBase
     {
         StartTiming(false);
         PauseUI.Create(BackToGame);
-        FBstatistics.LogEvent("game tentative");
+        FBstatistics.LogEvent("gamepause");
     }
 
     void ResetCard()
@@ -567,14 +582,15 @@ public class GameUI : UIBase
     void OnClickReset()
     {
         Dictionary<string,object> param = new Dictionary<string,object>();
-        param["name"] = "Refresh";
-        FBstatistics.LogEvent("Click the tool button", param);
+        param["name"] = "refresh";
+        FBstatistics.LogEvent("clicktool", param);
 
         if (!SaveModel.CheckGold(resetPrice))
         {
             return;
         }
         SaveModel.UseGold(resetPrice);
+        RefreshGold();
         ResetCard();
         SaveModel.ResetItemList(itemList);
 
@@ -583,8 +599,8 @@ public class GameUI : UIBase
     void OnClickImage()
     {
         Dictionary<string, object> param = new Dictionary<string, object>();
-        param["name"] = "Change picture";
-        FBstatistics.LogEvent("Click the tool button", param);
+        param["name"] = "changepicture";
+        FBstatistics.LogEvent("clicktool", param);
 
         if (GalleryModel.alreadyGalleryData.Count < 2)
         {
@@ -620,13 +636,14 @@ public class GameUI : UIBase
     {
         Dictionary<string, object> param = new Dictionary<string, object>();
         param["name"] = "prompt";
-        FBstatistics.LogEvent("Click the tool button", param);
+        FBstatistics.LogEvent("clicktool", param);
 
         if (!SaveModel.CheckGold(hintPrice))
         {
             return;
         }
         SaveModel.UseGold(hintPrice);
+        RefreshGold();
         AllItemCancleClick();
         int rand = Random.Range(0, canLinkList.Count);
         Item item1 = canLinkList[rand][0];

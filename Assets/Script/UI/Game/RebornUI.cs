@@ -59,7 +59,8 @@ public class RebornUI : UIBase
 
     void OnClickAdBtn() {
         Close();
-        callBack(GameModel.BACK_GAME_ADDTIME);
+        callBack(GameModel.BACK_GAME_ADDTIME);        
+        FBstatistics.LogEvent("watchad");
     }
 
     void OnClickCloseBtn() {

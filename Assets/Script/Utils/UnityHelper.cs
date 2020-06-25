@@ -185,23 +185,6 @@ public class UnityHelper : UnitySingleton<UnityHelper>
         return stringBuilder.ToString();
     }
 
-    public static void LogToTxt(string content, string textFileName = "MyDebug.txt")
-    {
-        if (!IsEditor())
-            return;
-
-        string tmpPath = Application.dataPath + "/../HiddenFolder/" + textFileName;
-
-
-        FileStream fs = new FileStream(tmpPath, FileMode.Create, FileAccess.Write);
-        fs.Flush();
-        StreamWriter bw = new StreamWriter(fs);
-        bw.Write(content);
-        bw.Close();
-
-        fs.Close();
-    }
-
     public static string GetNetWorkTypeName()
     {
         switch (Application.internetReachability)
@@ -391,6 +374,23 @@ public class UnityHelper : UnitySingleton<UnityHelper>
     public static string GetPlatformPersistentDataPath()
     {
         return string.Format("{0}/{1}", Application.persistentDataPath, GetActivePlatformName());
+    }
+
+    public static void LogToTxt(string content, string textFileName = "MyDebug.txt")
+    {
+        if (!IsEditor())
+            return;
+
+        string tmpPath = Application.dataPath + "/../HiddenFolder/" + textFileName;
+
+
+        FileStream fs = new FileStream(tmpPath, FileMode.Create, FileAccess.Write);
+        fs.Flush();
+        StreamWriter bw = new StreamWriter(fs);
+        bw.Write(content);
+        bw.Close();
+
+        fs.Close();
     }
 
 

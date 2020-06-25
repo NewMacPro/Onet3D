@@ -68,8 +68,8 @@ public class SettingUI : UIBase
     {
         Dictionary<string, object> param = new Dictionary<string, object>();
         param["name"] = "sound";
-        param["Whether to open"] = SaveModel.SoundSwith?"off" : "On";
-        FBstatistics.LogEvent("Click switch", param);
+        param["action"] = SaveModel.SoundSwith?"off" : "on";
+        FBstatistics.LogEvent("clickswitch", param);
 
         SaveModel.SoundSwith = !SaveModel.SoundSwith;
         RefreshSoundSwitch();
@@ -78,8 +78,8 @@ public class SettingUI : UIBase
     {
         Dictionary<string, object> param = new Dictionary<string, object>();
         param["name"] = "music";
-        param["Whether to open"] = SaveModel.MusicSwith ? "off" : "On";
-        FBstatistics.LogEvent("Click switch", param);
+        param["action"] = SaveModel.MusicSwith ? "off" : "on";
+        FBstatistics.LogEvent("clickswitch", param);
 
         SaveModel.MusicSwith = !SaveModel.MusicSwith;
         RefreshMusicSwitch();
@@ -88,8 +88,8 @@ public class SettingUI : UIBase
     {
         Dictionary<string, object> param = new Dictionary<string, object>();
         param["name"] = "notifs";
-        param["Whether to open"] = SaveModel.NotifySwitch ? "off" : "On";
-        FBstatistics.LogEvent("Click switch", param);
+        param["action"] = SaveModel.NotifySwitch ? "off" : "on";
+        FBstatistics.LogEvent("clickswitch", param);
 
         SaveModel.NotifySwitch = !SaveModel.NotifySwitch;
         RefreshNotifySwitch();
@@ -100,11 +100,11 @@ public class SettingUI : UIBase
     }
     void OnClickPrivacyBtn()
     {
-
+        IronsoucrManager.Instance.ShowInterstitial();
     }
     void OnClickTermsBtn()
     {
-
+        IronsoucrManager.Instance.ShowRewardedVideo();
     }
     void OnClickDataBtn()
     {

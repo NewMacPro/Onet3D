@@ -89,7 +89,7 @@ public class MessageCenter
         }
     }
 
-    public static void SendMessage(int messageType, int msgName, object msgContent)
+    public static void SendMessage(int messageType, int msgName, object msgContent = null)
     {
         KeyValuesUpdate kvs = new KeyValuesUpdate(msgName, msgContent);
         MessageCenter.SendMessage(messageType, kvs);

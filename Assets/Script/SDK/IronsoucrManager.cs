@@ -5,11 +5,11 @@
 //{
 //    public static string uniqueUserId = "demoUserUnity";
 //    public static string appKey = "38760d6d" ;
-
 //    // Use this for initialization
 //    public void Init ()
 //    {
 //        Debug.Log ("unity-script: MyAppStart Start called");
+
 
 //        //Dynamic config example
 //        IronSourceConfig.Instance.setClientSideCallbacks (true);
@@ -46,7 +46,6 @@
 //    // Update is called once per frame
 //    void Update ()
 //    {
-
 //    }
 
 //    void OnApplicationPause (bool isPaused)

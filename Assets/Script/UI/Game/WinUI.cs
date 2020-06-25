@@ -23,11 +23,6 @@ public class WinUI : UIBase
         starValue = star;
         timeValue = time;
         timer = 0;
-        Redisplay();
-    }
-
-    public override void Redisplay()
-    {
         CreateAndAttachRoot("WinUI");
         Attach();
         Refresh();
@@ -64,6 +59,7 @@ public class WinUI : UIBase
         param["lefttime"] = timeValue.ToString();
         param["getcoins"] = "" + starAddGoldValue + timeAddGoldValue;
 
+        ShowLuckyRewards();
         FBstatistics.LogEvent("gamelevel", param);
         
     }
@@ -81,20 +77,20 @@ public class WinUI : UIBase
         Close();
         GameUI.Create();
 
-        //Dictionary<string, object> param = new Dictionary<string, object>();
-        //param["action"] = "close";
-        //param["time"] = "" +(int)timer;
-        FBstatistics.LogEvent("Click to replay");
+        Dictionary<string, object> param = new Dictionary<string, object>();
+        param["action"] = "close";
+        param["time"] = "" + (int)timer;
+        FBstatistics.LogEvent("gameend" , param);
     }
 
     void OnClickAdBtn() {
         SaveModel.AddGold(starAddGoldValue + timeAddGoldValue);
         ViewUtils.SetActive(root, "AdBtn", false);
 
-        //Dictionary<string, object> param = new Dictionary<string, object>();
-        //param["action"] = "show";
-        //param["time"] = "" + (int)timer;
-        FBstatistics.LogEvent("Watch the video");
+        Dictionary<string, object> param = new Dictionary<string, object>();
+        param["action"] = "whatad";
+        param["time"] = "" + (int)timer;
+        FBstatistics.LogEvent("gameend" , param);
     }
 
     void OnClickEvaluateBtn() { 
@@ -107,5 +103,15 @@ public class WinUI : UIBase
 
     void OnClickShareBtn() { 
     
+    }
+
+    void ShowLuckyRewards()
+    {
+        int luckyRewardsGameNum = Config.Instance.commonNode.GetInt("luckyRewardsGameNum");
+        if (GameManager.Instance.gameNum >= luckyRewardsGameNum)
+        {
+            GameManager.Instance.gameNum = 0;
+            SurpriseRewardUI.Create();
+        }
     }
 }

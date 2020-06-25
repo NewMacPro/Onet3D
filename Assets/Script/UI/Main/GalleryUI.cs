@@ -108,7 +108,7 @@ using UnityEngine.UI;
          {
              Dictionary<string, object> param = new Dictionary<string, object>();
              param["name"] = gd.name;
-             FBstatistics.LogEvent("Choose atlas type", param);
+             FBstatistics.LogEvent("chooseatlas", param);
              GalleryModel.UseGallery(gd.id);
          }
          InitSingleItem(item, gd);

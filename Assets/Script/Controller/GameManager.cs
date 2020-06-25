@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : UnitySceneSingleton<GameManager>
+public class GameManager : UnitySingleton<GameManager>
 {
     bool init = false;
+    public int gameNum = 0;
     void Start()
     {
         DontDestroyOnLoad(gameObject);
