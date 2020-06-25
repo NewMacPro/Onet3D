@@ -100,11 +100,11 @@ public class SettingUI : UIBase
     }
     void OnClickPrivacyBtn()
     {
-        IronsoucrManager.Instance.ShowInterstitial();
+        //IronsoucrManager.Instance.ShowInterstitial();
     }
     void OnClickTermsBtn()
     {
-        IronsoucrManager.Instance.ShowRewardedVideo();
+        //IronsoucrManager.Instance.ShowRewardedVideo();
     }
     void OnClickDataBtn()
     {
