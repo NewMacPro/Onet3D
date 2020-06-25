@@ -284,11 +284,13 @@ public class GameUI : UIBase
         bool newGame = false;
         int totalRow = row + 2;
         int totalCol = col + 2;
+        Debug.Log(currentLevel.galleryId);
         if (!SaveModel.IsGalleryUnlock(currentLevel.galleryId))
         {
             currentLevel.galleryId = -1;
         }
         galleryId = currentLevel.galleryId == -1 ? GalleryModel.GetRandomGallery() : currentLevel.galleryId;
+        currentLevel.galleryId = galleryId;
         if (currentLevel.itemTypeList.Count != totalRow * totalCol)
         {
             newGame = true;
