@@ -8,18 +8,20 @@ public class LineItem : MonoBehaviour
     protected GameObject lineD;
     protected GameObject lineL;
     protected GameObject lineR;
+    protected Item item;
 
     void Awake()
     {
 
     }
-    public void initLine(int index, List<Point> pointList, int height)
+    public void initLine(int index, List<Point> pointList, int height, Item item)
     {
 
         lineU = gameObject.transform.Find("LineU").gameObject;
         lineD = gameObject.transform.Find("LineD").gameObject;
         lineL = gameObject.transform.Find("LineL").gameObject;
         lineR = gameObject.transform.Find("LineR").gameObject;
+        this.item = item;
 
         hideAllLine();
         Vector2 size = lineU.transform.GetComponent<RectTransform>().sizeDelta;

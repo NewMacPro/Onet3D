@@ -49,6 +49,7 @@ public class GameUI : UIBase
     private int bgIndex = 1;
     private int galleryId = 0; //图集种类
     private CurrentLevel currentLevel;
+    private Image viewMask;
 
     private int _score;
 
@@ -81,6 +82,7 @@ public class GameUI : UIBase
         resetText = root.FindAChild<Text>("ResetBtn/Text");
         changeImageText = root.FindAChild<Text>("ImageBtn/Text");
         hintText = root.FindAChild<Text>("HintBtn/Text");
+        viewMask = root.FindAChild<Image>("ViewMask");
         textTimer = timeText.AddComponent<TextTimer>();
 
         ViewUtils.AddButtonClick(root, "PauseBtn", OnClickPause);
@@ -107,6 +109,7 @@ public class GameUI : UIBase
         if (kv.Key == MyMessage.REFRESH_RES)
         {
             RefreshGold();
+            AddScore(1);
         }
     }
 
@@ -143,7 +146,7 @@ public class GameUI : UIBase
         ClearScore();
         if (currentLevel.level == SaveModel.player.level)
         {
-            AddScore(currentLevel.star);
+            AddScore(currentLevel.star, false);
         }
     }
 
@@ -283,11 +286,13 @@ public class GameUI : UIBase
         bool newGame = false;
         int totalRow = row + 2;
         int totalCol = col + 2;
+        Debug.Log(currentLevel.galleryId);
         if (!SaveModel.IsGalleryUnlock(currentLevel.galleryId))
         {
             currentLevel.galleryId = -1;
         }
         galleryId = currentLevel.galleryId == -1 ? GalleryModel.GetRandomGallery() : currentLevel.galleryId;
+        currentLevel.galleryId = galleryId;
         if (currentLevel.itemTypeList.Count != totalRow * totalCol)
         {
             newGame = true;
@@ -423,7 +428,6 @@ public class GameUI : UIBase
         Item item2 = clickList[1];
         item1.hasItem = false;
         item2.hasItem = false;
-        AddScore(pathList.Count);
         item1.fly();
         item2.fly();
         //Destroy (item1.gameObject);
@@ -431,6 +435,7 @@ public class GameUI : UIBase
         DoMoveAni();
         clickList.Clear();
         pathList.Clear();
+        AddScore(pathList.Count);
 
 
         if (GameModel.IsFinish(itemList))
@@ -445,13 +450,14 @@ public class GameUI : UIBase
 
     private void CreateAllStar(List<Point> pathList)
     {
+        Transform node = this.root.FindAChild("StarNode");
         for (int i = 0; i < pathList.Count; i++)
         {
             Item item = itemList[pathList[i].x][pathList[i].y];
             GameObject starItem = ViewUtils.CreatePrefabAndSetParent(itemContent.transform, "StarItem");
             starItem.transform.localPosition = item.transform.localPosition;
             Star star = starItem.AddComponent<Star>();
-            star.initLine(i, pathList, Mathf.CeilToInt(itemSize + 1), scoreText.transform.position);
+            star.initLine(i, pathList, Mathf.CeilToInt(itemSize + 1), node.position, item);
         }
     }
 
@@ -464,7 +470,7 @@ public class GameUI : UIBase
             GameObject tipItem = ViewUtils.CreatePrefabAndSetParent(itemContent.transform, "TipItem");
             tipItem.transform.localPosition = item.transform.localPosition;
             LineItem line = tipItem.AddComponent<LineItem>();
-            line.initLine(i, pathList, Mathf.CeilToInt(itemSize + 1));
+            line.initLine(i, pathList, Mathf.CeilToInt(itemSize + 1), item);
             tipItemList.Add(line);
         }
     }
@@ -523,7 +529,7 @@ public class GameUI : UIBase
         }
     }
 
-    public void AddScore(int score)
+    public void AddScore(int score, bool showAni = true)
     {
         _score += score;
         currentLevel.star = _score;
@@ -620,16 +626,28 @@ public class GameUI : UIBase
             whileCount++;
             galleryId = GalleryModel.GetRandomGallery();
         }
+        currentLevel.galleryId = galleryId;
+        SaveModel.ResetItemList(itemList);
+        viewMask.color = Color.white;
         for (int i = 0; i < itemList.Count; i++)
         {
             for (int j = 0; j < itemList[i].Count; j++)
             {
                 Item item = itemList[i][j];
-                item.ChangeGallery(galleryId, item.itemType);
+                item.SetAlpha(0);
             }
         }
-        currentLevel.galleryId = galleryId;
-        SaveModel.ResetItemList(itemList);
+        viewMask.DOFade(0, 0.5f).OnComplete(() =>
+        {
+            for (int i = 0; i < itemList.Count; i++)
+            {
+                for (int j = 0; j < itemList[i].Count; j++)
+                {
+                    Item item = itemList[i][j];
+                    item.ChangeGallery(galleryId, item.itemType);
+                }
+            }
+        });
     }
 
     void OnClickHint()

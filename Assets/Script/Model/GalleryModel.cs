@@ -69,19 +69,20 @@ class GalleryModel
     }
 
     //卸下图集
-    public static void UnloadGallery(int id)
+    public static bool UnloadGallery(int id)
     {
         if (!GalleryModel.HaveThisGallery(id))
         {
-            return;
+            return false;
         }
         if (SaveModel.player.currentGalleryIds.Count <= Config.Instance.commonNode.GetInt("minGalleryCount"))
         {
-            return;
+            return false;
         }
         SaveModel.player.currentGalleryIds.Remove(id);
         GalleryModel.currentGalleryData = Config.Instance.GetGalleryDataByIds(SaveModel.player.currentGalleryIds);
         SaveModel.ForceStorageSave();
+        return true;
     }
 
     //随机已有图集

@@ -56,10 +56,12 @@ using UnityEngine.UI;
         for (int j = 1; j <= 5; j++)
         {
             ViewUtils.SetImage(item.transform, "ItemGroup/Item" + j + "/Bg/Image", "img_" + imageName + "_" + j);
+            ViewUtils.SetActive(item.transform, "ItemGroup/Item" + j + "/Mask", !GalleryModel.HaveThisGallery(gd.id));
         }
 
         bool payUnlock = gd.unlockType == Const.UNLOCK_TYPE_PAY;
         ViewUtils.SetActive(item.transform, "Choose", GalleryModel.GalleryUsed(gd.id));
+        ViewUtils.SetActive(item.transform, "Unlock",GalleryModel.HaveThisGallery(gd.id) && !GalleryModel.GalleryUsed(gd.id));
         ViewUtils.SetActive(item.transform, "ButtonGroup/UnlockBtn", GalleryModel.HaveThisGallery(gd.id));
         ViewUtils.SetActive(item.transform, "ButtonGroup/AdBtn", !GalleryModel.HaveThisGallery(gd.id) && !payUnlock);
         ViewUtils.SetActive(item.transform, "ButtonGroup/PayBtn", !GalleryModel.HaveThisGallery(gd.id) && payUnlock);
@@ -102,7 +104,11 @@ using UnityEngine.UI;
          Debug.Log(GalleryModel.GalleryUsed(gd.id));
          if (GalleryModel.GalleryUsed(gd.id))
          {
-             GalleryModel.UnloadGallery(gd.id);
+             bool unload = GalleryModel.UnloadGallery(gd.id);
+             if (!unload)
+             {
+                 HintUI.Create("At least 3 atlases need to be selected");
+             }
          }
          else
          {
