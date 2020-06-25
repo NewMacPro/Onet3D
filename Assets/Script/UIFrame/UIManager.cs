@@ -246,7 +246,7 @@ public class UIManager : MonoBehaviour
         UIBase existUiBase;
         if (_DicALLUIForms.TryGetValue(uiBase.uiName, out existUiBase))
         {
-            if (uiBase.CurrentUIType.UIForms_ShowMode == UIFormsShowMode.PopUp)
+            if (uiBase.CurrentUIType.UIForms_ShowMode == UIFormsShowMode.PopUp || uiBase.CurrentUIType.UIForms_ShowMode == UIFormsShowMode.Simple)
                 uiBase.uiName = uiBase.uiName + "&&" + uiBase.GetHashCode();
             else if (uiBase.CurrentUIType.UIForms_ShowMode == UIFormsShowMode.Normal)
             {
