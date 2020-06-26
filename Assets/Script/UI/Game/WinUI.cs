@@ -74,6 +74,10 @@ public class WinUI : UIBase
     }
 
     void OnClickReStartBtn() {
+        if (SaveModel.player.level >= 2)
+        {
+            IronsoucrManager.Instance.ShowInterstitial();
+        }
         Close();
         GameUI.Create();
 
@@ -84,8 +88,11 @@ public class WinUI : UIBase
     }
 
     void OnClickAdBtn() {
-        SaveModel.AddGold(starAddGoldValue + timeAddGoldValue);
-        ViewUtils.SetActive(root, "AdBtn", false);
+        IronsoucrManager.Instance.ShowRewardedVideo(() =>
+        {
+            SaveModel.AddGold(starAddGoldValue + timeAddGoldValue);
+            ViewUtils.SetActive(root, "AdBtn", false);
+        });
 
         Dictionary<string, object> param = new Dictionary<string, object>();
         param["action"] = "whatad";
