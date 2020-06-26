@@ -1,14 +1,16 @@
 ﻿
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Events;
 
 
 public class IronsoucrManager : UnitySingleton<IronsoucrManager>
 {
-
+    
     // Use this for initialization
     public static string uniqueUserId = "demoUserUnity";
     public static string appKey = "38760d6d";
+    private UnityAction rewardsCallback = null;
     public void Init()
     {
         Debug.Log("unity-script: MyAppStart Start called");
@@ -65,10 +67,11 @@ public class IronsoucrManager : UnitySingleton<IronsoucrManager>
         //IronSource.Agent.loadBanner (IronSourceBannerSize.BANNER, IronSourceBannerPosition.BOTTOM);
 
         // Load Banner example
-        IronSource.Agent.loadBanner(IronSourceBannerSize.BANNER, IronSourceBannerPosition.BOTTOM);
+        //IronSource.Agent.loadBanner(IronSourceBannerSize.BANNER, IronSourceBannerPosition.BOTTOM);
+        LoadInterstitial();
     }
 
-    void LoadBanner()
+    public void LoadBanner()
     {
         //加载后自动显示
         IronSource.Agent.loadBanner(IronSourceBannerSize.BANNER, IronSourceBannerPosition.BOTTOM);
@@ -87,11 +90,12 @@ public class IronsoucrManager : UnitySingleton<IronsoucrManager>
         IronSource.Agent.showInterstitial();
     }
 
-    public void ShowRewardedVideo()
+    public void ShowRewardedVideo(UnityAction callback = null)
     {
         Debug.Log("unity-script: ShowRewardedVideoButtonClicked");
         if (IronSource.Agent.isRewardedVideoAvailable())
         {
+            rewardsCallback = callback;
             IronSource.Agent.showRewardedVideo();
         }
         else
@@ -221,6 +225,10 @@ public class IronsoucrManager : UnitySingleton<IronsoucrManager>
     {
         Debug.Log("unity-script: I got RewardedVideoAdRewardedEvent, amount = " + ssp.getRewardAmount() + " name = " + ssp.getRewardName());
         // 发奖励
+        if (rewardsCallback != null)
+        {
+            rewardsCallback();
+        }
     }
 
     void RewardedVideoAdClosedEvent()

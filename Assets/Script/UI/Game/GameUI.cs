@@ -98,6 +98,11 @@ public class GameUI : UIBase
         ViewUtils.SetTextColor(root, "ResetBtn/Text",  SaveModel.CheckGold(resetPrice, false) ? Color.white : Color.red);
         ViewUtils.SetTextColor(root, "ImageBtn/Text", SaveModel.CheckGold(changeImagePrice, false) ? Color.white : Color.red);
         ViewUtils.SetTextColor(root, "HintBtn/Text", SaveModel.CheckGold(hintPrice, false) ? Color.white : Color.red);
+        if (GameManager.Instance.showInterstitial)
+        {
+            IronsoucrManager.Instance.ShowInterstitial();
+            GameManager.Instance.showInterstitial = false;
+        }
     }
 
     void OnMessage(KeyValuesUpdate kv)
@@ -686,6 +691,7 @@ public class GameUI : UIBase
         else if (param == GameModel.BACK_GAME_CONTIUE)
         {
             StartTiming(true);
+            IronsoucrManager.Instance.ShowInterstitial();
         }
         else if (param == GameModel.BACK_GAME_RESTART)
         {
@@ -708,6 +714,7 @@ public class GameUI : UIBase
 
     void BackToMainUI()
     {
+        GameManager.Instance.showInterstitial = true;
         UIManager.GetInstance().ShowLobbyView();
     }
 

@@ -6,6 +6,7 @@ public class GameManager : UnitySingleton<GameManager>
 {
     bool init = false;
     public int gameNum = 0;
+    public bool showInterstitial = false;
     void Start()
     {
         DontDestroyOnLoad(gameObject);
@@ -24,5 +25,6 @@ public class GameManager : UnitySingleton<GameManager>
         //FBstatistics.Instance.Init();
         InAppPurchasing.Instance.Init();
         IronsoucrManager.Instance.Init();
+        IronsoucrManager.Instance.LoadBanner();
     }
 }

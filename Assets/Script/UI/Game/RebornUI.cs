@@ -58,8 +58,12 @@ public class RebornUI : UIBase
     }
 
     void OnClickAdBtn() {
-        Close();
-        callBack(GameModel.BACK_GAME_ADDTIME);        
+        IronsoucrManager.Instance.ShowRewardedVideo(() =>
+        {
+            Close();
+            callBack(GameModel.BACK_GAME_ADDTIME);
+        });
+        
         FBstatistics.LogEvent("watchad");
     }
 

@@ -33,8 +33,11 @@ public class GoldNotEnoughUI : UIBase
 
     private void OnClickADBtn()
     {
-        SaveModel.AddGold(gold);
-        MessageCenter.SendMessage(MyMessageType.GAME_UI, MyMessage.REFRESH_RES);
-        Close();
+        IronsoucrManager.Instance.ShowRewardedVideo(() =>
+        {
+            SaveModel.AddGold(gold);
+            MessageCenter.SendMessage(MyMessageType.GAME_UI, MyMessage.REFRESH_RES);
+            Close();
+        });
     }
 }

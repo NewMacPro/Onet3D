@@ -62,8 +62,11 @@ public class LoseUI : UIBase
 
     void OnClickAdBtn() 
     {
-        SaveModel.AddGold(addGoldValue);
-        ViewUtils.SetActive(root, "AdBtn", false);
+        IronsoucrManager.Instance.ShowRewardedVideo(() =>
+        {
+            SaveModel.AddGold(addGoldValue);
+            ViewUtils.SetActive(root, "AdBtn", false);
+        });
         FBstatistics.LogEvent("watchad");
     }
 }
