@@ -122,8 +122,11 @@ using UnityEngine.UI;
 
      void OnClickAdBtn(Transform item, GalleryData gd)
      {
-         GalleryModel.UnlockGallery(gd.id);
-         InitSingleItem(item, gd);
+         IronsoucrManager.Instance.ShowRewardedVideo(() =>
+         {
+             GalleryModel.UnlockGallery(gd.id);
+             InitSingleItem(item, gd);
+         });
      }
 
      void OnClickPay(Transform item, GalleryData gd)
