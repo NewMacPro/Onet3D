@@ -25,10 +25,11 @@ public class LineItem : MonoBehaviour
 
         hideAllLine();
         Vector2 size = lineU.transform.GetComponent<RectTransform>().sizeDelta;
-        lineU.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(height / 2, size.y);
-        lineD.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(height / 2, size.y);
-        lineL.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(height / 2, size.y);
-        lineR.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(height / 2, size.y);
+        float width = height / 2 + 15f;
+        lineU.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(width, size.y);
+        lineD.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(width, size.y);
+        lineL.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(width, size.y);
+        lineR.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(width, size.y);
         if (index != 0)
         {
             checkShowLine(pointList[index], pointList[index - 1]);
