@@ -25,6 +25,7 @@ public class Item : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private Image progress;
     public float nowSec = 0;
     public float lastSec = 0;
+    private Tweener twinkleTween;
 
     public bool hasItem;
     public bool isBomb;
@@ -113,6 +114,7 @@ public class Item : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void HintItem() {
         //scaTween.enabled = true;
+        Twinkle();
     }
 
 	public void fly()
@@ -179,6 +181,26 @@ public class Item : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         ViewUtils.SetActive(gameObject.transform, "Bg/Bomb", false);
         MessageCenter.SendMessage(MyMessageType.GAME_UI, MyMessage.TIME_OUT, null);
         textTimer.stopTiming();
+    }
+
+    public void Twinkle()
+    {
+        twinkleTween = transform.DOScale(0.7f, 0.5f).OnComplete(() =>
+        {
+            twinkleTween = transform.DOScale(1f, 0.5f).OnComplete(() =>
+            {
+                Twinkle();
+            });
+        });
+    }
+
+    public void StopTwinkle()
+    {
+        if (twinkleTween != null)
+        {
+            twinkleTween.Kill();
+        }
+        transform.localScale = Vector3.one;
     }
 
     public void OnPointerDown(PointerEventData eventData)

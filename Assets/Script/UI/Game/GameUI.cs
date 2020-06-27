@@ -28,6 +28,7 @@ public class GameUI : UIBase
     private List<List<Item>> canLinkList = new List<List<Item>>();
     /**已点击的列表*/
     private List<Item> clickList = new List<Item>();
+    private List<Item> tipItem = new List<Item>();
     private Text scoreText;
     private Text levelText;
     private Text goldText;
@@ -380,14 +381,7 @@ public class GameUI : UIBase
 
     public void ClickItem(Item item)
     {
-        if (tipItemList.Count > 0)
-        {
-            foreach (LineItem li in tipItemList)
-            {
-                li.DestroyThis();
-            }
-            tipItemList.Clear();
-        }
+        ClearTip();
         if (clickList.Count == 1)
         {
             Item item1 = clickList[0];
@@ -423,6 +417,26 @@ public class GameUI : UIBase
         {
             clickList.Clear();
             clickList.Add(item);
+        }
+    }
+
+    private void ClearTip()
+    {
+        if (tipItemList.Count > 0)
+        {
+            foreach (LineItem li in tipItemList)
+            {
+                li.DestroyThis();
+            }
+            tipItemList.Clear();
+        }
+        if (tipItem.Count > 0)
+        {
+            foreach (Item li in tipItem)
+            {
+                li.StopTwinkle();
+            }
+            tipItem.Clear();
         }
     }
 
@@ -474,6 +488,7 @@ public class GameUI : UIBase
             Item item = itemList[pathList[i].x][pathList[i].y];
             GameObject tipItem = ViewUtils.CreatePrefabAndSetParent(itemContent.transform, "TipItem");
             tipItem.transform.localPosition = item.transform.localPosition;
+            tipItem.transform.SetSiblingIndex(1);
             LineItem line = tipItem.AddComponent<LineItem>();
             line.initLine(i, pathList, Mathf.CeilToInt(itemSize + 1), item);
             tipItemList.Add(line);
@@ -661,10 +676,14 @@ public class GameUI : UIBase
         param["name"] = "prompt";
         FBstatistics.LogEvent("clicktool", param);
 
-        if (!SaveModel.CheckGold(hintPrice))
+        if (tipItemList.Count > 0)
+        {
+            return;
+        } if (!SaveModel.CheckGold(hintPrice))
         {
             return;
         }
+        ClearTip();
         SaveModel.UseGold(hintPrice);
         RefreshGold();
         AllItemCancleClick();
@@ -674,6 +693,8 @@ public class GameUI : UIBase
         item1.HintItem();
         item2.HintItem();
         CreatLine(item1.pos, item2.pos);
+        tipItem.Add(item1);
+        tipItem.Add(item2);
     }
 
     public void CreatLine(Point a, Point b)
