@@ -8,8 +8,8 @@ public class IronsoucrManager : UnitySingleton<IronsoucrManager>
 {
     
     // Use this for initialization
-    public static string uniqueUserId = "demoUserUnity";
-    public static string appKey = "38760d6d";
+    public static string uniqueUserId = "test";
+    public static string appKey = "ca95f32d";
     private UnityAction rewardsCallback = null;
     public void Init()
     {
