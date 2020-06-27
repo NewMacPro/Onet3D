@@ -65,6 +65,7 @@ public class LoseUI : UIBase
         IronsoucrManager.Instance.ShowRewardedVideo(() =>
         {
             SaveModel.AddGold(addGoldValue);
+            MessageCenter.SendMessage(MyMessageType.GAME_UI, MyMessage.REFRESH_RES);
             ViewUtils.SetActive(root, "AdBtn", false);
         });
         FBstatistics.LogEvent("watchad");
