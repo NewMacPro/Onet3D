@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -25.5, y: -585}
-  m_SizeDelta: {x: 523.9759, y: 85.88901}
+  m_AnchoredPosition: {x: 52.5, y: -585}
+  m_SizeDelta: {x: 679.98615, y: 85.88901}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3584501749561047826
 CanvasRenderer:
@@ -74,10 +74,10 @@ MonoBehaviour:
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u4F7F\u7528\u6D17\u724C\u9053\u5177\uFF0C\u91CD\u65B0\u6392\u5217\u56FE\u5757"
+  m_Text: Use image change props to change the set of images in the level
 --- !u!1 &3584501750305153968
 GameObject:
   m_ObjectHideFlags: 0
@@ -113,7 +113,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -0.000061035156}
-  m_SizeDelta: {x: 66.859856, y: 66.859856}
+  m_SizeDelta: {x: 59.30224, y: 59.30224}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3584501750305153975
 CanvasRenderer:
@@ -229,7 +229,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u4E00\u4E2A\u62D0\u70B9"
+  m_Text: An inflection point
 --- !u!1 &3584501750707273639
 GameObject:
   m_ObjectHideFlags: 0
@@ -307,7 +307,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u6CA1\u6709\u62D0\u70B9"
+  m_Text: No turning point
 --- !u!1 &3584501750740615400
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,7 +385,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u4E09\u4E2A\u62D0\u70B9"
+  m_Text: Tree inflection points
 --- !u!1 &3584501750793289872
 GameObject:
   m_ObjectHideFlags: 0
@@ -463,7 +463,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u9053\u5177\u4ECB\u7ECD"
+  m_Text: Prop introduction
 --- !u!1 &3584501750951704250
 GameObject:
   m_ObjectHideFlags: 0
@@ -541,7 +541,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u73A9\u6CD5\u8BF4\u660E"
+  m_Text: HOW TO PLAY
 --- !u!1 &3584501751023337112
 GameObject:
   m_ObjectHideFlags: 0
@@ -660,8 +660,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -25.5, y: -468}
-  m_SizeDelta: {x: 523.9759, y: 85.88901}
+  m_AnchoredPosition: {x: 52.503, y: -468}
+  m_SizeDelta: {x: 679.981, y: 85.88901}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3584501751053837825
 CanvasRenderer:
@@ -700,10 +700,10 @@ MonoBehaviour:
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u4F7F\u7528\u6D17\u724C\u9053\u5177\uFF0C\u91CD\u65B0\u6392\u5217\u56FE\u5757"
+  m_Text: Use shuffled items to rearrange tiles
 --- !u!1 &3584501751140033890
 GameObject:
   m_ObjectHideFlags: 0
@@ -857,8 +857,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -25.5, y: -707}
-  m_SizeDelta: {x: 523.9759, y: 85.88901}
+  m_AnchoredPosition: {x: 52.503, y: -707}
+  m_SizeDelta: {x: 679.981, y: 85.88901}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3584501751306673515
 CanvasRenderer:
@@ -897,10 +897,10 @@ MonoBehaviour:
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u4F7F\u7528\u6D17\u724C\u9053\u5177\uFF0C\u91CD\u65B0\u6392\u5217\u56FE\u5757"
+  m_Text: Use the hint props to find two matching tiles
 --- !u!1 &3584501751364182265
 GameObject:
   m_ObjectHideFlags: 0
@@ -978,4 +978,4 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u4E24\u4E2A\u62D0\u70B9"
+  m_Text: Two inflection points

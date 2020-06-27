@@ -2,7 +2,7 @@
 "gallery": [
     {
 	  "id": 1,
-      "imgName": "yi", 
+      "imgName": "j", 
       "name": "Sofa illustrated book", 
       "gold": 0,
 	  "typeCount" : 24
@@ -25,7 +25,15 @@
     }, 
     {
 	  "id": 4,
-      "imgName": "cai", 
+      "imgName": "sc", 
+      "name": "Vegetables", 
+      "gold": 0,
+	  "typeCount" : 20,
+	  "unlockType": "ad"
+    },
+    {
+	  "id": 5,
+      "imgName": "he", 
       "name": "Vegetables", 
       "gold": 0,
 	  "typeCount" : 20,
