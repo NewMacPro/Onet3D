@@ -19,7 +19,7 @@ public class SafeAreaView : MonoBehaviour
     public float matchHeight = 2160f;   // UI单位
 
     public float minRatio = 9f / 18f;    // 限制最小宽高比
-    public float maxRatio = 10f / 16f;   // 限制最大宽高比
+    public float maxRatio = 9f / 16f;   // 限制最大宽高比
     public float maxShowWidthRatio = 2.2f;   
 
     public float scale = 1;   

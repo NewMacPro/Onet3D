@@ -223,7 +223,7 @@ MonoBehaviour:
   matchWidth: 1080
   matchHeight: 1920
   minRatio: 0.5
-  maxRatio: 0.625
+  maxRatio: 0.5625
   maxShowWidthRatio: 2.2
   scale: 1
 --- !u!1 &1000012026742308

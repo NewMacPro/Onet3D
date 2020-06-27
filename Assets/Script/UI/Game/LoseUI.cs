@@ -30,6 +30,9 @@ public class LoseUI : UIBase
     {
         ViewUtils.AddButtonClick(root, "ReStartBtn", OnClickReStartBtn);
         ViewUtils.AddButtonClick(root, "AdBtn", OnClickAdBtn);
+        ViewUtils.AddButtonClick(root, "EvaluateBtn", OnClickEvaluateBtn);
+        ViewUtils.AddButtonClick(root, "NoAdBtn", OnClickNoAdBtn);
+        ViewUtils.AddButtonClick(root, "ShareBtn", OnClickShareBtn);
 
         
         ViewUtils.SetText(root, "AdBtn/Text", addGoldValue.ToString());
@@ -69,5 +72,22 @@ public class LoseUI : UIBase
             ViewUtils.SetActive(root, "AdBtn", false);
         });
         FBstatistics.LogEvent("watchad");
+    }
+
+    void OnClickEvaluateBtn()
+    {
+
+    }
+
+    void OnClickNoAdBtn()
+    {
+        FBstatistics.LogEvent("clickremovead");
+        SaveModel.RemoveAD();
+        IronsoucrManager.Instance.DestroyBanner();
+    }
+
+    void OnClickShareBtn()
+    {
+
     }
 }

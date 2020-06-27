@@ -170,11 +170,19 @@ public class SaveModel
 
         ForceStorageSave();
     }
+
     public static bool IsGalleryUnlock(int galleryId)
     {
-        int index = player.galleryIds.FindIndex((int id)=>{
+        int index = player.galleryIds.FindIndex((int id) =>
+        {
             return id == galleryId;
         });
         return index >= 0;
+    }
+
+    public static void RemoveAD()
+    {
+        SaveModel.player.removeAD = true;
+        SaveModel.ForceStorageSave();
     }
 }

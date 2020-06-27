@@ -34,6 +34,10 @@ public class MainUI : UIBase
         ViewUtils.AddButtonClick(root, "GalleryBtn", OnClickGallery);
         ViewUtils.AddButtonClick(root, "NoadBtn", OnClickNoAdBtn);
         ViewUtils.AddButtonClick(root, "HelpBtn", OnClickHelp);
+        ViewUtils.SetActive(root, "ClearBtn", false);
+#if UNITY_EDITOR
+        ViewUtils.SetActive(root, "ClearBtn", true);
+#endif
         goldText = root.FindAChild<Text>("Gold/Text");
     }
 
@@ -58,8 +62,7 @@ public class MainUI : UIBase
     void OnClickNoAdBtn()
     {
         FBstatistics.LogEvent("clickremovead");
-        SaveModel.player.removeAD = true;
-        SaveModel.ForceStorageSave();
+        SaveModel.RemoveAD();
         IronsoucrManager.Instance.DestroyBanner();
     }
     void OnClickHelp()

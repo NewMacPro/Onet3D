@@ -40,9 +40,9 @@ public class WinUI : UIBase
         SaveModel.AddGold(totalAddGoldValue);
         ViewUtils.AddButtonClick(root, "ReStartBtn", OnClickReStartBtn);
         ViewUtils.AddButtonClick(root, "AdBtn", OnClickAdBtn);
-        ViewUtils.AddButtonClick(root, "AdBtn", OnClickEvaluateBtn);
-        ViewUtils.AddButtonClick(root, "AdBtn", OnClickNoAdBtn);
-        ViewUtils.AddButtonClick(root, "AdBtn", OnClickShareBtn);
+        ViewUtils.AddButtonClick(root, "EvaluateBtn", OnClickEvaluateBtn);
+        ViewUtils.AddButtonClick(root, "NoAdBtn", OnClickNoAdBtn);
+        ViewUtils.AddButtonClick(root, "ShareBtn", OnClickShareBtn);
 
         ViewUtils.SetText(root, "TitleText", "YOU WIN！");
         ViewUtils.SetText(root, "CheckPointText", "level" + SaveModel.player.level);
@@ -111,6 +111,8 @@ public class WinUI : UIBase
 
     void OnClickNoAdBtn() {
         FBstatistics.LogEvent("clickremovead");
+        SaveModel.RemoveAD();
+        IronsoucrManager.Instance.DestroyBanner();
     }
 
     void OnClickShareBtn() { 
