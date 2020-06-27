@@ -9,6 +9,7 @@ public class WinUI : UIBase
     private int timeValue;
     private int starAddGoldValue = 0;
     private int timeAddGoldValue = 0;
+    private int totalAddGoldValue = 0;
     private float timer = 0;
     public static void Create(int star , int time)
     {
@@ -30,10 +31,13 @@ public class WinUI : UIBase
 
     void Attach()
     {
+
         //3颗星星转换为1金币，6S转换为1金币
         starAddGoldValue = Mathf.FloorToInt(starValue / 3);
         timeAddGoldValue = Mathf.FloorToInt(timeValue / 6);
-        SaveModel.AddGold(starAddGoldValue + timeAddGoldValue);
+        totalAddGoldValue = starAddGoldValue + timeAddGoldValue;
+
+        SaveModel.AddGold(totalAddGoldValue);
         ViewUtils.AddButtonClick(root, "ReStartBtn", OnClickReStartBtn);
         ViewUtils.AddButtonClick(root, "AdBtn", OnClickAdBtn);
         ViewUtils.AddButtonClick(root, "AdBtn", OnClickEvaluateBtn);
@@ -48,7 +52,7 @@ public class WinUI : UIBase
 
         ViewUtils.SetText(root, "TimeBg/TimeValue", timeValue + "s");
         ViewUtils.SetText(root, "TimeBg/GoldValue", "+" + timeAddGoldValue);
-        ViewUtils.SetText(root, "AdBtn/Text", "" + starAddGoldValue + timeAddGoldValue);
+        ViewUtils.SetText(root, "AdBtn/Text", "" + totalAddGoldValue);
         ViewUtils.SetText(root, "ReStartBtn/Text", "CONTINUE");
 
         //统计
@@ -57,7 +61,7 @@ public class WinUI : UIBase
         param["ispassed"] = "true";
         param["getstars"] = starValue.ToString();
         param["lefttime"] = timeValue.ToString();
-        param["getcoins"] = "" + starAddGoldValue + timeAddGoldValue;
+        param["getcoins"] = totalAddGoldValue.ToString();
 
         ShowLuckyRewards();
         FBstatistics.LogEvent("gamelevel", param);
@@ -90,7 +94,7 @@ public class WinUI : UIBase
     void OnClickAdBtn() {
         IronsoucrManager.Instance.ShowRewardedVideo(() =>
         {
-            SaveModel.AddGold(starAddGoldValue + timeAddGoldValue);
+            SaveModel.AddGold(totalAddGoldValue);
             MessageCenter.SendMessage(MyMessageType.GAME_UI, MyMessage.REFRESH_RES);
             ViewUtils.SetActive(root, "AdBtn", false);
         });
