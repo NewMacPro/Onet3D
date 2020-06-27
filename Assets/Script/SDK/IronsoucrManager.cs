@@ -112,6 +112,13 @@ public class IronsoucrManager : UnitySingleton<IronsoucrManager>
 
     public void ShowRewardedVideo(UnityAction callback = null)
     {
+#if UNITY_EDITOR
+        if (callback != null)
+        {
+            callback();
+        }
+        return;
+#endif
         if (RemoveAD)
         {
             if (callback != null)

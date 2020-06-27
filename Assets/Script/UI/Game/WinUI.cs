@@ -65,6 +65,7 @@ public class WinUI : UIBase
 
         ShowLuckyRewards();
         FBstatistics.LogEvent("gamelevel", param);
+        ShowEvaluate();
         
     }
 
@@ -75,6 +76,14 @@ public class WinUI : UIBase
     void Refresh()
     {
 
+    }
+
+    void ShowEvaluate()
+    {
+        if (SaveModel.player.level == Const.EVALUETE_LEVEL)
+        {
+            SDKInterface.Instance.Evaluate();
+        }
     }
 
     void OnClickReStartBtn() {
@@ -105,8 +114,9 @@ public class WinUI : UIBase
         FBstatistics.LogEvent("gameend" , param);
     }
 
-    void OnClickEvaluateBtn() { 
-    
+    void OnClickEvaluateBtn()
+    {
+        SDKInterface.Instance.Evaluate();
     }
 
     void OnClickNoAdBtn() {
@@ -115,8 +125,8 @@ public class WinUI : UIBase
         IronsoucrManager.Instance.DestroyBanner();
     }
 
-    void OnClickShareBtn() { 
-    
+    void OnClickShareBtn() {
+        SDKInterface.Instance.Share();
     }
 
     void ShowLuckyRewards()

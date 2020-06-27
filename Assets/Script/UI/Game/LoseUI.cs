@@ -76,7 +76,7 @@ public class LoseUI : UIBase
 
     void OnClickEvaluateBtn()
     {
-
+        SDKInterface.Instance.Evaluate();
     }
 
     void OnClickNoAdBtn()
@@ -88,6 +88,6 @@ public class LoseUI : UIBase
 
     void OnClickShareBtn()
     {
-
+        SDKInterface.Instance.Share();
     }
 }
