@@ -58,6 +58,9 @@ public class MainUI : UIBase
     void OnClickNoAdBtn()
     {
         FBstatistics.LogEvent("clickremovead");
+        SaveModel.player.removeAD = true;
+        SaveModel.ForceStorageSave();
+        IronsoucrManager.Instance.DestroyBanner();
     }
     void OnClickHelp()
     {

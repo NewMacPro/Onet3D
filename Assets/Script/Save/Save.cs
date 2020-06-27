@@ -1,4 +1,5 @@
-﻿using LitJson;
+﻿
+using LitJson;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -13,6 +14,7 @@ public class Save
     public bool soundSwitch = true;
     public bool musicSwitch = true;
     public bool notifySwitch = true;
+    public bool removeAD = false;
     public CurrentLevel currentLevel = new CurrentLevel();
     public List<int> galleryIds = new List<int>();
     public List<int> currentGalleryIds = new List<int>();

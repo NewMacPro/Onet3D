@@ -11,6 +11,14 @@ public class IronsoucrManager : UnitySingleton<IronsoucrManager>
     public static string uniqueUserId = "demoUserUnity";
     public static string appKey = "38760d6d";
     private UnityAction rewardsCallback = null;
+
+    private bool RemoveAD
+    {
+        get
+        {
+            return SaveModel.player.removeAD;
+        }
+    }
     public void Init()
     {
         Debug.Log("unity-script: MyAppStart Start called");
@@ -73,11 +81,19 @@ public class IronsoucrManager : UnitySingleton<IronsoucrManager>
 
     public void LoadBanner()
     {
+        if (RemoveAD)
+        {
+            return;
+        }
         //加载后自动显示
         IronSource.Agent.loadBanner(IronSourceBannerSize.BANNER, IronSourceBannerPosition.BOTTOM);
         //IronSource.Agent.hideBanner(); //隐藏banner
         //IronSource.Agent.displayBanner(); //恢复显示banner
         //IronSource.Agent.destroyBanner(); //销毁banner
+    }
+    public void DestroyBanner()
+    {
+        IronSource.Agent.destroyBanner(); //销毁banner
     }
     void LoadInterstitial()
     {
@@ -86,12 +102,24 @@ public class IronsoucrManager : UnitySingleton<IronsoucrManager>
 
     public void ShowInterstitial()
     {
+        if (RemoveAD)
+        {
+            return;
+        }
         //IronSource.Agent.isInterstitialReady() //可以判断是否有插屏广告
         IronSource.Agent.showInterstitial();
     }
 
     public void ShowRewardedVideo(UnityAction callback = null)
     {
+        if (RemoveAD)
+        {
+            if (callback != null)
+            {
+                callback();
+            }
+            return;
+        }
         Debug.Log("unity-script: ShowRewardedVideoButtonClicked");
         if (IronSource.Agent.isRewardedVideoAvailable())
         {
