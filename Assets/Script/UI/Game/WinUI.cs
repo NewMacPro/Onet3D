@@ -91,6 +91,7 @@ public class WinUI : UIBase
         IronsoucrManager.Instance.ShowRewardedVideo(() =>
         {
             SaveModel.AddGold(starAddGoldValue + timeAddGoldValue);
+            MessageCenter.SendMessage(MyMessageType.GAME_UI, MyMessage.REFRESH_RES);
             ViewUtils.SetActive(root, "AdBtn", false);
         });
 
