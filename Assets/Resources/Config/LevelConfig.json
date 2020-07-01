@@ -4,70 +4,70 @@
       "level": 1, 
       "size": "1", 
       "time": 130,
-	  "haveBomb" : true,
+	  "haveBomb" : false,
 	  "moveType" : 0
     }, 
     {
       "level": 2, 
-      "size": "2", 
-      "time": 200,
+      "size": "1", 
+      "time": 130,
 	  "haveBomb" : false,
-	  "moveType" : 1
+	  "moveType" : 0
     }, 
     {
       "level": 3, 
-      "size": "3", 
-      "time": 280,
-	  "haveBomb" : false,
-	  "moveType" : 2
+      "size": "1", 
+      "time": 130,
+	  "haveBomb" : true,
+	  "moveType" : 0
     }, 
     {
       "level": 4, 
       "size": "2", 
       "time": 200,
 	  "haveBomb" : false,
-	  "moveType" : 5
-    },
-    {
-      "level": 5, 
-      "size": "2", 
-      "time": 200,
-	  "haveBomb" : true,
 	  "moveType" : 0
     },
     {
+      "level": 5, 
+      "size": "1", 
+      "time": 130,
+	  "haveBomb" : true,
+	  "moveType" : 5
+    },
+    {
       "level": 6, 
+      "size": "2", 
+      "time": 200,
+	  "haveBomb" : false,
+	  "moveType" : 3
+    },
+    {
+      "level": 7, 
       "size": "1", 
       "time": 130,
 	  "haveBomb" : true,
 	  "moveType" : 0
     },
     {
-      "level": 7, 
-      "size": "4", 
-      "time": 370,
-	  "haveBomb" : true,
-	  "moveType" : 2
-    },
-    {
       "level": 8, 
-      "size": "3", 
-      "time": 280,
+      "size": "2", 
+      "time": 200,
 	  "haveBomb" : false,
-	  "moveType" : 3
+	  "moveType" : 0
     },
     {
       "level": 9, 
       "size": "1", 
       "time": 130,
 	  "haveBomb" : true,
-	  "moveType" : 0
+	  "moveType" : 5
     },
     {
       "level": 10, 
-      "size": "3", 
-      "time": 280,
-	  "haveBomb" : true,
+      "size": "2", 
+      "time": 200,
+	  "haveBomb" : false,
 	  "moveType" : 0
     },
     {
@@ -75,127 +75,163 @@
       "size": "2", 
       "time": 200,
 	  "haveBomb" : false,
-	  "moveType" : 4
+	  "moveType" : 0
     },
     {
       "level": 12, 
-      "size": "4", 
-      "time": 370,
+      "size": "1", 
+      "time": 130,
 	  "haveBomb" : true,
-	  "moveType" : 3
+	  "moveType" : 0
     },
     {
       "level": 13, 
       "size": "2", 
       "time": 200,
-	  "haveBomb" : true,
-	  "moveType" : 2
+	  "haveBomb" : false,
+	  "moveType" : 4
     },
     {
       "level": 14, 
       "size": "1", 
       "time": 130,
-	  "haveBomb" : false,
+	  "haveBomb" : true,
 	  "moveType" : 0
     },
     {
       "level": 15, 
-      "size": "3", 
-      "time": 280,
-	  "haveBomb" : true,
-	  "moveType" : 2
-    },
-    {
-      "level": 16, 
       "size": "2", 
       "time": 200,
 	  "haveBomb" : false,
-	  "moveType" : 4
+	  "moveType" : 0
+    },
+    {
+      "level": 16, 
+      "size": "3", 
+      "time": 280,
+	  "haveBomb" : true,
+	  "moveType" : 5
     },
     {
       "level": 17, 
-      "size": "4", 
-      "time": 370,
-	  "haveBomb" : true,
-	  "moveType" : 5
+      "size": "1", 
+      "time": 130,
+	  "haveBomb" : false,
+	  "moveType" : 2
     },
     {
       "level": 18, 
       "size": "2", 
       "time": 200,
-	  "haveBomb" : true,
-	  "moveType" : 2
+	  "haveBomb" : false,
+	  "moveType" : 0
     },
     {
       "level": 19, 
-      "size": "3", 
-      "time": 280,
+      "size": "1", 
+      "time": 130,
 	  "haveBomb" : false,
-	  "moveType" : 4
+	  "moveType" : 3
     },
     {
       "level": 20, 
-      "size": "4", 
-      "time": 370,
-	  "haveBomb" : false,
-	  "moveType" : 5
+      "size": "2", 
+      "time": 200,
+	  "haveBomb" : true,
+	  "moveType" : 0
     },
     {
       "level": 21, 
       "size": "3", 
       "time": 280,
-	  "haveBomb" : true,
+	  "haveBomb" : false,
 	  "moveType" : 0
     },
     {
       "level": 22, 
-      "size": "2", 
-      "time": 200,
+      "size": "1", 
+      "time": 130,
 	  "haveBomb" : false,
-	  "moveType" : 4
-    },
-    {
-      "level": 23, 
-      "size": "4", 
-      "time": 370,
-	  "haveBomb" : true,
 	  "moveType" : 0
     },
     {
-      "level": 24, 
+      "level": 23, 
       "size": "2", 
       "time": 200,
 	  "haveBomb" : true,
+	  "moveType" : 5
+    },
+    {
+      "level": 24, 
+      "size": "1", 
+      "time": 130,
+	  "haveBomb" : false,
 	  "moveType" : 2
     },
     {
       "level": 25, 
-      "size": "1", 
-      "time": 130,
-	  "haveBomb" : false,
+      "size": "2", 
+      "time": 200,
+	  "haveBomb" : true,
 	  "moveType" : 0
     },
     {
       "level": 26, 
       "size": "3", 
       "time": 280,
-	  "haveBomb" : true,
-	  "moveType" : 2
-    },
-    {
-      "level": 27, 
-      "size": "2", 
-      "time": 200,
 	  "haveBomb" : false,
 	  "moveType" : 0
     },
     {
+      "level": 27, 
+      "size": "1", 
+      "time": 130,
+	  "haveBomb" : false,
+	  "moveType" : 4
+    },
+    {
       "level": 28, 
+      "size": "2", 
+      "time": 200,
+	  "haveBomb" : false,
+	  "moveType" : 5
+    },
+    {
+      "level": 29, 
+      "size": "1", 
+      "time": 130,
+    "haveBomb" : true,
+    "moveType" : 0
+    },
+    {
+      "level": 30, 
+      "size": "2", 
+      "time": 200,
+    "haveBomb" : false,
+    "moveType" : 2
+    },
+    {
+      "level": 31, 
       "size": "4", 
       "time": 370,
-	  "haveBomb" : true,
-	  "moveType" : 5
+    "haveBomb" : true,
+    "moveType" : 0
+    },
+    {
+      "level": 32, 
+      "size": "1", 
+      "time": 130,
+    "haveBomb" : false,
+    "moveType" : 5
+    },
+    {
+      "level": 33, 
+      "size": "2", 
+      "time": 200,
+    "haveBomb" : true,
+    "moveType" : 0
     }
+    
   ],
  "size":{
 	"1":{
