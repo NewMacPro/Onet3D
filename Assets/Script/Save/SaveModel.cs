@@ -192,7 +192,9 @@ public class SaveModel
 
     public static void RemoveAD()
     {
+#if UNITY_EDITOR
         SaveModel.player.removeAD = true;
         SaveModel.ForceStorageSave();
+#endif 
     }
 }
