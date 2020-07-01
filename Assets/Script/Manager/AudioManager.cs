@@ -19,7 +19,7 @@ public class AudioManager : UnitySingleton<AudioManager>
     public float low_pitch_range = 0.95f;
     public float high_pitch_range = 1.05f;
 
-    public bool enableBGM = false;
+    public bool enableBGM = true;
 
     // Use this for initialization
     public override void Awake()
@@ -79,7 +79,7 @@ public class AudioManager : UnitySingleton<AudioManager>
 
     public void PlaySingle(AudioClip clip, float volume)
     {
-        if (!LocalSave.SoundOn())
+        if (!SaveModel.SoundSwith)
             return;
 
         AudioSource playSource = effectSource;
@@ -98,19 +98,18 @@ public class AudioManager : UnitySingleton<AudioManager>
     {
         if (!enableBGM)
             return;
-
+        
         AudioClip clip = iResourceManager.Load<AudioClip>(bgmPath);
         if (musicSource.clip == null || musicSource.clip.name != clip.name)
         {
             musicSource.clip = clip;
             musicSource.Play();
         }
-        SetMusicOn(LocalSave.MusicOn());
+        SetMusicOn(SaveModel.MusicSwith);
     }
 
     public void SetMusicOn(bool music_on)
     {
-        LocalSave.SetMusic(music_on);
         musicSource.mute = !music_on;
     }
 
@@ -131,23 +130,6 @@ public class AudioManager : UnitySingleton<AudioManager>
         }
 
         return false;
-    }
-
-    public void SetAudioOn(bool value)
-    {
-        if (!value)
-        {
-            musicSource.mute = true;
-            effectSource.mute = true;
-            effectSource1.mute = true;
-        }
-        else
-        {
-            SetMusicOn(LocalSave.MusicOn());
-            SetSoundOn(LocalSave.SoundOn());
-        }
-
-        LocalSave.SetAudio(value);
     }
 
     public void PlayAList(List<string> soundsList)

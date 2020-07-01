@@ -82,6 +82,7 @@ public class SettingUI : UIBase
         FBstatistics.LogEvent("clickswitch", param);
 
         SaveModel.MusicSwith = !SaveModel.MusicSwith;
+        AudioManager.Instance.SetMusicOn(SaveModel.MusicSwith);
         RefreshMusicSwitch();
     }
     void OnClickNotifyBtn()

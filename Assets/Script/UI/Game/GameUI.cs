@@ -456,6 +456,7 @@ public class GameUI : UIBase
         pathList.Clear();
         AddScore(pathList.Count);
 
+        AudioManager.Instance.PlaySingle("Sound/clear");
 
         if (GameModel.IsFinish(itemList))
         {
@@ -716,6 +717,8 @@ public class GameUI : UIBase
         }
         else if (param == GameModel.BACK_GAME_RESTART)
         {
+            currentLevel.level = -1;
+            SaveModel.ForceStorageSave();
             RestartGame();
         }
         else if (param == GameModel.BACK_GAME_FAIL)
@@ -902,6 +905,7 @@ public class GameUI : UIBase
     {
 #if UNITY_EDITOR
         SaveModel.LevelUp();
+        GameManager.Instance.gameNum++;
         GameUI.Create();
 #endif
     }

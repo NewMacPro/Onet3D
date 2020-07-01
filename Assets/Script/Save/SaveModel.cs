@@ -22,12 +22,16 @@ public class SaveModel
         return SaveModel.player;
     }
 
-    public static void AddGold(int value)
+    public static void AddGold(int value , bool showAnime = true)
     {
         SaveModel.player.gold += value;
         if (SaveModel.player.gold <= 0)
         {
             SaveModel.player.gold = 0;
+        }
+        if (showAnime)
+        {
+            GetGoldUI.Create(value);
         }
         ForceStorageSave();
     }
@@ -60,14 +64,20 @@ public class SaveModel
     {
         get { return SaveModel.player.soundSwitch;}
 
-        set { SaveModel.player.soundSwitch = value; }
+        set { 
+            SaveModel.player.soundSwitch = value;
+            SaveModel.ForceStorageSave();
+        }
     }
 
     public static bool MusicSwith
     {
          get { return SaveModel.player.musicSwitch;}
 
-        set { SaveModel.player.musicSwitch = value; }
+        set { 
+            SaveModel.player.musicSwitch = value;
+            SaveModel.ForceStorageSave();
+        }
     }
 
     public static bool NotifySwitch

@@ -74,6 +74,7 @@ public class PauseUI : UIBase
     void OnClickMusicBtn()
     {
         SaveModel.MusicSwith = !SaveModel.MusicSwith;
+        AudioManager.Instance.SetMusicOn(SaveModel.MusicSwith);
         RefreshMusicSwitch();
     }
 

@@ -31,13 +31,14 @@ public class WinUI : UIBase
 
     void Attach()
     {
+        AudioManager.Instance.PlaySingle("Sound/gameFinish");
 
         //3颗星星转换为1金币，6S转换为1金币
         starAddGoldValue = Mathf.FloorToInt(starValue / 3);
         timeAddGoldValue = Mathf.FloorToInt(timeValue / 6);
         totalAddGoldValue = starAddGoldValue + timeAddGoldValue;
 
-        SaveModel.AddGold(totalAddGoldValue);
+        SaveModel.AddGold(totalAddGoldValue , false);
         ViewUtils.AddButtonClick(root, "ReStartBtn", OnClickReStartBtn);
         ViewUtils.AddButtonClick(root, "AdBtn", OnClickAdBtn);
         ViewUtils.AddButtonClick(root, "EvaluateBtn", OnClickEvaluateBtn);

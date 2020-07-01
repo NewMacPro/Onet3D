@@ -54,24 +54,6 @@ using LitJson;
             return info;
         }
 
-        public static bool SoundOn()
-        {
-            string yes_or_no = PlayerPrefs.GetString("UseSound");
-            if (yes_or_no.Equals(""))       //尚未创建，默认出声音
-                return true;
-
-            return yes_or_no.Equals("yes");
-        }
-
-        public static bool MusicOn()
-        {
-            string yes_or_no = PlayerPrefs.GetString("UseMusic");
-            if (yes_or_no.Equals(""))
-                return true;
-
-            return yes_or_no.Equals("yes");
-        }
-
         public static bool AudioOn()
         {
             string yes_or_no = PlayerPrefs.GetString("UseAudio");

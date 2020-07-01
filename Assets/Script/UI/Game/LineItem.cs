@@ -25,7 +25,7 @@ public class LineItem : MonoBehaviour
 
         hideAllLine();
         Vector2 size = lineU.transform.GetComponent<RectTransform>().sizeDelta;
-        float width = height / 2 + 15f;
+        float width = height / 2 + 10f;
         lineU.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(width, size.y);
         lineD.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(width, size.y);
         lineL.transform.GetComponent<RectTransform>().sizeDelta = new Vector2(width, size.y);
