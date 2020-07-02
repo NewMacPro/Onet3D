@@ -10,7 +10,7 @@ public class SDKAndroid : SDKDefault
     {
         CoroutineHelper.Instance.WaitForEndOfFrame(() =>
         {
-            string shareText = "I've reached level " + SaveModel.player.level + ", so interesting! Come and play Onet 3D with me! https://play.google.com/store/apps/details?id=com.connetly.puzzle.game"
+            string shareText = "I've reached level " + SaveModel.player.level + ", so interesting! Come and play Onet 3D with me! https://play.google.com/store/apps/details?id=com.connetly.puzzle.game";
             new NativeShare().SetSubject("Subject goes here").SetText("Share!").Share();
 
         });

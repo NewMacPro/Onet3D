@@ -89,9 +89,12 @@ public class GameUI : UIBase
         ViewUtils.AddButtonClick(root, "PauseBtn", OnClickPause);
         ViewUtils.AddButtonClick(root, "ResetBtn", OnClickReset);
         ViewUtils.AddButtonClick(root, "ImageBtn", OnClickImage);
-        ViewUtils.AddButtonClick(root, "HintBtn", OnClickHint);
         ViewUtils.AddButtonClick(root, "Gold", OnClickGoldDebug);
         ViewUtils.AddButtonClick(root, "Level", OnClickLevelDebug);
+        ViewUtils.AddButtonClick(root, "HintBtn", () =>
+        {
+            OnClickHint(true);
+        });
 
         ViewUtils.SetText(root, "ResetBtn/Text", resetPrice.ToString());
         ViewUtils.SetText(root, "ImageBtn/Text", changeImagePrice.ToString());
@@ -233,7 +236,7 @@ public class GameUI : UIBase
 
     private void GameOver()
     {
-        CoroutineHelper.Stop(coroutine);
+        CoroutineHelper.Instance.Stop(coroutine);
         SaveModel.ClearCurrentLevel();
         StartTiming(false);
         RebornUI.Create(BackToGame);
@@ -563,7 +566,7 @@ public class GameUI : UIBase
 
     private void GameFinish()
     {
-        CoroutineHelper.Stop(coroutine);
+        CoroutineHelper.Instance.Stop(coroutine);
         SaveModel.ClearCurrentLevel();
         StartTiming(false);
         int useTime = config.time - (int)textTimer.getTime() / 10000;
@@ -675,7 +678,7 @@ public class GameUI : UIBase
         });
     }
 
-    void OnClickHint()
+    void OnClickHint(bool needGold)
     {
         Dictionary<string, object> param = new Dictionary<string, object>();
         param["name"] = "prompt";
@@ -684,12 +687,17 @@ public class GameUI : UIBase
         if (tipItemList.Count > 0)
         {
             return;
-        } if (!SaveModel.CheckGold(hintPrice))
+        }
+        if (needGold)
         {
-            return;
+            if (!SaveModel.CheckGold(hintPrice))
+            {
+                return;
+            }
+            SaveModel.UseGold(hintPrice);
+
         }
         ClearTip();
-        SaveModel.UseGold(hintPrice);
         RefreshGold();
         AllItemCancleClick();
         int rand = Random.Range(0, canLinkList.Count);
@@ -704,14 +712,14 @@ public class GameUI : UIBase
 
     void AutoHint()
     {
-        if (SaveMode.play.level > 1)
+        if (SaveModel.player.level > 1)
         {
             return;
         }
-        CoroutineHelper.Stop(coroutine);
+        CoroutineHelper.Instance.Stop(coroutine);
         coroutine = CoroutineHelper.Instance.WaitForSeconds(3f, () =>
         {
-            OnClickHint();
+            OnClickHint(false);
         });
     }
 
@@ -758,7 +766,7 @@ public class GameUI : UIBase
 
     void BackToMainUI()
     {
-        CoroutineHelper.Stop(coroutine);
+        CoroutineHelper.Instance.Stop(coroutine);
         GameManager.Instance.showInterstitial = true;
         UIManager.GetInstance().ShowLobbyView();
     }

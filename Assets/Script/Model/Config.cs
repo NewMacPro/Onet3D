@@ -74,8 +74,12 @@ public class Config: Singleton<Config>
             return new LevelConfig();
         }
         int index = level - 1;
-        index = index % config.Length;
-        return config[index];
+        if (index < 15)
+        {
+            return config[index];
+        }
+        index = (index - 15) % (config.Length - 15);
+        return config[15 + index];
     }
 
     public Dictionary<string, LevelSize> GetLevelSizeConfig()
