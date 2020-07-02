@@ -7,9 +7,9 @@
 √7 游戏界面适配更改，下边别空太大地方
 √8 视频广告可能有bug（当前是没有缓存的video广告可展示，直接点击就把金币给了。这个逻辑有点问题）
 √9 图集名称更改（应该是图集界面的名字不太对，可能有重复，在配置里看看）
-10 第四关之后再开始有插屏广告
-11 第一局，只要用户3秒没有点击，就给提示
-12 初始金币300
+√10 第四关之后再开始有插屏广告
+?11 第一局，只要用户3秒没有点击，就给提示
+√12 初始金币300
 13 分享文案：level读取当前level
  I've reached level 1, so interesting! Come and play Onet 3D with me! https://play.google.com/store/apps/details?id=com.connetly.puzzle.game
 14 换背景

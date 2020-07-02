@@ -51,7 +51,7 @@ public class GameUI : UIBase
     private int galleryId = 0; //图集种类
     private CurrentLevel currentLevel;
     private Image viewMask;
-
+    private Coroutine coroutine;
     private int _score;
 
     public static void Create()
@@ -99,7 +99,7 @@ public class GameUI : UIBase
         ViewUtils.SetTextColor(root, "ResetBtn/Text",  SaveModel.CheckGold(resetPrice, false) ? Color.white : Color.red);
         ViewUtils.SetTextColor(root, "ImageBtn/Text", SaveModel.CheckGold(changeImagePrice, false) ? Color.white : Color.red);
         ViewUtils.SetTextColor(root, "HintBtn/Text", SaveModel.CheckGold(hintPrice, false) ? Color.white : Color.red);
-        if (GameManager.Instance.showInterstitial)
+        if (GameManager.Instance.showInterstitial && SaveModel.player.level > 4)
         {
             IronsoucrManager.Instance.ShowInterstitial();
             GameManager.Instance.showInterstitial = false;
@@ -145,6 +145,7 @@ public class GameUI : UIBase
 
         CreateItems();
         CheckHaveCanLink();
+        AutoHint();
     }
 
     void InitScore()
@@ -232,6 +233,7 @@ public class GameUI : UIBase
 
     private void GameOver()
     {
+        CoroutineHelper.Stop(coroutine);
         SaveModel.ClearCurrentLevel();
         StartTiming(false);
         RebornUI.Create(BackToGame);
@@ -382,6 +384,7 @@ public class GameUI : UIBase
     public void ClickItem(Item item)
     {
         ClearTip();
+        AutoHint();
         if (clickList.Count == 1)
         {
             Item item1 = clickList[0];
@@ -560,6 +563,7 @@ public class GameUI : UIBase
 
     private void GameFinish()
     {
+        CoroutineHelper.Stop(coroutine);
         SaveModel.ClearCurrentLevel();
         StartTiming(false);
         int useTime = config.time - (int)textTimer.getTime() / 10000;
@@ -698,6 +702,19 @@ public class GameUI : UIBase
         tipItem.Add(item2);
     }
 
+    void AutoHint()
+    {
+        if (SaveMode.play.level > 1)
+        {
+            return;
+        }
+        CoroutineHelper.Stop(coroutine);
+        coroutine = CoroutineHelper.Instance.WaitForSeconds(3f, () =>
+        {
+            OnClickHint();
+        });
+    }
+
     public void CreatLine(Point a, Point b)
     {
         List<Point> pathList = GameModel.CheckLink(a, b, itemList);
@@ -713,7 +730,10 @@ public class GameUI : UIBase
         else if (param == GameModel.BACK_GAME_CONTIUE)
         {
             StartTiming(true);
-            IronsoucrManager.Instance.ShowInterstitial();
+            if (SaveModel.player.level > 4)
+            {
+                IronsoucrManager.Instance.ShowInterstitial();
+            }
         }
         else if (param == GameModel.BACK_GAME_RESTART)
         {
@@ -738,6 +758,7 @@ public class GameUI : UIBase
 
     void BackToMainUI()
     {
+        CoroutineHelper.Stop(coroutine);
         GameManager.Instance.showInterstitial = true;
         UIManager.GetInstance().ShowLobbyView();
     }
