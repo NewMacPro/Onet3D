@@ -283,6 +283,7 @@ public class IronsoucrManager : UnitySingleton<IronsoucrManager>
 
     void RewardedVideoAdShowFailedEvent(IronSourceError error)
     {
+        HintUI.Create("The reward video is not ready~");
         Debug.Log("unity-script: I got RewardedVideoAdShowFailedEvent, code :  " + error.getCode() + ", description : " + error.getDescription());
     }
 

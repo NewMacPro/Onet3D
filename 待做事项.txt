@@ -1,7 +1,7 @@
 1 去广告的文字修改
 2 炸弹的关卡新手引导
-3 更新配置文档
-4 分享的文案更改
+√3 更新配置文档
+√4 分享的文案更改
 5 设置界面所有按钮的功能
 ?6 loading界面，及提示文本。
 √7 游戏界面适配更改，下边别空太大地方
@@ -10,9 +10,9 @@
 √10 第四关之后再开始有插屏广告
 ?11 第一局，只要用户3秒没有点击，就给提示
 √12 初始金币300
-13 分享文案：level读取当前level
+√13 分享文案：level读取当前level
  I've reached level 1, so interesting! Come and play Onet 3D with me! https://play.google.com/store/apps/details?id=com.connetly.puzzle.game
 14 换背景
 15 新手引导
-16 如果视频广告没有缓存下来，点击视频广告按钮，则提示“The reward video is not ready~”
-17 从15关以后进行循环，第5关以后开始加广告
+?16 如果视频广告没有缓存下来，点击视频广告按钮，则提示“The reward video is not ready~”
+17 LevelConfig从15关以后进行循环
