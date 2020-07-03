@@ -2,8 +2,9 @@
 √2 炸弹的关卡新手引导：资源放在Guide里
 √3 更新配置文档
 √4 分享的文案更改
-5 设置界面所有按钮的功能：设置界面重新设计，多一个发邮件功能
-6 loading界面，及提示文本。：效果图在Guide里
+5√① 设置界面所有按钮的功能：设置界面重新设计
+  ②多一个发邮件功能
+√6 loading界面，及提示文本。：效果图在Guide里
 Tips：Match two more distant blocks to get a higher score.
 Tips：Use shuffle props to rearrange blocks.
 Tips：In the settings,you can close theimages you don’t like.

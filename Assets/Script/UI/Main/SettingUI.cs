@@ -13,6 +13,8 @@ public class SettingUI : UIBase
 
     void Init()
     {
+        CurrentUIType.UIForms_Type = UIFormsType.PopUp;
+        CurrentUIType.UIForms_ShowMode = UIFormsShowMode.PopUp;
         Redisplay();
     }
 
@@ -25,22 +27,20 @@ public class SettingUI : UIBase
 
     void Attach()
     {
-        ViewUtils.AddButtonClick(root, "CloseBtn", BackAView);
+        ViewUtils.AddButtonClick(root, "CloseBtn", Close);
         ViewUtils.AddButtonClick(root, "Sound/SwitchBtn", OnClickSoundBtn);
         ViewUtils.AddButtonClick(root, "Music/SwitchBtn", OnClickMusicBtn);
         ViewUtils.AddButtonClick(root, "Notify/SwitchBtn", OnClickNotifyBtn);
-        ViewUtils.AddButtonClick(root, "SupportBtn/Text", OnClickSupportBtn);
-        ViewUtils.AddButtonClick(root, "PrivacyBtn/Text", OnClickPrivacyBtn);
-        ViewUtils.AddButtonClick(root, "TermsBtn/Text", OnClickTermsBtn);
-        ViewUtils.AddButtonClick(root, "DataBtn/Text", OnClickDataBtn);
+        ViewUtils.AddButtonClick(root, "FeedbackBtn", OnClickFeedbackBtn);
+        ViewUtils.AddButtonClick(root, "Score", OnClickScoreBtn);
+        ViewUtils.AddButtonClick(root, "Share", OnClickShareBtn);
         ViewUtils.SetText(root, "TitleText", "SETTINGS");
         ViewUtils.SetText(root, "Sound/Text", "Sound");
         ViewUtils.SetText(root, "Music/Text", "Music");
         ViewUtils.SetText(root, "Notify/Text", "Notify");
-        ViewUtils.SetText(root, "SupportBtn/Text", "SUPPORT");
-        ViewUtils.SetText(root, "PrivacyBtn/Text", "PRIVAC POLICY");
-        ViewUtils.SetText(root, "TermsBtn/Text", "TERMS OF SERVICE");
-        ViewUtils.SetText(root, "DataBtn/Text", "PERSONAL DATA \nREQUEST");
+        ViewUtils.SetText(root, "FeedbackBtn/Text", "FEEDBACK");
+        ViewUtils.SetText(root, "ScoreBtn/Text", "SCORE");
+        ViewUtils.SetText(root, "ShareBtn/Text", "SHARE");
     }
 
     void Refresh()
@@ -95,21 +95,18 @@ public class SettingUI : UIBase
         SaveModel.NotifySwitch = !SaveModel.NotifySwitch;
         RefreshNotifySwitch();
     }
-    void OnClickSupportBtn()
+    void OnClickFeedbackBtn()
     {
 
     }
-    void OnClickPrivacyBtn()
+    void OnClickScoreBtn()
     {
-        //IronsoucrManager.Instance.ShowInterstitial();
+        SDKInterface.Instance.Evaluate();
     }
-    void OnClickTermsBtn()
-    {
-        //IronsoucrManager.Instance.ShowRewardedVideo();
-    }
-    void OnClickDataBtn()
-    {
 
+    void OnClickShareBtn()
+    {
+        SDKInterface.Instance.Share();
     }
 
 }
