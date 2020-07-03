@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e7b03582ddb66d84b99eb31a73807a47
+guid: 54c1f2923d5f8354b9e011b06df8f003
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -108,7 +108,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: GameUI
+  spritePackingTag: Guide
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
   userData: 

@@ -37,6 +37,7 @@ public class GameUI : UIBase
     private Text changeImageText;
     private Text hintText;
     private TextTimer textTimer;
+    private Item bombItem;
     private bool haveBomb;
     private bool IsTiming;
 
@@ -149,6 +150,7 @@ public class GameUI : UIBase
         CreateItems();
         CheckHaveCanLink();
         AutoHint();
+        Guide();
     }
 
     void InitScore()
@@ -338,6 +340,10 @@ public class GameUI : UIBase
                 bool isBomb = j == bombPos.x && i == bombPos.y;
                 itemScript = CreateItem(i, j, type, isBomb);
                 tmp.Add(itemScript);
+                if (isBomb)
+                {
+                    bombItem = itemScript;
+                }
             }
             itemList.Add(tmp);
         }
@@ -917,11 +923,27 @@ public class GameUI : UIBase
             MoveHor(false);
         }
     }
+    private void Guide()
+    {
+        if (bombItem == null || SaveModel.GetPlayer().guide)
+        {
+            return;
+        }
+        //StartTiming(false);
+        GuideUI.Create(bombItem.gameObject, () =>
+        {
+            //StartTiming(true);
+        }, "Get bomb card of connecting to avoid exploading or you will fail!");
+        SaveModel.GetPlayer().guide = true;
+        SaveModel.ForceStorageSave();
+    }
 
     public override void OnDestroyRoot()
     {
+        CoroutineHelper.Instance.Stop(coroutine);
         MessageCenter.RemoveMsgListener(MyMessageType.GAME_UI , OnMessage);
     }
+
     private void OnClickGoldDebug()
     {
 #if UNITY_EDITOR

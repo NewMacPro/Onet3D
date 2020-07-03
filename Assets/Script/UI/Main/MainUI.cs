@@ -34,6 +34,9 @@ public class MainUI : UIBase
         ViewUtils.AddButtonClick(root, "GalleryBtn", OnClickGallery);
         ViewUtils.AddButtonClick(root, "NoadBtn", OnClickNoAdBtn);
         ViewUtils.AddButtonClick(root, "HelpBtn", OnClickHelp);
+        ViewUtils.SetText(root, "GalleryBtn/Text", "GALLERY");
+        ViewUtils.SetText(root, "NoadBtn/Text", "NoAD");
+        ViewUtils.SetText(root, "HelpBtn/Text", "HELP");
         ViewUtils.SetActive(root, "ClearBtn", false);
 #if UNITY_EDITOR
         ViewUtils.SetActive(root, "ClearBtn", true);

@@ -138,7 +138,7 @@ public class UIManager : MonoBehaviour
         baseNodeOrderDic.Add(UIFormsType.Waiting, _CanTransformWaiting.GetComponent<Canvas>().sortingOrder);
         baseNodeOrderDic.Add(UIFormsType.Front, _CanTransformFront.GetComponent<Canvas>().sortingOrder);
         baseNodeOrderDic.Add(UIFormsType.Middle, _CanTransformMiddle.GetComponent<Canvas>().sortingOrder);
-        baseNodeOrderDic.Add(UIFormsType.NoviceGuide, _CanTransformMiddle.GetComponent<Canvas>().sortingOrder);
+        baseNodeOrderDic.Add(UIFormsType.NoviceGuide, _CanTransformNovice.GetComponent<Canvas>().sortingOrder);
     }
 
     public int GetBaseNodeSortingOrder(UIFormsType type)
