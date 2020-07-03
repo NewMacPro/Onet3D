@@ -7,9 +7,13 @@ using System.Collections.Generic;
 class LoadingUI : MonoBehaviour
 {
     const float TIPS_CHANGE_TIME = 2;
-    static List<string> TIPS = new List<string>(){"111", "222", "333"};
-    public Text label;
+    static List<string> TIPS = new List<string>(){ "Tips：Match two more distant blocks to get a higher score."
+        , "Tips：Use shuffle props to rearrange blocks."
+        , "Tips：In the settings,you can close theimages you don’t like."};
+    public Text progressLabel;
+    public Transform loadingLabel;
     public Text tipsLabel;
+    public Image progressImg;
     private float currentProgress = 0;
     private float targetProgress = 0;
     private float tipsTime = 0;
@@ -17,16 +21,17 @@ class LoadingUI : MonoBehaviour
     {
         StartLoad();
         ChangeTip();
+        ViewUtils.SetText(loadingLabel, "", "Loading");
     }
 
     void Update()
     {
-        tipsTime += Time.deltaTime;
-        if (tipsTime >= TIPS_CHANGE_TIME)
-        {
-            tipsTime = 0;
-            ChangeTip();
-        }
+        //    tipsTime += Time.deltaTime;
+        //    if (tipsTime >= TIPS_CHANGE_TIME)
+        //    {
+        //        tipsTime = 0;
+        //        ChangeTip();
+        //    }
     }
 
     public void StartLoad()
@@ -57,7 +62,13 @@ class LoadingUI : MonoBehaviour
 
     void OnProgress(float progress)
     {
-        label.text = Mathf.FloorToInt(progress * 100) + "%";
+        progressImg.fillAmount = progress;
+        int intProgress = Mathf.FloorToInt(progress * 100);
+        if (intProgress > 100)
+        {
+            intProgress = 100;
+        }
+        progressLabel.text = intProgress + "%";
         if (progress >= 1)
         {
             SceneManager.LoadScene("Hall");
