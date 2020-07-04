@@ -1,9 +1,9 @@
+待测试：
 √1 去广告的文字修改：NoAD
 √2 炸弹的关卡新手引导：资源放在Guide里
 √3 更新配置文档
 √4 分享的文案更改
-5√① 设置界面所有按钮的功能：设置界面重新设计
-  ②多一个发邮件功能
+√5 设置界面所有按钮的功能：设置界面重新设计
 √6 loading界面，及提示文本。：效果图在Guide里
 Tips：Match two more distant blocks to get a higher score.
 Tips：Use shuffle props to rearrange blocks.
@@ -16,7 +16,15 @@ Tips：In the settings,you can close theimages you don’t like.
 √12 初始金币300
 √13 分享文案：level读取当前level
  I've reached level 1, so interesting! Come and play Onet 3D with me! https://play.google.com/store/apps/details?id=com.connetly.puzzle.game
-14 换背景
-15 新手引导
 √16 如果视频广告没有缓存下来，点击视频广告按钮，则提示“The reward video is not ready~”
 √17 LevelConfig从15关以后进行循环
+---------------------------------------------------------------------
+
+待完成：
+1、设置界面加一个跳转网站功能  privacy terms
+https://sites.google.com/view/gamelabprivacy
+https://sites.google.com/view/terms-ios
+2、How to play 功能 在Newbie文件夹里，有视频参考
+3、换背景
+4、删除无用资源
+
