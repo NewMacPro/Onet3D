@@ -21,7 +21,8 @@ Tips：In the settings,you can close theimages you don’t like.
 ---------------------------------------------------------------------
 
 待完成：
-1、设置界面加一个跳转网站功能  privacy terms
+1、设置界面加一个跳转网站功能 privacy terms（能放两个就放两个，不行就第一个）
+用方法Application.OpenURL()应该可以
 https://sites.google.com/view/gamelabprivacy
 https://sites.google.com/view/terms-ios
 2、How to play 功能 在Newbie文件夹里，有视频参考
