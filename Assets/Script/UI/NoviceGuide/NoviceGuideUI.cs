@@ -31,6 +31,7 @@ public class NoviceGuideUI : UIBase
     void Attach()
     {
         ani = root.GetComponent<Animator>();
+        ViewUtils.SetText(root, "Title", "SETTING");
         ViewUtils.SetText(root, "ErrTipLabel", "The connection 3 or more inflection poins is not allowed.");
         ViewUtils.SetText(root, "TipLabel", "Click to match the same block.");
         ViewUtils.AddButtonClick(root, "Step1/Item2", OnClickStepBtn);

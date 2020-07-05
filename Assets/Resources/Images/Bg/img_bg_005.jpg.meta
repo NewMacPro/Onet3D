@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f859be6a18c11eb408c59c3b43506222
+guid: 99bad5edeb636de409524ca4777ad7ad
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -84,7 +84,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: Newbie
+  spritePackingTag: Bg
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
   userData: 

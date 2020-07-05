@@ -31,14 +31,16 @@ public class SettingUI : UIBase
         ViewUtils.AddButtonClick(root, "Sound/SwitchBtn", OnClickSoundBtn);
         ViewUtils.AddButtonClick(root, "Music/SwitchBtn", OnClickMusicBtn);
         ViewUtils.AddButtonClick(root, "Notify/SwitchBtn", OnClickNotifyBtn);
-        ViewUtils.AddButtonClick(root, "FeedbackBtn", OnClickFeedbackBtn);
+        ViewUtils.AddButtonClick(root, "PrivacyBtn", OnClickPrivacyBtn);
+        ViewUtils.AddButtonClick(root, "TermsBtn", OnClickTermsBtn);
         ViewUtils.AddButtonClick(root, "Score", OnClickScoreBtn);
         ViewUtils.AddButtonClick(root, "Share", OnClickShareBtn);
         ViewUtils.SetText(root, "TitleText", "SETTINGS");
         ViewUtils.SetText(root, "Sound/Text", "Sound");
         ViewUtils.SetText(root, "Music/Text", "Music");
         ViewUtils.SetText(root, "Notify/Text", "Notify");
-        ViewUtils.SetText(root, "FeedbackBtn/Text", "FEEDBACK");
+        ViewUtils.SetText(root, "PrivacyBtn/Text", "PRIVACY");
+        ViewUtils.SetText(root, "TermsBtn/Text", "TERMS");
         ViewUtils.SetText(root, "ScoreBtn/Text", "SCORE");
         ViewUtils.SetText(root, "ShareBtn/Text", "SHARE");
     }
@@ -95,10 +97,17 @@ public class SettingUI : UIBase
         SaveModel.NotifySwitch = !SaveModel.NotifySwitch;
         RefreshNotifySwitch();
     }
-    void OnClickFeedbackBtn()
-    {
 
+    void OnClickPrivacyBtn()
+    {
+        Application.OpenURL("https://sites.google.com/view/gamelabprivacy");
     }
+
+    void OnClickTermsBtn()
+    {
+        Application.OpenURL("https://sites.google.com/view/terms-ios");
+    }
+
     void OnClickScoreBtn()
     {
         SDKInterface.Instance.Evaluate();

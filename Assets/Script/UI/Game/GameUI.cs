@@ -202,7 +202,7 @@ public class GameUI : UIBase
         ViewUtils.SetActive(root, "ItemContent" + levelSize, true);
 
         ViewUtils.SetText(root, "TopArea/Level/Text", nowLevel.ToString());
-        bgIndex = Random.Range(1, 4);
+        bgIndex = Random.Range(1, 7);
         ViewUtils.SetImage(root, "Bg", "img_bg_00" + bgIndex);
     }
 
