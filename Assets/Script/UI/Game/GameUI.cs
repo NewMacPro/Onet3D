@@ -925,7 +925,7 @@ public class GameUI : UIBase
     }
     private void Guide()
     {
-        if (bombItem == null || SaveModel.GetPlayer().guide)
+        if (bombItem == null || SaveModel.GetPlayer().bobmGuide)
         {
             return;
         }
@@ -934,7 +934,7 @@ public class GameUI : UIBase
         {
             //StartTiming(true);
         }, "Get bomb card of connecting to avoid exploading or you will fail!");
-        SaveModel.GetPlayer().guide = true;
+        SaveModel.GetPlayer().bobmGuide = true;
         SaveModel.ForceStorageSave();
     }
 

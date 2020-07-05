@@ -54,7 +54,14 @@ public class MainUI : UIBase
     }
 
     void OnClickPlay() {
-        GameUI.Create();
+        if (SaveModel.GetPlayer().guide)
+        {
+            GameUI.Create();
+        }
+        else
+        {
+            NoviceGuideUI.Create();
+        }
     }
     void OnClickGallery()
     {

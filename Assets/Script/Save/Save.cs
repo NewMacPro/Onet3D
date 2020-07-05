@@ -15,6 +15,7 @@ public class Save
     public bool musicSwitch = true;
     public bool notifySwitch = true;
     public bool removeAD = false;
+    public bool bobmGuide = false;
     public bool guide = false;
     public CurrentLevel currentLevel = new CurrentLevel();
     public List<int> galleryIds = new List<int>();
