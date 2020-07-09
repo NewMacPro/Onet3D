@@ -11,7 +11,7 @@ public class InAppPurchasing : UnitySingleton<InAppPurchasing>, IStoreListener
     private static IExtensionProvider m_Extensions;
 
     //需要配置
-    private string[] idArr = new string[] { };
+    private string[] idArr = new string[] { "removeads" };
     //需要配置
 
     private static bool PurchaseAvailable = true;//IAP可用状态

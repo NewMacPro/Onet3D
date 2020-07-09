@@ -9,7 +9,7 @@ public class IronsoucrManager : UnitySingleton<IronsoucrManager>
     
     // Use this for initialization
     public static string uniqueUserId = "test";
-    public static string appKey = "ca95f32d";
+    public static string appKey = "a453edc5";
     private UnityAction rewardsCallback = null;
 
     private bool RemoveAD
