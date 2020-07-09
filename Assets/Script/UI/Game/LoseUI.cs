@@ -38,7 +38,7 @@ public class LoseUI : UIBase
         ViewUtils.SetText(root, "AdBtn/Text", addGoldValue.ToString());
         ViewUtils.SetText(root, "ReStartBtn/Text", "RESTART");
         ViewUtils.SetText(root, "TitleText", "YOU LOSE!");
-        ViewUtils.SetText(root, "CheckPointText", "level" + SaveModel.player.level);
+        ViewUtils.SetText(root, "CheckPointText", "level " + SaveModel.player.level);
         ViewUtils.SetText(root, "TimeOutText", "Time is up!");
 
         Dictionary<string,object> param = new Dictionary<string,object>();
@@ -68,7 +68,7 @@ public class LoseUI : UIBase
         IronsoucrManager.Instance.ShowRewardedVideo(() =>
         {
             SaveModel.AddGold(addGoldValue);
-            MessageCenter.SendMessage(MyMessageType.GAME_UI, MyMessage.REFRESH_RES);
+            MessageCenter.SendMessage(MyMessageType.GAME_UI, MyMessage.REFRESH_RES, addGoldValue);
             ViewUtils.SetActive(root, "AdBtn", false);
         });
         FBstatistics.LogEvent("watchad");

@@ -33,15 +33,15 @@ public class SettingUI : UIBase
         ViewUtils.AddButtonClick(root, "Notify/SwitchBtn", OnClickNotifyBtn);
         ViewUtils.AddButtonClick(root, "PrivacyBtn", OnClickPrivacyBtn);
         ViewUtils.AddButtonClick(root, "TermsBtn", OnClickTermsBtn);
-        ViewUtils.AddButtonClick(root, "Score", OnClickScoreBtn);
-        ViewUtils.AddButtonClick(root, "Share", OnClickShareBtn);
+        ViewUtils.AddButtonClick(root, "ScoreBtn", OnClickScoreBtn);
+        ViewUtils.AddButtonClick(root, "ShareBtn", OnClickShareBtn);
         ViewUtils.SetText(root, "TitleText", "SETTINGS");
         ViewUtils.SetText(root, "Sound/Text", "Sound");
         ViewUtils.SetText(root, "Music/Text", "Music");
         ViewUtils.SetText(root, "Notify/Text", "Notify");
         ViewUtils.SetText(root, "PrivacyBtn/Text", "PRIVACY");
         ViewUtils.SetText(root, "TermsBtn/Text", "TERMS");
-        ViewUtils.SetText(root, "ScoreBtn/Text", "SCORE");
+        ViewUtils.SetText(root, "ScoreBtn/Text", "RATE");
         ViewUtils.SetText(root, "ShareBtn/Text", "SHARE");
     }
 

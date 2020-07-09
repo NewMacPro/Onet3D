@@ -9,8 +9,8 @@
     }, 
     {
 	  "id": 2,
-      "imgName": "che", 
-      "name": "Car", 
+      "imgName": "he", 
+      "name": "Beverage", 
       "gold": 0,
 	  "typeCount" : 16,
 	  "unlockType": "pay"
@@ -33,8 +33,8 @@
     },
     {
 	  "id": 5,
-      "imgName": "he", 
-      "name": "Beverage", 
+      "imgName": "che", 
+      "name": "Car", 
       "gold": 0,
 	  "typeCount" : 20,
 	  "unlockType": "ad"

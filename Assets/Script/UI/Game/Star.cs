@@ -45,7 +45,7 @@ public class Star : LineItem
         transform.DOMove(this.flyPos, Const.STAR_FLY_TIME + Const.STAR_FLY_INTERVAL_TIME * item.pos.x).SetEase(Ease.OutCirc).OnComplete(() =>
         {
             DestroyThis();
-            MessageCenter.SendMessage(MyMessageType.GAME_UI, MyMessage.REFRESH_RES);
+            MessageCenter.SendMessage(MyMessageType.GAME_UI, MyMessage.REFRESH_STAR);
         });
         //EventDelegate ed = new EventDelegate();
         //ed.Set(this , "DestroyThis");

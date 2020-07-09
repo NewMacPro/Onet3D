@@ -91,7 +91,7 @@ public class Item : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     }
 
     public void SetImageBg(int bgIndex) {
-        ViewUtils.SetImage(gameObject.transform, "Bg", "ItemBg" + bgIndex);
+        //ViewUtils.SetImage(gameObject.transform, "Bg", "ItemBg" + bgIndex);
     }
 
     public void SetItemSize(float s) {

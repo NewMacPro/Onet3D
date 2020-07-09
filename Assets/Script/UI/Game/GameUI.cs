@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public class GameUI : UIBase
 {
     const float ITEM_MOVE_TIME = 0.2f;
+    const float GOLD_ANI_TIME = 3f;
+    const float GOLD_ANI_MAX_NUM = 60;
     /**背景*/
     private GameObject itemContent;
     /**行号*/
@@ -54,6 +56,11 @@ public class GameUI : UIBase
     private Image viewMask;
     private Coroutine coroutine;
     private int _score;
+    private int addStarCount = 0;
+    private int needAddStarCount = 0;
+    private bool win = false;
+    private int useTime = 0;
+    private Coroutine goldAniCoro;
 
     public static void Create()
     {
@@ -103,7 +110,7 @@ public class GameUI : UIBase
         ViewUtils.SetTextColor(root, "ResetBtn/Text",  SaveModel.CheckGold(resetPrice, false) ? Color.white : Color.red);
         ViewUtils.SetTextColor(root, "ImageBtn/Text", SaveModel.CheckGold(changeImagePrice, false) ? Color.white : Color.red);
         ViewUtils.SetTextColor(root, "HintBtn/Text", SaveModel.CheckGold(hintPrice, false) ? Color.white : Color.red);
-        if (GameManager.Instance.showInterstitial && SaveModel.player.level > 4)
+        if (GameManager.Instance.showInterstitial)
         {
             IronsoucrManager.Instance.ShowInterstitial();
             GameManager.Instance.showInterstitial = false;
@@ -118,8 +125,23 @@ public class GameUI : UIBase
         }
         if (kv.Key == MyMessage.REFRESH_RES)
         {
-            RefreshGold();
+            int addGold = -1;
+            if (kv.Values != null)
+            {
+                addGold = (int)kv.Values;
+            }
+
+            RefreshGold(addGold);
+        }
+        if (kv.Key == MyMessage.REFRESH_STAR)
+        {
+            addStarCount++;
             AddScore(1);
+            if (addStarCount >= needAddStarCount && win)
+            {
+                //ConfirmDialogUI.Create().SetContent(addStarCount + "///" + needAddStarCount);
+                WinUI.Create(_score, useTime);
+            }
         }
     }
 
@@ -149,7 +171,7 @@ public class GameUI : UIBase
 
         CreateItems();
         CheckHaveCanLink();
-        AutoHint();
+        AutoHint(true);
         Guide();
     }
 
@@ -206,12 +228,44 @@ public class GameUI : UIBase
         ViewUtils.SetImage(root, "Bg", "img_bg_00" + bgIndex);
     }
 
-    private void RefreshGold()
+    private void RefreshGold(int addGold = -1)
     {
-        ViewUtils.SetText(root, "TopArea/Gold/Text", SaveModel.player.gold.ToString());
         ViewUtils.SetTextColor(root, "ResetBtn/Text", SaveModel.CheckGold(resetPrice, false) ? Color.white : Color.red);
         ViewUtils.SetTextColor(root, "ImageBtn/Text", SaveModel.CheckGold(changeImagePrice, false) ? Color.white : Color.red);
         ViewUtils.SetTextColor(root, "HintBtn/Text", SaveModel.CheckGold(hintPrice, false) ? Color.white : Color.red);
+        if (addGold <= 0)
+        {
+            ViewUtils.SetText(root, "TopArea/Gold/Text", SaveModel.player.gold.ToString());
+        }
+        else
+        {
+            DoGoldAni(addGold);
+        }
+        
+    }
+
+    private void DoGoldAni(float addGold)
+    {
+        float goldInterval = 1f;
+        if (addGold > GOLD_ANI_MAX_NUM)
+        {
+            goldInterval = addGold / GOLD_ANI_MAX_NUM;
+        }
+        float interval = GOLD_ANI_TIME / (addGold - goldInterval);
+        StartGoldAni(addGold, interval, goldInterval);
+    }
+
+    private void StartGoldAni(float addGold, float interval, float goldInterval)
+    {
+        addGold -= goldInterval;
+        ViewUtils.SetText(root, "TopArea/Gold/Text", Mathf.Round(SaveModel.player.gold - addGold).ToString());
+        if (addGold > 0)
+        {
+            goldAniCoro = CoroutineHelper.Instance.WaitForSeconds(interval, () =>
+            {
+                StartGoldAni(addGold, interval, goldInterval);
+            });
+        }
     }
 
     private void InitTime()
@@ -454,6 +508,7 @@ public class GameUI : UIBase
 
     private void HideTwoItem(List<Point> pathList)
     {
+        needAddStarCount += pathList.Count;
         CreateAllStar(pathList);
         Item item1 = clickList[0];
         Item item2 = clickList[1];
@@ -466,7 +521,7 @@ public class GameUI : UIBase
         DoMoveAni();
         clickList.Clear();
         pathList.Clear();
-        AddScore(pathList.Count);
+        //AddScore(pathList.Count);
 
         AudioManager.Instance.PlaySingle("Sound/clear");
 
@@ -572,12 +627,12 @@ public class GameUI : UIBase
 
     private void GameFinish()
     {
+        win = true;
         CoroutineHelper.Instance.Stop(coroutine);
         SaveModel.ClearCurrentLevel();
         StartTiming(false);
-        int useTime = config.time - (int)textTimer.getTime() / 10000;
+        useTime = config.time - (int)textTimer.getTime() / 10000;
         GameManager.Instance.gameNum++;
-        WinUI.Create(_score, useTime);
         SaveModel.LevelUp();
     }
 
@@ -716,16 +771,20 @@ public class GameUI : UIBase
         tipItem.Add(item2);
     }
 
-    void AutoHint()
+    void AutoHint(bool hint = false)
     {
         if (SaveModel.player.level > 1)
         {
             return;
         }
+        if (hint)
+        {
+            OnClickHint(false);
+        }
         CoroutineHelper.Instance.Stop(coroutine);
         coroutine = CoroutineHelper.Instance.WaitForSeconds(3f, () =>
         {
-            OnClickHint(false);
+            AutoHint(true);
         });
     }
 
@@ -744,10 +803,7 @@ public class GameUI : UIBase
         else if (param == GameModel.BACK_GAME_CONTIUE)
         {
             StartTiming(true);
-            if (SaveModel.player.level > 4)
-            {
-                IronsoucrManager.Instance.ShowInterstitial();
-            }
+            IronsoucrManager.Instance.ShowInterstitial();
         }
         else if (param == GameModel.BACK_GAME_RESTART)
         {
@@ -941,6 +997,7 @@ public class GameUI : UIBase
     public override void OnDestroyRoot()
     {
         CoroutineHelper.Instance.Stop(coroutine);
+        CoroutineHelper.Instance.Stop(goldAniCoro);
         MessageCenter.RemoveMsgListener(MyMessageType.GAME_UI , OnMessage);
     }
 

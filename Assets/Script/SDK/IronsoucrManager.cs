@@ -102,7 +102,7 @@ public class IronsoucrManager : UnitySingleton<IronsoucrManager>
 
     public void ShowInterstitial()
     {
-        if (RemoveAD)
+        if (RemoveAD || SaveModel.player.level < 4)
         {
             return;
         }

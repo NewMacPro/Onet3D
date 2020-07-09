@@ -7,6 +7,7 @@ public class WinUI : UIBase
 {
     private int starValue;
     private int timeValue;
+    private int level;
     private int starAddGoldValue = 0;
     private int timeAddGoldValue = 0;
     private int totalAddGoldValue = 0;
@@ -32,7 +33,7 @@ public class WinUI : UIBase
     void Attach()
     {
         AudioManager.Instance.PlaySingle("Sound/gameFinish");
-
+        level = SaveModel.GetPlayer().level - 1;
         //3颗星星转换为1金币，6S转换为1金币
         starAddGoldValue = Mathf.FloorToInt(starValue / 3);
         timeAddGoldValue = Mathf.FloorToInt(timeValue / 6);
@@ -46,7 +47,7 @@ public class WinUI : UIBase
         ViewUtils.AddButtonClick(root, "ShareBtn", OnClickShareBtn);
 
         ViewUtils.SetText(root, "TitleText", "YOU WIN！");
-        ViewUtils.SetText(root, "CheckPointText", "level" + SaveModel.player.level);
+        ViewUtils.SetText(root, "CheckPointText", "level " + level);
 
         ViewUtils.SetText(root, "StarBg/StarValue", starValue.ToString());
         ViewUtils.SetText(root, "StarBg/GoldValue", "+" + starAddGoldValue);
@@ -58,7 +59,7 @@ public class WinUI : UIBase
 
         //统计
         Dictionary<string, object> param = new Dictionary<string, object>();
-        param["name"] = "level" + SaveModel.player.level;
+        param["name"] = "level" + level;
         param["ispassed"] = "true";
         param["getstars"] = starValue.ToString();
         param["lefttime"] = timeValue.ToString();
@@ -81,17 +82,14 @@ public class WinUI : UIBase
 
     void ShowEvaluate()
     {
-        if (SaveModel.player.level == Const.EVALUETE_LEVEL)
+        if (level == Const.EVALUETE_LEVEL)
         {
             SDKInterface.Instance.Evaluate();
         }
     }
 
     void OnClickReStartBtn() {
-        if (SaveModel.player.level >= 2)
-        {
-            IronsoucrManager.Instance.ShowInterstitial();
-        }
+        IronsoucrManager.Instance.ShowInterstitial();
         Close();
         GameUI.Create();
 
@@ -105,7 +103,7 @@ public class WinUI : UIBase
         IronsoucrManager.Instance.ShowRewardedVideo(() =>
         {
             SaveModel.AddGold(totalAddGoldValue);
-            MessageCenter.SendMessage(MyMessageType.GAME_UI, MyMessage.REFRESH_RES);
+            MessageCenter.SendMessage(MyMessageType.GAME_UI, MyMessage.REFRESH_RES, totalAddGoldValue);
             ViewUtils.SetActive(root, "AdBtn", false);
         });
 

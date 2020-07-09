@@ -15,5 +15,6 @@ class MyMessage
     public const int TIME_OUT = 10001;
     public const int REFRESH_RES = 10002;
     public const int CLOSE = 10003;
+    public const int REFRESH_STAR = 10003;
 }
 

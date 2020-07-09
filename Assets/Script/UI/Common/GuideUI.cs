@@ -32,6 +32,7 @@ public class GuideUI : UIBase
         ViewUtils.SetText(root, "GuideTipLabel", tip);
         GameObject objClone = GameObject.Instantiate(oriObj);
         objClone.transform.SetParent(root);
+        objClone.transform.SetSiblingIndex(1);
         objClone.transform.position = oriObj.transform.position;
         objClone.transform.localScale = oriObj.transform.localScale;
         oriObj.SetActive(false);
@@ -59,7 +60,7 @@ public class GuideUI : UIBase
         }
         tipNode.localPosition = objPos;
 
-        root.GetComponent<Button>().onClick.AddListener(Close);
+        root.FindAChild<Button>("Button").onClick.AddListener(Close);
     }
 
     public override void OnDestroyRoot()

@@ -53,7 +53,7 @@ public class SurpriseRewardUI : UIBase
             if (random <= 0)
             {
                 SaveModel.AddGold(item.gold);
-                MessageCenter.SendMessage(MyMessageType.GAME_UI, MyMessage.REFRESH_RES, null);
+                MessageCenter.SendMessage(MyMessageType.GAME_UI, MyMessage.REFRESH_RES, item.gold);
                 Close();
                 return;
             }

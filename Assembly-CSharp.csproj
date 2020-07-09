@@ -11,7 +11,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{8A5C12C1-CA44-706D-DDFA-7E12C7D16B7C}</ProjectGuid>
+    <ProjectGuid>{095ED8BD-415E-8863-3E49-D4414AF44ED8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -116,6 +116,7 @@
     <Compile Include="Assets\Script\Test.cs" />
     <Compile Include="Assets\Script\UI\Common\GetGoldUI.cs" />
     <Compile Include="Assets\Script\UI\Common\GoldNotEnoughUI.cs" />
+    <Compile Include="Assets\Script\UI\Common\GuideUI.cs" />
     <Compile Include="Assets\Script\UI\Common\HintUI.cs" />
     <Compile Include="Assets\Script\UI\Common\LoadingUI.cs" />
     <Compile Include="Assets\Script\UI\ConfirmUI\ConfirmDialogUI.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="Assets\Script\UI\Main\IntroductionUI.cs" />
     <Compile Include="Assets\Script\UI\Main\MainUI.cs" />
     <Compile Include="Assets\Script\UI\Main\SettingUI.cs" />
+    <Compile Include="Assets\Script\UI\NoviceGuide\NoviceGuideUI.cs" />
     <Compile Include="Assets\Script\UIFrame\AllSceneCorutine.cs" />
     <Compile Include="Assets\Script\UIFrame\BehaviourDelegate.cs" />
     <Compile Include="Assets\Script\UIFrame\EventTriggerListener.cs" />
@@ -174,64 +176,64 @@
     <None Include="Assets\IronSource\Plugins\Android\IronSource.plugin\AndroidManifest.xml" />
     <None Include="Assets\ThirdParty\Demigiant\DOTween\readme.txt" />
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>F:/GIT/HelloGitHub/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Monetization">
-      <HintPath>F:/GIT/HelloGitHub/Library/ScriptAssemblies/UnityEngine.Monetization.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Library/ScriptAssemblies/UnityEngine.Monetization.dll</HintPath>
     </Reference>
     <Reference Include="com.unity.multiplayer-hlapi.Editor">
-      <HintPath>F:/GIT/HelloGitHub/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Editor.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
-      <HintPath>F:/GIT/HelloGitHub/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Advertisements">
-      <HintPath>F:/GIT/HelloGitHub/Library/ScriptAssemblies/UnityEngine.Advertisements.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Library/ScriptAssemblies/UnityEngine.Advertisements.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>F:/GIT/HelloGitHub/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>F:/GIT/HelloGitHub/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>F:/GIT/HelloGitHub/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>F:/GIT/HelloGitHub/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="com.unity.multiplayer-weaver.Editor">
-      <HintPath>F:/GIT/HelloGitHub/Library/ScriptAssemblies/com.unity.multiplayer-weaver.Editor.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Library/ScriptAssemblies/com.unity.multiplayer-weaver.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.XR.LegacyInputHelpers">
-      <HintPath>F:/GIT/HelloGitHub/Library/ScriptAssemblies/UnityEngine.XR.LegacyInputHelpers.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Library/ScriptAssemblies/UnityEngine.XR.LegacyInputHelpers.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
-      <HintPath>F:/GIT/HelloGitHub/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Sprite.Editor">
-      <HintPath>F:/GIT/HelloGitHub/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Tilemap.Editor">
-      <HintPath>F:/GIT/HelloGitHub/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.SpatialTracking">
-      <HintPath>F:/GIT/HelloGitHub/Library/ScriptAssemblies/UnityEditor.SpatialTracking.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Library/ScriptAssemblies/UnityEditor.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.SpatialTracking">
-      <HintPath>F:/GIT/HelloGitHub/Library/ScriptAssemblies/UnityEngine.SpatialTracking.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Library/ScriptAssemblies/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>F:/GIT/HelloGitHub/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.XR.LegacyInputHelpers">
-      <HintPath>F:/GIT/HelloGitHub/Library/ScriptAssemblies/UnityEditor.XR.LegacyInputHelpers.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Library/ScriptAssemblies/UnityEditor.XR.LegacyInputHelpers.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-      <HintPath>F:/GIT/HelloGitHub/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="com.unity.multiplayer-hlapi.Runtime">
-      <HintPath>F:/GIT/HelloGitHub/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Runtime.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>D:/unity2019.3.11/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -405,64 +407,64 @@
       <HintPath>D:/unity2019.3.11/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
     </Reference>
     <Reference Include="Facebook.Unity">
-      <HintPath>F:/GIT/HelloGitHub/Assets/FacebookSDK/Plugins/Facebook.Unity.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Assets/FacebookSDK/Plugins/Facebook.Unity.dll</HintPath>
     </Reference>
     <Reference Include="Facebook.Unity.Gameroom">
-      <HintPath>F:/GIT/HelloGitHub/Assets/FacebookSDK/Plugins/Gameroom/Facebook.Unity.Gameroom.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Assets/FacebookSDK/Plugins/Gameroom/Facebook.Unity.Gameroom.dll</HintPath>
     </Reference>
     <Reference Include="FacebookNamedPipeClient">
-      <HintPath>F:/GIT/HelloGitHub/Assets/FacebookSDK/Plugins/Gameroom/FacebookNamedPipeClient.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Assets/FacebookSDK/Plugins/Gameroom/FacebookNamedPipeClient.dll</HintPath>
     </Reference>
     <Reference Include="Facebook.Unity.Settings">
-      <HintPath>F:/GIT/HelloGitHub/Assets/FacebookSDK/Plugins/Settings/Facebook.Unity.Settings.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Assets/FacebookSDK/Plugins/Settings/Facebook.Unity.Settings.dll</HintPath>
     </Reference>
     <Reference Include="LitJson">
-      <HintPath>F:/GIT/HelloGitHub/Assets/Plugins/LitJson.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Assets/Plugins/LitJson.dll</HintPath>
     </Reference>
     <Reference Include="UDP">
-      <HintPath>F:/GIT/HelloGitHub/Assets/Plugins/UDP/UDP.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Assets/Plugins/UDP/UDP.dll</HintPath>
     </Reference>
     <Reference Include="ChannelPurchase">
-      <HintPath>F:/GIT/HelloGitHub/Assets/Plugins/UnityChannel/ChannelPurchase.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Assets/Plugins/UnityChannel/ChannelPurchase.dll</HintPath>
     </Reference>
     <Reference Include="UnityStore">
-      <HintPath>F:/GIT/HelloGitHub/Assets/Plugins/UnityChannel/UnityStore.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Assets/Plugins/UnityChannel/UnityStore.dll</HintPath>
     </Reference>
     <Reference Include="Editor">
-      <HintPath>F:/GIT/HelloGitHub/Assets/Plugins/UnityPurchasing/Bin/Editor.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Assets/Plugins/UnityPurchasing/Bin/Editor.dll</HintPath>
     </Reference>
     <Reference Include="Purchasing.Common">
-      <HintPath>F:/GIT/HelloGitHub/Assets/Plugins/UnityPurchasing/Bin/Purchasing.Common.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Assets/Plugins/UnityPurchasing/Bin/Purchasing.Common.dll</HintPath>
     </Reference>
     <Reference Include="Stores">
-      <HintPath>F:/GIT/HelloGitHub/Assets/Plugins/UnityPurchasing/Bin/Stores.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Assets/Plugins/UnityPurchasing/Bin/Stores.dll</HintPath>
     </Reference>
     <Reference Include="Apple">
-      <HintPath>F:/GIT/HelloGitHub/Assets/Plugins/UnityPurchasing/Bin/Apple/Apple.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Assets/Plugins/UnityPurchasing/Bin/Apple/Apple.dll</HintPath>
     </Reference>
     <Reference Include="FacebookStore">
-      <HintPath>F:/GIT/HelloGitHub/Assets/Plugins/UnityPurchasing/Bin/Facebook/FacebookStore.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Assets/Plugins/UnityPurchasing/Bin/Facebook/FacebookStore.dll</HintPath>
     </Reference>
     <Reference Include="Security">
-      <HintPath>F:/GIT/HelloGitHub/Assets/Plugins/UnityPurchasing/Bin/Security/live/Security.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Assets/Plugins/UnityPurchasing/Bin/Security/live/Security.dll</HintPath>
     </Reference>
     <Reference Include="Tizen">
-      <HintPath>F:/GIT/HelloGitHub/Assets/Plugins/UnityPurchasing/Bin/Tizen/Tizen.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Assets/Plugins/UnityPurchasing/Bin/Tizen/Tizen.dll</HintPath>
     </Reference>
     <Reference Include="winrt">
-      <HintPath>F:/GIT/HelloGitHub/Assets/Plugins/UnityPurchasing/winrt/winrt.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Assets/Plugins/UnityPurchasing/winrt/winrt.dll</HintPath>
     </Reference>
     <Reference Include="DemiLib">
-      <HintPath>F:/GIT/HelloGitHub/Assets/ThirdParty/Demigiant/DemiLib/Core/DemiLib.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Assets/ThirdParty/Demigiant/DemiLib/Core/DemiLib.dll</HintPath>
     </Reference>
     <Reference Include="DOTween">
-      <HintPath>F:/GIT/HelloGitHub/Assets/ThirdParty/Demigiant/DOTween/DOTween.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Assets/ThirdParty/Demigiant/DOTween/DOTween.dll</HintPath>
     </Reference>
     <Reference Include="DOTweenPro">
-      <HintPath>F:/GIT/HelloGitHub/Assets/ThirdParty/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Assets/ThirdParty/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Purchasing">
-      <HintPath>F:/GIT/HelloGitHub/Library/PackageCache/com.unity.purchasing@2.0.6/UnityEngine.Purchasing.dll</HintPath>
+      <HintPath>F:/GIT/Onet3D/Library/PackageCache/com.unity.purchasing@2.0.6/UnityEngine.Purchasing.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>D:/unity2019.3.11/Unity/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
@@ -821,7 +823,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{6CD561BD-8460-8B2D-375B-3120CA4266C7}</Project>
+      <Project>{AEE15E39-06DD-802D-DECA-6003A5AE911A}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
   </ItemGroup>
