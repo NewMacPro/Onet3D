@@ -88,6 +88,7 @@ public class InAppPurchasing : UnitySingleton<InAppPurchasing>, IStoreListener
         if (OnPaySuccessAction != null)
         {
             OnPaySuccessAction(e);
+            OnPaySuccessAction = null;
         }
 
         return PurchaseProcessingResult.Complete;
@@ -102,7 +103,13 @@ public class InAppPurchasing : UnitySingleton<InAppPurchasing>, IStoreListener
 
     public void OnPurchaseClicked(string ProductId)//发起购买函数，在你的商品按钮上拖这个方法进入
     {
-        m_Controller.InitiatePurchase(ProductId);
+        if (InternetAvailable)
+        {
+            Debug.Log("拉起支付");
+            m_Controller.InitiatePurchase(ProductId);
+            return;
+        }
+        HintUI.Create("Purchase initialization failed");
     }
 
     public string GetProductData()
@@ -151,6 +158,14 @@ public class InAppPurchasing : UnitySingleton<InAppPurchasing>, IStoreListener
         {
             return "";
         }
+    }
+
+    public void SetOnPaySuccessAction(Action callback)
+    {
+        OnPaySuccessAction = (PurchaseEventArgs e) =>
+        {
+            callback();
+        };
     }
 
 
