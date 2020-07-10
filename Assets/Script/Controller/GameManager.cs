@@ -44,5 +44,9 @@ public class GameManager : UnitySingleton<GameManager>
                 }
             }
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 }
