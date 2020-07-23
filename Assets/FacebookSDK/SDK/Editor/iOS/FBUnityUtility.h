@@ -17,7 +17,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #import <FBSDKShareKit/FBSDKShareKit.h>
-#import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 extern const char* const FB_OBJECT_NAME;
 
@@ -31,5 +30,4 @@ extern const char* const FB_OBJECT_NAME;
 + (void)sendMessageToUnity:(NSString *)unityMessage userData:(NSDictionary *)userData requestId:(int)requestId;
 + (NSString *)stringFromCString:(const char *)string;
 + (NSDictionary *)appLinkDataFromUrl:(NSURL *)url;
-+ (NSDictionary *)getUserDataFromAccessToken:(FBSDKAccessToken *)token;
 @end
