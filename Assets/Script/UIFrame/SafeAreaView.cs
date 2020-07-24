@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class SafeAreaView : MonoBehaviour
 {
-
-#if UNITY_IOS && !UNITY_EDITOR 
-	[DllImport("__Internal")]
-    private extern static void GetSafeAreaImpl(out float x, out float y, out float w, out float h);
-#endif
-
     // 一下整出N个区域
     public RectTransform[] areas;
     public RectTransform[] maskAreas;
@@ -48,14 +42,10 @@ public class SafeAreaView : MonoBehaviour
     private Rect GetSafeArea()
     {
         float x, y, w, h;
-#if UNITY_IOS && !UNITY_EDITOR 
-        GetSafeAreaImpl(out x, out y, out w, out h);
-#else
         x = 0;
         y = 0;
         w = Screen.width;
         h = Screen.height;
-#endif
         return new Rect(x, y, w, h);
     }
 
