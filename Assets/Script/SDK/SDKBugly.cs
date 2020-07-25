@@ -8,7 +8,7 @@ public class SDKBugly : MonoBehaviour
     void Start()
     {
 #if UNITY_IPHONE || UNITY_IOS
-        BuglyAgent.InitWithAppId("");
+        BuglyAgent.InitWithAppId("03f21bf475");
         BuglyAgent.EnableExceptionHandler();
 #elif UNITY_ANDROID
         BuglyAgent.InitWithAppId ("03f21bf475");
