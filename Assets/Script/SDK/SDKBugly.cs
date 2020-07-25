@@ -7,10 +7,11 @@ public class SDKBugly : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-#if UNITY_IPHONE || UNITY_IOS
-        BuglyAgent.InitWithAppId("03f21bf475");
-        BuglyAgent.EnableExceptionHandler();
-#elif UNITY_ANDROID
+//#if UNITY_IPHONE || UNITY_IOS
+        //BuglyAgent.InitWithAppId("03f21bf475");
+        //BuglyAgent.EnableExceptionHandler();
+//# el
+#if UNITY_ANDROID
         BuglyAgent.InitWithAppId ("03f21bf475");
         BuglyAgent.EnableExceptionHandler();
 #endif
