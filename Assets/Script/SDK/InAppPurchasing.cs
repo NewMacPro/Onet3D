@@ -103,6 +103,11 @@ public class InAppPurchasing : UnitySingleton<InAppPurchasing>, IStoreListener
 
     public void OnPurchaseClicked(string ProductId)//发起购买函数，在你的商品按钮上拖这个方法进入
     {
+        if (SaveModel.player.removeAD)
+        {
+            HintUI.Create("You have purchased, not need to pay again");
+            return;
+        }
         if (InternetAvailable)
         {
             Debug.Log("拉起支付");
