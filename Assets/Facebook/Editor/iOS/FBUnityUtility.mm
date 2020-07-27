@@ -25,12 +25,10 @@
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <FBSDKShareKit/FBSDKShareKit.h>
 
-#import <Bolts/Bolts.h>
-
 const char* const FB_OBJECT_NAME = "UnityFacebookSDKPlugin";
 
 // Helper method to create C string copy
-char* MakeStringCopy (const char* string)
+static char* FBUnityMakeStringCopy (const char* string)
 {
   if (string == NULL)
     return NULL;
@@ -50,11 +48,31 @@ char* MakeStringCopy (const char* string)
                  requestId:requestId];
 }
 
++ (void) triggerUploadViewHierarchy
+{
+  [self sendMessageToUnity:@"CaptureViewHierarchy"
+                  userData:nil
+                 requestId:0];
+}
+
++ (void) triggerUpdateBindings:(NSString *)json
+{
+    [self sendMessageToUnity:@"OnReceiveMapping"
+                    message:json
+                   requestId:0];
+}
+
 + (void)sendErrorToUnity:(NSString *)unityMessage
                    error:(NSError *)error
                requestId:(int)requestId
 {
-  [self sendErrorToUnity:unityMessage errorMessage:[error localizedDescription] requestId:requestId];
+  NSString *errorMessage =
+    error.userInfo[FBSDKErrorLocalizedDescriptionKey] ?:
+    error.userInfo[FBSDKErrorDeveloperMessageKey] ?:
+    error.localizedDescription;
+  [self sendErrorToUnity:unityMessage
+            errorMessage:errorMessage
+               requestId:requestId];
 }
 
 + (void)sendErrorToUnity:(NSString *)unityMessage
@@ -92,7 +110,15 @@ char* MakeStringCopy (const char* string)
   }
 
   const char *cString = [jsonString UTF8String];
-  UnitySendMessage(FB_OBJECT_NAME, [unityMessage cStringUsingEncoding:NSASCIIStringEncoding], MakeStringCopy(cString));
+  UnitySendMessage(FB_OBJECT_NAME, [unityMessage cStringUsingEncoding:NSASCIIStringEncoding], FBUnityMakeStringCopy(cString));
+}
+
++ (void)sendMessageToUnity:(NSString *)unityMessage
+                   message:(NSString *)message
+                 requestId:(int)requestId
+{
+    const char *cString = [message UTF8String];
+    UnitySendMessage(FB_OBJECT_NAME, [unityMessage cStringUsingEncoding:NSASCIIStringEncoding], FBUnityMakeStringCopy(cString));
 }
 
 + (NSString *)stringFromCString:(const char *)string {
@@ -125,7 +151,7 @@ char* MakeStringCopy (const char* string)
     return FBSDKGameRequestFilterNone;
   } else if ([filter isEqualToString:@"app_users"]) {
     return FBSDKGameRequestFilterAppUsers;
-  } else if ([filter isEqualToString:@"non_app_users"]) {
+  } else if ([filter isEqualToString:@"app_non_users"]) {
     return FBSDKGameRequestFilterAppNonUsers;
   }
 
@@ -154,7 +180,7 @@ char* MakeStringCopy (const char* string)
   NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
   if (url) {
     [dict setObject:url.absoluteString forKey:@"url"];
-    BFURL *parsedUrl = [BFURL URLWithInboundURL:url sourceApplication:nil];
+    FBSDKURL *parsedUrl = [FBSDKURL URLWithInboundURL:url sourceApplication:nil];
     if (parsedUrl) {
       if (parsedUrl.appLinkExtras) {
         [dict setObject:parsedUrl.appLinkExtras forKey:@"extras"];
@@ -170,6 +196,33 @@ char* MakeStringCopy (const char* string)
     [dict setObject:@true forKey:@"did_complete"];
   }
   return dict;
+}
+
++ (NSDictionary *)getUserDataFromAccessToken:(FBSDKAccessToken *)token
+{
+  if (token) {
+    if (token.tokenString &&
+        token.expirationDate &&
+        token.userID &&
+        token.permissions &&
+        token.declinedPermissions) {
+      NSInteger expiration = token.expirationDate.timeIntervalSince1970;
+      NSInteger lastRefreshDate = token.refreshDate ? token.refreshDate.timeIntervalSince1970 : 0;
+      return @{
+               @"opened" : @"true",
+               @"access_token" : token.tokenString,
+               @"expiration_timestamp" : [@(expiration) stringValue],
+               @"user_id" : token.userID,
+               @"permissions" : [token.permissions allObjects],
+               @"granted_permissions" : [token.permissions allObjects],
+               @"declined_permissions" : [token.declinedPermissions allObjects],
+               @"last_refresh" : [@(lastRefreshDate) stringValue],
+               @"graph_domain" : token.graphDomain ? : @"facebook",
+               };
+    }
+  }
+
+  return nil;
 }
 
 @end
