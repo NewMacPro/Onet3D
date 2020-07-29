@@ -41,6 +41,12 @@ PlayerSettings:
     height: 1
   m_SplashScreenLogos: []
   m_VirtualRealitySplashScreen: {fileID: 0}
+  m_ShowUnitySplashAds: 0
+  m_AdsAndroidGameId: 
+  m_AdsIosGameId: 
+  m_ShowSplashAdsSlogan: 0
+  m_SloganImage: {fileID: 0}
+  m_SloganHeight: 150
   m_HolographicTrackingLossScreen: {fileID: 0}
   defaultScreenWidth: 1024
   defaultScreenHeight: 768
@@ -113,6 +119,7 @@ PlayerSettings:
   switchNVNOtherPoolsGranularity: 16777216
   vulkanNumSwapchainBuffers: 3
   vulkanEnableSetSRGBWrite: 0
+  useSecurityBuild: 0
   m_SupportedAspectRatios:
     4:3: 1
     5:4: 1
@@ -164,7 +171,9 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
     Android: com.connetly.puzzle.game
-  buildNumber: {}
+    iPhone: com.connetly.puzzle.game
+  buildNumber:
+    iPhone: 2
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 19
   AndroidTargetSdkVersion: 0
@@ -376,6 +385,7 @@ PlayerSettings:
       m_Kind: 2
       m_SubKind: 
   m_BuildTargetBatching: []
+  m_BuildTargetEncrypting: []
   m_BuildTargetGraphicsJobs:
   - m_BuildTarget: MacStandaloneSupport
     m_GraphicsJobs: 0
@@ -727,6 +737,7 @@ PlayerSettings:
       daydreamIconForeground: {fileID: 0}
       daydreamIconBackground: {fileID: 0}
   cloudServicesEnabled:
+    Collab: 1
     UNet: 1
   luminIcon:
     m_Name: 
@@ -740,10 +751,10 @@ PlayerSettings:
     m_VersionCode: 1
     m_VersionName: 
   apiCompatibilityLevel: 6
-  cloudProjectId: 582da406-4eb3-4698-b957-32b1eaad3f7e
+  cloudProjectId: 328b8e19-b112-4e6e-bd01-5c347072f01c
   framebufferDepthMemorylessMode: 0
-  projectName: Onet3D
-  organizationId: narcissu
+  projectName: Connect3D
+  organizationId: lijiazhicool
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
